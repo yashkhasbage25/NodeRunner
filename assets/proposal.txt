@@ -1,0 +1,28 @@
+Group members:
+Atharva Sarage     : CS17BTECH11005
+Yash Khasbage      : CS17BTECH11044
+Rushikesh Tammewar : CS17BTECH11041
+Maulikkumar Ravat  : CS17BTECH11031
+
+Aim: Extend the game of 'LodeRunner' to a two-player setting. We name the game
+as 'NodeRunner'.
+LodeRunner: https://www.crazygames.com/game/lode-runner
+Implementation:
+C++ SFML-gaming library.
+golang for server-side computations using golang websocket library.
+Phaser - a JavaScript library for User Interface.
+
+Details: We aim at creating a game 'NodeRunner'. Unlike its counterpart
+'LodeRunner', it is a two-player game. It shares the same background with
+'LodeRunner'. A player aims at sustaining his health before other one
+runs out of health. Health of a player decreases with time. Gems are placed
+at certain locations. Every gem can either improve one's health or decrease
+other's health. Health of both players are updated in parallel. If P1 acquires
+a gem that halves P2's health, then we don't want the operation of halving health
+to be overwritten by the operation of regularly reducing the health by 1. The
+problem can be solved by using a mutex.
+Like LodeRunner it will also have Bots that aim to kill the players. Players
+protect themselves away from them. The Bots are run using Dijkstra's algorithm
+to find the shortest path from a Bot to nearest player. The Bots can be
+dropped into holes created by player. After a certain time, a Bot comes out
+of the hole.
