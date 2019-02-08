@@ -3,7 +3,7 @@ package main
 import (
     "github.com/gorilla/websocket"
     "net/http"
-    "time"
+    // "time"
     "io/ioutil"
     // "log"
     "fmt"
@@ -32,7 +32,7 @@ type UpdatedPositions struct {
 
 func unlimited_write(conn *websocket.Conn) {
     for {
-        time.Sleep(1000 * time.Millisecond)
+        // time.Sleep(1000 * time.Millisecond)
         // pos := UpdatedPositions{}
         event := Event{}
         // var msg int
