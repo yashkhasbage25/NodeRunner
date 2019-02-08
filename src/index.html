@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div id="container">
+            <img src="player2.png" id="player2"/>
+        </div>
+    </body>
+    <style media="screen">
+        /* canvas#game_canvas {
+            border: 1px solid black;
+            position: absolute;
+        } */
+        #container {
+            border: 1px solid yellow;
+            background-color: black;
+            height: 60vh;
+            width: 60vh;
+            position: absolute;
+        }
+        #player2 {
+            position: absolute;
+            left: 50px;
+            top: 50px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        // var canvas = document.getElementById('game_canvas');
+        // context = canvas.getContext('2d');
+        //
+        // player_sprite = new Image();
+        // player_sprite.src = 'player2.png'
+        // draw_image(0, 0, player_sprite);
+        // function draw_image(x, y, player_sprite) {
+        //     player_sprite.onload = function() {
+        //         context.drawImage(player_sprite, x, y);
+        //     }
+        // }
+        //
+        // player2_sprite = document.getElementById("player2")
+
+        var player2_sprite = document.getElementById("player2");
+
+        ws = new WebSocket("ws://localhost:8080/ws");
+
+        // ws.onopen = function() {
+        //     document.body.append("   opened  ");
+        //     ws.send(JSON.stringify({px:2}));
+        // };
+        ws.onmessage = function(event) {
+            // document.body.append("   "+ e.data + "    ");
+            console.log(event)
+            // ws.send(JSON.stringify({px:2}));
+            var rect = player2_sprite.getBoundingClientRect();
+            data = JSON.parse(event.data)
+            document.getElementById("player2").style.left = data.px + "px";
+            document.getElementById("player2").style.top = data.py + "px";
+        }
+        ws.onclose = function() {
+            console.log("   closed  ");
+        }
+
+        document.onkeyup = function(event) {
+            var rect = player2_sprite.getBoundingClientRect();
+            ws.send(JSON.stringify({etype: "up", px: rect.right, py: rect.top}));
+            // draw_image(player_sprite.x, player_sprite.y + 10, player_sprite)
+        }
+        document.onkeydown = function(event) {
+            var rect = player2_sprite.getBoundingClientRect();
+            ws.send(JSON.stringify({etype: "down", px: rect.right, py: rect.top}));
+        }
+
+    </script>
+</html>
+<!-- <html>
+<head>
+    <title>WebSocket demo</title>
+</head>
+<body>
+
+    <div>
+        <form>
+            <label for="numberfield">Number</label>
+            <input type="text" id="numberfield" placeholder="12"/><br />
+            <button type="button" id="sendBtn">Send</button>
+        </form>
+    </div>
+    <div id="container"></div>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var ws;
+
+            if (window.WebSocket === undefined) {
+                $("#container").append("Your browser does not support WebSockets");
+                return;
+            } else {
+                ws = initWS();
+            }
+
+            function initWS() {
+                var socket = new WebSocket("ws://localhost:8080/ws"),
+                    container = $("#container")
+                socket.onopen = function() {
+                    container.append("<p>Socket is open</p>");
+                };
+                socket.onmessage = function (e) {
+                    container.append("<p> Got some shit:" + e.data + "</p>");
+                }
+                socket.onclose = function () {
+                    container.append("<p>Socket closed</p>");
+                }
+
+                return socket;
+            }
+
+            $("#sendBtn").click(function (e) {
+                e.preventDefault();
+                ws.send(JSON.stringify({ px: parseInt($("#numberfield").val()) }));
+            });
+        });
+    </script>
+</body>
+</html> -->
