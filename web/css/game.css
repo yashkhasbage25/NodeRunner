@@ -1,0 +1,20 @@
+#container {
+    border: 5px solid yellow;
+    background-image: image('assets/img/background.png');
+    height: 80vh;
+    width: 120vh;
+    position: absolute;
+    align-self: center;
+}
+
+#player1 {
+    position: absolute;
+    left: 500px;
+    top: 500px;
+}
+
+#player2 {
+    position: absolute;
+    left: 50px;
+    top: 500px;
+}
