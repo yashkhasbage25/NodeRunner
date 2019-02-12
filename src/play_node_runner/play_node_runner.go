@@ -1,4 +1,4 @@
-package play
+package play_node_runner
 
 import (
 	"dtypes"
