@@ -1,5 +1,13 @@
 package server
 
+import (
+    "fmt"
+	"io/ioutil"
+	"log"
+    "net/http"
+    "net"
+)
+
 func (s *Server) SetHandlers {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         indexContent, err := ioutil.ReadFile("web/index.html")
@@ -51,5 +59,5 @@ func (s *Server) SetHandlers {
         }
         w.Header().Add("Content-Type", "text/css")
         fmt.Fprintf(w, "%s", content)
-    })    
+    })
 }
