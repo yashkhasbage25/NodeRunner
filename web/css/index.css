@@ -1,0 +1,25 @@
+#theme {
+    top: 115;
+    left: 375;
+    font-size: 30px;
+    position: absolute;
+    z-index: 1;
+    visibility: show;
+}
+
+#btn {
+    top: 250;
+    left: 575;
+    position: absolute;
+    z-index: 1;
+    visibility: show;
+}
+
+body {
+    background-image:url("/web/assets/img/front.png");
+    background-size:contain;
+    background-size: 80% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

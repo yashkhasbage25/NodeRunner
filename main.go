@@ -38,5 +38,26 @@ func main() {
 
 		go play.PlayNodeRunner(conn)
 	})
+
+	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/front.png")
+		if err != nil {
+			fmt.Println("Could not open image.", err)
+		}
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/css/index.css", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/css/index.css")
+		if err != nil {
+			fmt.Println("Could not open image.", err)
+		}
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("*", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("handler not found")
+	})
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

@@ -1,0 +1,18 @@
+
+body {
+  background: black;
+}
+
+#wrap {
+  padding-top: 100px;
+  position: center;
+  margin: auto;
+  display: block;
+}
+
+#wait {
+  font-size: 40px;
+  font-family: 'Rubik', sans-serif;
+  color: white;
+  margin-top: 40px;
+}
