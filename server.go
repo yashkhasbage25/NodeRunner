@@ -6,41 +6,35 @@ import(
 )
 
 type server struct {
-		Connected_client [2] *Client
-		Id_counter int
-
+	ConnectedClient [2] *Client
+	IdCounter int
 }
 
-func (s server) validity() bool{
-	if s.Id_counter !=2	{
+func (s *server) validity() bool{
+	if s.IdCounter != 2 {
 		return false
-	}else{
+	} else {
 		return true
 	}
 }
 
-func(s server) AddNewClient(c *Client)
-{
-	if s.Id_counter<2 && c!=nil{
-		s.Connected_client[s.Id_counter]=c
-		s.Id_counter++
+func(s *server) AddNewClient (c *Client) {
+	if s.IdCounter < 2 && c != nil {
+		s.ConnectedClient[s.IdCounter] = c
+		s.IdCounter++
 	}
-
 }
-func (s server) RemoveClient(IpAddress string)
-{
-	if s.Connected_client[0].Ip==IpAddress{
-		s.Connected_client[0]=s.Connected_client[1]
-		s.Connected_client[1]=nil
-		s.Id_counter--
-	}
-	else if s.Connected_client[1].Ip==IpAddress{
-		s.Connected_client[1]=nil
-		s.Id_counter--
-	}
-	else{
+
+func (s *server) RemoveClient (IpAddress string) {
+	if s.ConnectedClient[0].Ip == IpAddress {
+		s.ConnectedClient[0] = s.ConnectedClient[1]
+		s.ConnectedClient[1] = nil
+		s.IdCounter--
+	} else if s.ConnectedClient[1].Ip == IpAddress {
+		s.ConnectedClient[1] = nil
+		s.IdCounter--
+	} else{
 		//print wrong ip in consol.
 	}
-
 }
 
