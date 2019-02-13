@@ -47,16 +47,22 @@ func main() {
 		fmt.Fprintf(w, "%s", content)
 	})
 
-	http.HandleFunc("/web/css/index.css", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/css/index.css", func(w http.ResponseWriter, r *http.Request) {
 		content, err := ioutil.ReadFile("web/css/index.css")
 		if err != nil {
 			fmt.Println("Could not open image.", err)
 		}
+		w.Header().Add("Content-Type", "text/css")
 		fmt.Fprintf(w, "%s", content)
 	})
 
-	http.HandleFunc("*", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("handler not found")
+	http.HandleFunc("/css/wait.css", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/css/wait.css")
+		if err != nil {
+			fmt.Println("Could not open image.", err)
+		}
+		w.Header().Add("Content-Type", "text/css")
+		fmt.Fprintf(w, "%s", content)
 	})
 
 	log.Fatal(http.ListenAndServe(":8080", nil))

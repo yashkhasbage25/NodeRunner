@@ -1,15 +1,15 @@
 #theme {
-    top: 115;
-    left: 375;
+    top: 35%;
+    left: 40%;
     font-size: 30px;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     visibility: show;
 }
 
 #btn {
-    top: 250;
-    left: 575;
+    top: 50%;
+    left: 50%;
     position: absolute;
     z-index: 1;
     visibility: show;
