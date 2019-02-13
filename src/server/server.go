@@ -1,5 +1,4 @@
 package server
- //checks weather  there are more than 1 client willing to join the game.
 
 import(
 	"client"
@@ -33,8 +32,7 @@ func (s *server) RemoveClient (IpAddress string) {
 	} else if s.ConnectedClient[1].Ip == IpAddress {
 		s.ConnectedClient[1] = nil
 		s.IdCounter--
-	} else{
-		//print wrong ip in consol.
+	} else {
+		//print wrong ip in console.
 	}
 }
-
