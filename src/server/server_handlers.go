@@ -3,12 +3,13 @@ package server
 import (
     "fmt"
 	"io/ioutil"
-	"log"
     "net/http"
-    "net"
+    "github.com/gorilla/websocket"
+    play "play_node_runner"   
+
 )
 
-func (s *Server) SetHandlers {
+func (s *Server) SetHandlers() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         indexContent, err := ioutil.ReadFile("web/index.html")
         if err != nil {
@@ -23,6 +24,14 @@ func (s *Server) SetHandlers {
             fmt.Println("Could not open file.", err)
         }
         fmt.Fprintf(w, "%s", waitContent)
+    })
+
+    http.HandleFunc("/ready", func(w http.ResponseWriter, r *http.Request) {
+        readyContent, err := ioutil.ReadFile("web/game.html")
+        if err != nil {
+            fmt.Println("Could not open file.", err)
+        }
+        fmt.Fprintf(w, "%s", readyContent)
     })
 
     http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {

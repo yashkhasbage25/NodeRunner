@@ -1,15 +1,13 @@
 package server
 
-import(
-	"client"
-)
+import "client"
 
-type server struct {
-	ConnectedClient [2] *Client
-	IdCounter int
+type Server struct {
+	ConnectedClient [2]*client.Client
+	IdCounter uint32
 }
 
-func (s *server) validity() bool{
+func (s *Server) Validity() bool { 
 	if s.IdCounter != 2 {
 		return false
 	} else {
@@ -17,14 +15,14 @@ func (s *server) validity() bool{
 	}
 }
 
-func(s *server) AddNewClient (c *Client) {
+func(s *Server) AddNewClient (c *client.Client) {
 	if s.IdCounter < 2 && c != nil {
 		s.ConnectedClient[s.IdCounter] = c
 		s.IdCounter++
 	}
 }
 
-func (s *server) RemoveClient (IpAddress string) {
+func (s *Server) RemoveClient (IpAddress string) {
 	if s.ConnectedClient[0].Ip == IpAddress {
 		s.ConnectedClient[0] = s.ConnectedClient[1]
 		s.ConnectedClient[1] = nil
