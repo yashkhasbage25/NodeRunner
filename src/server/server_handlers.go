@@ -26,14 +26,7 @@ func (s *Server) SetHandlers() {
         fmt.Fprintf(w, "%s", waitContent)
     })
 
-    http.HandleFunc("/ready", func(w http.ResponseWriter, r *http.Request) {
-        readyContent, err := ioutil.ReadFile("web/game.html")
-        if err != nil {
-            fmt.Println("Could not open file.", err)
-        }
-        fmt.Fprintf(w, "%s", readyContent)
-    })
-
+ 
     http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
         conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
         if err != nil {
