@@ -1,6 +1,6 @@
 #container {
     border: 5px solid yellow;
-    background-image: image('assets/img/background.png');
+    background-image: image('/web/assets/svg/level1.svg');
     height: 80vh;
     width: 120vh;
     position: absolute;

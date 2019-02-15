@@ -24,3 +24,13 @@ type Event struct {
 	G3Pos Position `json:"g3_pos"`
 	G4Pos Position `json:"g4_pos"`
 }
+
+// GameRedirector redirects when both clients are connected to server
+type GameRedirector struct {
+	Redirect bool `json:"redirect"`
+}
+
+// Debug struct is used for communicating error codes
+type Debug struct {
+	Code int `json:"code"`
+}

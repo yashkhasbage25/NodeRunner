@@ -1,17 +1,19 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"log"
 	server "server"
-	
 )
 
 func main() {
 
-	gameServer := server.Server{IdCounter: 0}
+	gameServer := server.Server{
+		IDCounter: 0,
+	}
 
-	gameServer.SetHandlers()
-
+	gameServer.SetHandlers(&gameServer)
+	go gameServer.RedirectToGameIfConnected()
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
