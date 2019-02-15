@@ -1,17 +1,18 @@
 package main
 
 import (
+	"log"
 	"net/http"
-	play "play_node_runner"
 	server "server"
-	"github.com/gorilla/websocket"
 )
 
 func main() {
 
-	gameServer := server.Server{IdCounter: 0}
+	gameServer := server.Server{
+		IDCounter: 0,
+	}
 
-	gameServer.SetHandlers()
-
+	gameServer.SetHandlers(&gameServer)
+	go gameServer.RedirectToGameIfConnected()
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
