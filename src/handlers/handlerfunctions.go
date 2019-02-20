@@ -1,9 +1,11 @@
-package handlerfunctions
+package handler
+
 import (
 	"fmt"
 	"dtypes"
 	"log"
 )
+
 const offset=5
 // type Position struct {
 // 	X int;
