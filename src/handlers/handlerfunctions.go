@@ -151,6 +151,37 @@ func GetPosition(player Rect) dtypes.Position{
 	temp.Y=(player.YHi+player.YLo)/2
 	return temp
 }
+func CollidesGem(player Rect) int{
+	for i:=0;i<len(gems);i++{
+		if player.XLo>=gems[i].XHi || player.XHi<=gems[i].XLo{
+			if gems[i].active==true && gems[i].type==1 {
+				// increase own health atomically
+				UpdatePlayer1Increment()
+				for j:=0;j<len(freepositions);j++{
+					if freepositions[i]==true  {
+						gems[i].XHi=freepositions[i].XHi
+						gems[i].XLo=freepositions[i].XLo
+						gems[i].YHi=freepositions[i].YHi
+						gems[i].XLo=freepositions[i].YLo
+						break
+					}
+				}
+			}else if gems[i].active==true && gems[i].type==2 {
+				// decrease opponent's health atomically
+				UpdatePlayer2Decrement()
+				for j:=0;j<len(freepositions);j++{
+					if freepositions[i]==true {
+						gems[i].XHi=freepositions[i].XHi
+						gems[i].XLo=freepositions[i].XLo
+						gems[i].YHi=freepositions[i].YHi
+						gems[i].XLo=freepositions[i].YLo
+						break
+					}
+				}				
+			}
+		}
+	}
+}
 // testing part
 /*func main() {
 	p1:=Position{54,15}
@@ -169,3 +200,4 @@ func GetPosition(player Rect) dtypes.Position{
 	fmt.Println(CollidesWithBlock_vertically(p11))
 
 }*/
+
