@@ -1,6 +1,8 @@
 package client
 
 import (
+	"strconv"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -27,7 +29,12 @@ func (client *Client) GetPort() string {
 	return client.Port
 }
 
-// GetWsocket is getter for Wsocket
+// GetWSocket is getter for Wsocket
 func (client *Client) GetWSocket() *websocket.Conn {
 	return client.WSocket
+}
+
+// GetInfoStr gives string of attributes of a client object
+func (client *Client) GetInfoStr() string {
+	return "client: IP: " + client.GetIP() + "\n\t\t" + "Port: " + client.GetPort() + "\n\t\t" + "ID: " + strconv.Itoa(int(client.GetID()))
 }

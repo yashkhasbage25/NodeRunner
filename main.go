@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"log"
 	server "server"
 )
 
@@ -13,7 +12,7 @@ func main() {
 		IDCounter: 0,
 	}
 
-	gameServer.SetHandlers(&gameServer)
+	server.SetHandlers(&gameServer)
 	go gameServer.RedirectToGameIfConnected()
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

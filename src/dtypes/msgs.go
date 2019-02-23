@@ -2,8 +2,8 @@ package dtypes
 
 // Position represents the coordinates of an object in the form (left, top)
 type Position struct {
-	X uint32 `json:"x"`
-	Y uint32 `json:"y"`
+	X int `json:"x"`
+	Y int `json:"y"`
 }
 
 // Event represents the events on the client side

@@ -3,6 +3,7 @@ package server
 import (
 	"client"
 	"log"
+	"strconv"
 
 	"github.com/gorilla/websocket"
 )
@@ -122,4 +123,9 @@ func (server *Server) RedirectToGameIfConnected() {
 	}
 	log.Println("Both clients connected to server")
 	server.BroadcastGameRedirection()
+}
+
+// GetInfoStr gives a string  of attributes of a server object
+func (server *Server) GetInfoStr() string {
+	return "server: " + "IDCounter: " + strconv.Itoa(int(server.GetIDCounter()))
 }
