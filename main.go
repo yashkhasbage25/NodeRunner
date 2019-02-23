@@ -12,7 +12,7 @@ func main() {
 		IDCounter: 0,
 	}
 
-	server.SetHandlers(&gameServer)
+	gameServer.SetHandlers()
 	go gameServer.RedirectToGameIfConnected()
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

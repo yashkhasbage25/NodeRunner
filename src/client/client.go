@@ -38,3 +38,23 @@ func (client *Client) GetWSocket() *websocket.Conn {
 func (client *Client) GetInfoStr() string {
 	return "client: IP: " + client.GetIP() + "\n\t\t" + "Port: " + client.GetPort() + "\n\t\t" + "ID: " + strconv.Itoa(int(client.GetID()))
 }
+
+// SetIP is getter for IP
+func (client *Client) SetIP(ip string) {
+	client.IP = ip
+}
+
+// SetID is getter for ID
+func (client *Client) SetID(id uint32) {
+	client.ID = id
+}
+
+// SetPort is getter for Port
+func (client *Client) SetPort(port string) {
+	client.Port = port
+}
+
+// SetWSocket is getter for Wsocket
+func (client *Client) SetWSocket(wsocket *websocket.Conn) {
+	client.WSocket = wsocket
+}

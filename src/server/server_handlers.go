@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	play "play_node_runner"
+	"strconv"
 
 	"github.com/gorilla/websocket"
 )
@@ -68,7 +69,7 @@ func SetHandlers(gameServer *Server) {
 }
 
 // SetHandlers is sets all possible handlers for the server.
-func (s *Server) SetHandlers(gameServer *Server) {
+func (gameServer *Server) SetHandlers() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		indexContent, err := ioutil.ReadFile("web/index.html")
 		if err != nil {
@@ -101,14 +102,15 @@ func (s *Server) SetHandlers(gameServer *Server) {
 
 		log.Println("server client count is", gameServer.GetNextID())
 		if gameServer.CheckClientLimit() {
-			newClient := client.Client{
+			newClient := &client.Client{
 				IP:      ip,
 				Port:    port,
 				ID:      gameServer.GetNextID(),
 				WSocket: conn,
 			}
-			log.Println("New client object created.")
-			gameServer.AddNewClient(&newClient)
+			log.Println("New client object created.", newClient.GetInfoStr())
+			gameServer.AddNewClient(newClient)
+			log.Println("New server state: ", gameServer.GetInfoStr())
 		}
 	})
 
@@ -134,18 +136,25 @@ func (s *Server) SetHandlers(gameServer *Server) {
 		}
 
 		if gameServer.CheckClientLimit() {
-			newClient := client.Client{
+			log.Println("Before getting sockets server is:", gameServer.GetInfoStr())
+			thisClientID := gameServer.GetNextID()
+			newClient := &client.Client{
 				IP:      ip,
 				Port:    port,
-				ID:      gameServer.GetNextID(),
+				ID:      thisClientID,
 				WSocket: conn,
 			}
-			log.Println("New client object created.")
-			gameServer.AddNewClient(&newClient)
+			log.Println("New client object created.", newClient.GetInfoStr())
+			gameServer.AddNewClient(newClient)
+			log.Println("New state of server: ", gameServer.GetInfoStr())
+			conn.WriteJSON(dtypes.Event{
+				EventType: "SetClientID",
+				Object:    strconv.Itoa(int(thisClientID)),
+			})
+			// gameServer.AddNewClient(newClient)
 		}
 
 		log.Println("handling pattern /game")
-		conn.WriteJSON(dtypes.Debug{Code: 0})
 		// go play.PlayNodeRunner(conn)
 	})
 

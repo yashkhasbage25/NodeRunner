@@ -2,6 +2,7 @@
 // var player2 = document.getElementById("player2");
 
 ws = new WebSocket("ws://192.168.105.49:8080/game");
+var clientID
 
 ws.onopen = function() {
     console.log("game.html websocket opened");
@@ -14,7 +15,11 @@ ws.onclose = function() {
 ws.onmessage = function(event) {
     console.log(event.data);
     // var rect = player2_sprite.getBoundingClientRect();
-    // data = JSON.parse(event.data)
+    data = JSON.parse(event.data)
+    if(data.etype == "SetClientID") {
+        clientID = parseInt(data.object);
+    }
+    console.log("This client has ID:", clientID);
     // document.getElementById("player2").style.left = data.px + "px";
     // document.getElementById("player2").style.top = data.py + "px";
 }
