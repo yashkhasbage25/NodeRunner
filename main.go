@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dtypes"
 	"log"
 	"net/http"
 	server "server"
@@ -9,7 +10,8 @@ import (
 func main() {
 
 	gameServer := server.Server{
-		IDCounter: 0,
+		IDCounter:      0,
+		RequestChannel: make(chan dtypes.Events),
 	}
 
 	gameServer.SetHandlers()

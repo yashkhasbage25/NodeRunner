@@ -138,12 +138,16 @@ func (gameServer *Server) SetHandlers() {
 		if gameServer.CheckClientLimit() {
 			log.Println("Before getting sockets server is:", gameServer.GetInfoStr())
 			thisClientID := gameServer.GetNextID()
+			newChannel := make(chan dtypes.Event)
 			newClient := &client.Client{
-				IP:      ip,
-				Port:    port,
-				ID:      thisClientID,
-				WSocket: conn,
+				IP:             ip,
+				Port:           port,
+				ID:             thisClientID,
+				WSocket:        conn,
+				RequestChannel: gameServer.GetRequestChannel(),
+				ReceiveChannel: newChannel,
 			}
+			gameServer.SetRespondChannel(thisClientID, newChannel)
 			log.Println("New client object created.", newClient.GetInfoStr())
 			gameServer.AddNewClient(newClient)
 			log.Println("New state of server: ", gameServer.GetInfoStr())
@@ -155,7 +159,8 @@ func (gameServer *Server) SetHandlers() {
 		}
 
 		log.Println("handling pattern /game")
-		go play.PlayNodeRunner(conn)
+		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameServer.GetClient(0), gameServer.GetClient(1))
+		// go play.Respond(gameServer)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {

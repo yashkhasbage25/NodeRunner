@@ -11,6 +11,8 @@ import (
 // Server structure
 type Server struct {
 	ConnectedClient [2]*client.Client
+	RespondChannels [2]chan dtypes.Event
+	RequestChannel  chan dtypes.Event
 	IDCounter       uint32
 }
 
@@ -21,11 +23,23 @@ func (server *Server) GetIDCounter() uint32 {
 
 // GetClient is a getter for clients connected to server
 func (server *Server) GetClient(index int) *client.Client {
-	if index >= 2 {
+	if index >= 2 || index < 0 {
 		log.Println("Client index requested is out of bounds")
 		return nil
 	}
 	return server.ConnectedClient[index]
+}
+
+// GetRespondChannel is a getter for update channel of a server
+func (server *Server) GetRespondChannel(index int) chan dtypes.Event {
+	if index >= 2 || index < 0 {
+		log.Fatalln("Client index requested is out of bounds")
+	}
+	return server.RespondChannels[index]
+}
+
+func (server *Server) GetRequestChannel() chan dtypes.Event {
+	return server.RequestChannel
 }
 
 // SetIDCounter is setter for IDCoubter
@@ -36,6 +50,18 @@ func (server *Server) SetIDCounter(i uint32) {
 // SetClient is a setter for client of server
 func (server *Server) SetClient(index uint32, newClient *client.Client) {
 	server.ConnectedClient[index] = newClient
+}
+
+// SetRespondChannel is setter for update channel of a server
+func (server *Server) SetRespondChannel(index int, respondChannel chan dtypes.Event) {
+	if index >= 2 || index < 0 {
+		log.Println("Index requested is out of bounds")
+	}
+	server.RespondChannels[index] = respondChannel
+}
+
+func (server *Server) SetRequestChannel(requestChannel chan dtypes.Event) {
+	server.RequestChannel = requestChannel
 }
 
 // CheckClientLimit checks if the number of clients is not more than 2
