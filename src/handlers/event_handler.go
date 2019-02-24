@@ -127,6 +127,10 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				}
 			}
 			replyEvent.P1Pos=getposition(updated)
+			replyEvent.G1Pos=getposition(coords.gems[0].pos)
+			replyEvent.G2Pos=getposition(coords.gems[1].pos)
+			replyEvent.G3Pos=getposition(coords.gems[2].pos)
+			replyEvent.G4Pos=getposition(coords.gems[3].pos)
 		}
 
 		if event.Object == "p2" {
@@ -225,6 +229,10 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				}
 			}
 			replyEvent.P2Pos=getposition(updated)
+			replyEvent.G1Pos=getposition(coords.gems[0].pos)
+			replyEvent.G2Pos=getposition(coords.gems[1].pos)
+			replyEvent.G3Pos=getposition(coords.gems[2].pos)
+			replyEvent.G4Pos=getposition(coords.gems[3].pos)
 		}
 		
 	}
