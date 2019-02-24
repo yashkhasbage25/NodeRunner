@@ -155,7 +155,7 @@ func (gameServer *Server) SetHandlers() {
 		}
 
 		log.Println("handling pattern /game")
-		// go play.PlayNodeRunner(conn)
+		go play.PlayNodeRunner(conn)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {

@@ -15,7 +15,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 	if utils.InArray(event.EventType, spriteMotionEventTypes) {
 		return handleMotionEvent(event)
 	} else {
-		log.Fatalf("Invalid event detected '%s'", event.EventType)
+		log.Printf("Invalid event detected '%s'", event.EventType)
 		return dtypes.Event{}
 	}
 }
