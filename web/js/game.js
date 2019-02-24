@@ -1,8 +1,36 @@
 // var player1 = document.getElementById("player1");
 // var player2 = document.getElementById("player2");
 
+function getElement(id) {
+    item = document.getElementById(id);
+    if(item == null) {
+        throw "No element found with id " + id;
+    }
+    itemHeight = item.style.height;
+    itemWidth = item.style.width;
+    return {
+        elem: item,
+        height: itemHeight,
+        width: itemWidth
+    }
+}
+
 ws = new WebSocket("ws://192.168.105.49:8080/game");
-var clientID
+var clientID = -1
+var playerOne = getElement("player1");
+var playerTwo = getElement("player2");
+
+var gemOne = getElement("gem1");
+var gemTwo = getElement("gem2");
+var gemThree = getElement("gem3");
+var gemFounr = getElement("gem4");
+
+var botOne = getElement("bot1");
+var botTwo = getElement("bot2");
+var botThree = getElement("bot3");
+
+var playerHeight = playerOne.height;
+var playerWidth = playerOne.width;
 
 ws.onopen = function() {
     console.log("game.html websocket opened");
@@ -10,6 +38,7 @@ ws.onopen = function() {
 
 ws.onclose = function() {
     console.log("game.html websocket closed");
+    ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}))
 }
 
 ws.onmessage = function(event) {
@@ -18,6 +47,8 @@ ws.onmessage = function(event) {
     data = JSON.parse(event.data)
     if(data.etype == "SetClientID") {
         clientID = parseInt(data.object);
+    } else if (data.etype == "SendUpdate") {
+        ws.send(JSON.stringify(getAllCurrentPositions()))
     }
     console.log("This client has ID:", clientID);
     // document.getElementById("player2").style.left = data.px + "px";
@@ -32,3 +63,44 @@ ws.onmessage = function(event) {
 //     var rect = player2.getBoundingClientRect();
 //     ws.send(JSON.stringify({etype: "down", px: rect.left, py: rect.top}));
 // }
+
+function getPositionOfElement(element) {
+
+    let centerX = element.offsetLeft + element.offsetWidth / 2;
+    let centerY = element.offsetTop + element.offsetHeight / 2;
+    return {
+        x: centerX,
+        y: centerY
+    };
+}
+
+function getCurrentPositions() {
+    return {
+        etype: "None",
+        object: "None",
+        p1_pos: getPositionOfElement(playerOne),
+        p2_pos: getPositionOfElement(playerTwo),
+        b1_pos: getPositionOfElement(botOne),
+        b2_pos: getPositionOfElement(botTwo),
+        b3_pos: getPositionOfElement(botThree),
+        g1_pos: getPositionOfElement(gemOne),
+        g2_pos: getPositionOfElement(gemTwo),
+        g3_pos: getPositionOfElement(gemThree),
+        g4_pos: getPositionOfElement(gemFour)
+    };
+}
+
+document.onkeypress = function(event) {
+    currentPositions = getCurrentPositions();
+    currentPositions.object = clientID.toString();
+    if(event.keyCode == 37) {
+        currentPositions.etype = "Left";
+    } else if (event.keyCode == 38) {
+        currentPositions.etype = "Up";
+    } else if (event.keyCode == 39) {
+        currentPositions.etype = "Right";
+    } else if (event.keyCode == 40) {
+        currentPositions.etype = "Down";
+    }
+    ws.send(JSON.stringify(currentPositions));
+}

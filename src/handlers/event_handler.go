@@ -10,14 +10,14 @@ import (
 func Handle(event dtypes.Event) dtypes.Event {
 
 	// var spriteMotionEventTypes = getMotionEventTypes("p1", "p2")
-	var spriteMotionEventTypes = []string{"up", "down", "right", "left"}
+	var spriteMotionEventTypes = []string{"Up", "Down", "Right", "Left"}
 
 	if utils.InArray(event.EventType, spriteMotionEventTypes) {
 		return handleMotionEvent(event)
-	} else {
-		log.Printf("Invalid event detected '%s'", event.EventType)
-		return dtypes.Event{}
 	}
+	log.Fatalf("Invalid event detected '%s'\n", event.EventType)
+	return dtypes.Event{}
+
 }
 
 // handleMotionEvent specifically handles motion events
@@ -26,7 +26,7 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 
 	var replyEvent dtypes.Event
 
-	direction := [4]string{"up", "down", "left", "right"}
+	direction := [4]string{"Up", "Down", "Left", "Right"}
 	freeFallP1 := false
 	// freeFallP2 := false
 	step := 2
@@ -75,21 +75,21 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				} else if i == 1 {
 					if !AllignedWithLadder(p11) {
 						// no change
-						log.Println("down but not alligned with ladder")
+						log.Println("Down but not alligned with ladder")
 						updatedRect = p11
 					} else if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						// success
-						log.Println("down and alligned with ladder")
+						log.Println("Down and alligned with ladder")
 						updatedRect = p22
 					} else {
 						// get ladder bottom
-						log.Println("down and alligned with ladder restricted")
+						log.Println("Down and alligned with ladder restricted")
 						updatedRect = SetAccordingToLadderBottom(p11)
 					}
 				} else if i == 2 {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						updatedRect = p22
-						log.Println("was alligned with ladder on pressing left")
+						log.Println("was alligned with ladder on pressing Left")
 					} else if AllignedWithLadder(p11) && !AllignedWithLadder(p22) {
 						log.Println("freefall")
 						freeFallP1 = true
@@ -97,19 +97,19 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 						log.Println("not on platform")
 						updatedRect = p11
 					} else if CollidesWithBlockOnLeftMove(p22) {
-						log.Println("collided with block on left")
+						log.Println("collided with block on Left")
 						updatedRect = GetPositionCollidesWithBlockOnLeft(p22)
 					} else if FallsFromBlock(p22) != nil {
 						log.Println("fell from block and freefall")
 						freeFallP1 = true
 					} else {
-						log.Println("successfull left move")
+						log.Println("successfull Left move")
 						updatedRect = p22
 					}
 				} else if i == 3 {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						updatedRect = p22
-						log.Println("was alligned with ladder on pressing right")
+						log.Println("was alligned with ladder on pressing Right")
 					} else if AllignedWithLadder(p11) && !AllignedWithLadder(p22) {
 						freeFallP1 = true
 						log.Println("freefall")
@@ -117,13 +117,13 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 						log.Println("not on platform")
 						updatedRect = p11
 					} else if CollidesWithBlockOnRightMove(p22) {
-						log.Println("collided with block on right")
+						log.Println("collided with block on Right")
 						updatedRect = GetPositionCollidesWithBlockOnRight(p22)
 					} else if FallsFromBlock(p22) != nil {
 						log.Println("fell from block and freefall")
 						freeFallP1 = true
 					} else {
-						log.Println("successfull right move")
+						log.Println("successfull Right move")
 						updatedRect = p22
 					}
 				}
@@ -131,7 +131,10 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 
 				if freeFallP1 {
 					log.Println("freefall")
-					temporary2 := dtypes.Position{temporary.X, temporary.Y + 2*step}
+					temporary2 := dtypes.Position{
+						X: temporary.X,
+						Y: temporary.Y + 2*step,
+					}
 					p11 = GetBoundary(temporary)
 					p22 := GetBoundary(temporary2)
 					if CollidesWithBlockVertically(p22) {

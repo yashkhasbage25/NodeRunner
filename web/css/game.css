@@ -22,3 +22,52 @@
     top: 500px;
     z-index: 101;
 }
+
+#bot1 {
+    position: absolute;
+    left: 400px;
+    top: 500px;
+    z-index: 101;
+}
+
+#bot2 {
+    position: absolute;
+    left: 600px;
+    top: 500px;
+    z-index: 101;
+}
+
+#bot3 {
+    position: absolute;
+    left: 99px;
+    top: 400px;
+    z-index: 101;
+}
+
+#gem1 {
+    position: absolute;
+    left: 350px;
+    top: 240px;
+    z-index: 101;
+}
+
+#gem2 {
+    position: absolute;
+    left: 150px;
+    top: 360px;
+    z-index: 101;
+}
+
+#gem3 {
+    position: absolute;
+    left: 490px;
+    top: 50px;
+    z-index: 101;
+}
+
+#gem4 {
+    position: absolute;
+    left: 600px;
+    top: 400px;
+    z-index: 101;
+}

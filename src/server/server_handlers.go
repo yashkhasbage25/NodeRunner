@@ -155,7 +155,7 @@ func (gameServer *Server) SetHandlers() {
 		}
 
 		log.Println("handling pattern /game")
-		// go play.PlayNodeRunner(conn)
+		go play.PlayNodeRunner(conn)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
@@ -264,6 +264,42 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("Could not open image.", err)
 		}
 		log.Println("handling pattern /web/assets/img/player2.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/gem.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/gem.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/gem.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/pos_gem.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/pos_gem.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/pos_gem.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/neg_gem.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/neg_gem.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/neg_gem.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/bot.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/bot.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/bot.png")
 		fmt.Fprintf(w, "%s", content)
 	})
 }

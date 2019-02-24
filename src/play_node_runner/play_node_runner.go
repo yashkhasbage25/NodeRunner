@@ -1,9 +1,10 @@
 package play_node_runner
 
 import (
+	"coord"
+	"dijkstra"
 	"dtypes"
 	"fmt"
-
 	handler "handlers"
 
 	"github.com/gorilla/websocket"
@@ -11,6 +12,7 @@ import (
 
 // PlayNodeRunner is the event loop of NodeRunner
 func PlayNodeRunner(conn *websocket.Conn) {
+	coord.initialize()
 	for {
 		event := dtypes.Event{}
 		err := conn.ReadJSON(&event)
@@ -19,9 +21,10 @@ func PlayNodeRunner(conn *websocket.Conn) {
 			fmt.Println("Error reading json.", err)
 		}
 
-		handler.Handle(event)
+		updatedPlayerPositions := handler.Handle(event)
+		updatedBotPositions := dijkstra.UpdateBots(updatedPlayerPositions)
 
-		err = conn.WriteJSON(event)
+		err = conn.WriteJSON(updatedBotPositions)
 		if err != nil {
 			fmt.Print(err)
 		}
