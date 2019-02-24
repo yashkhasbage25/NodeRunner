@@ -1,20 +1,24 @@
 #container {
     border: 5px solid yellow;
-    background-image: image('/web/assets/svg/level1.svg');
-    height: 80vh;
-    width: 120vh;
+    background-image: url('/web/assets/svg/level1.svg');
+    background-size: contain;
+    height: 600px;
+    width: 1200px;
     position: absolute;
     align-self: center;
+    z-index: 50;
 }
 
 #player1 {
     position: absolute;
     left: 500px;
     top: 500px;
+    z-index: 100;
 }
 
 #player2 {
     position: absolute;
     left: 50px;
     top: 500px;
+    z-index: 101;
 }

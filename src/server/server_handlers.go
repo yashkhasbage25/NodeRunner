@@ -155,7 +155,7 @@ func (gameServer *Server) SetHandlers() {
 		}
 
 		log.Println("handling pattern /game")
-		go play.PlayNodeRunner(conn)
+		// go play.PlayNodeRunner(conn)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
@@ -183,7 +183,17 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("Could not open image.", err)
 		}
 		w.Header().Add("Content-Type", "text/css")
-		log.Println("handling pattern /web/css/index.css")
+		log.Println("handling pattern /web/css/wait.css")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/css/game.css", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/css/game.css")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		w.Header().Add("Content-Type", "text/css")
+		log.Println("handling pattern /web/css/game.css")
 		fmt.Fprintf(w, "%s", content)
 	})
 
@@ -236,6 +246,24 @@ func (gameServer *Server) SetHandlers() {
 		w.Header().Add("Content-Type", "image/svg+xml")
 		w.Header().Add("Vary", "Accept-Encoding")
 		log.Println("handling pattern /web/assets/svg/level1.svg")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/player1.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/player1.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/player1.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/player2.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/player2.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/player2.png")
 		fmt.Fprintf(w, "%s", content)
 	})
 }
