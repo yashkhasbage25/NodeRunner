@@ -13,14 +13,14 @@ var secondHealth int
 var pause int
 var rate int
 
-func SetHealth(string player, int value) {
+func SetHealth(player string, value int) {
 	if player == "p1" {
 		firstHealth = value
 	} else if player == "p2" {
 		secondHealth = value
 	}
 }
-func GetHealth(string player) int {
+func GetHealth(player string) int {
 	if player == "p1" {
 		return firstHealth
 	} else {
@@ -32,7 +32,7 @@ func SetDecayParams(rate_val, pause_val int) {
 	pause = pause_val
 }
 
-func UpdateHealth(byte operation, int value, string player) {
+func UpdateHealth(operation byte, value int, player string) {
 
 	if operation == '+' {
 		log.Println("plus detected")
