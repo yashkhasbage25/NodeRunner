@@ -1,5 +1,9 @@
 language: go
 
+env:
+  - SH=bash
+  - PACKAGE_VERSION="0.1"
+
 dist:
   - trusty
   - xenial
