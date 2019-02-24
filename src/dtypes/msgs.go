@@ -1,3 +1,4 @@
+
 package dtypes
 
 // Position represents the coordinates of an object in the form (left, top)
@@ -33,4 +34,15 @@ type GameRedirector struct {
 // Debug struct is used for communicating error codes
 type Debug struct {
 	Code int `json:"code"`
+}
+type Rect struct {
+  XHi int
+  YHi int
+  XLo int
+  YLo int
+}
+type Gem struct{
+	type byte
+	value int
+	pos struct Rect
 }
