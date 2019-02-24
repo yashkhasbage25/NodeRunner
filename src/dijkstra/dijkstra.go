@@ -25,6 +25,7 @@ type matrix struct { // 32 is number of static node and we are adding 2 dynamic 
 var game matrix
 var parentarray [6][32+2] int
 var allNodes [6][32+2] staticNode
+var path[6][32+2] bool
 func  initialize() {
 	for z:=0;z<6;z++{
 		// write all distances.
@@ -63,6 +64,12 @@ func  initialize() {
 
 
 		//allNodes[z][]={{,},,,}
+		// if there is no edge between node i and j then value corresponding them will be -1
+		for i:=0;i<34;i++{
+			for j:=0;j<34;j++{
+				game.adjacencyMatrix[z][i][j]=-1
+			}
+		}
 
 		// initialize global adjacency matrix.
 		 game.adjacencyMatrix[z][0][1]=370
@@ -159,29 +166,48 @@ func setter(i int ,n int, z int,flag bool){
 	
 }
 
+func fallingon(entity dtypes.Position,z int)int{
+	var ymin=1200
+	for i:=0;i<32;i++  {
+		if allNodes[z][i].location.Y > entity.Y &&	allNodes[z][i].location.Y < ymin /* &&(entity.x,allNodes[z][i].location.Y)must be on plank */{
+			ymin=allNodes[z][i].location.Y
+		}
+
+	}
+	return ymin
+}
+func onladder(entity dtypes.Position)bool{//code from atharva.
+	return false
+}
+
 func addDynamicnode(bot dtypes.Position,player dtypes.Position,z int) {
 	allNodes[z][32]= staticNode{dtypes.Position{bot.X,bot.Y},9,bot.X,bot.Y} //added bot at position equal to n.
+	/* if inair(player)=1{
+		allNodes[z][32+1]=staticNode{dtypes.Position{player.X,fallingon(player,z)},10 ,player.X, fallingon(player,z)}
+
+	}*/
+	//else
 	allNodes[z][32+1]=staticNode{dtypes.Position{player.X,player.Y},10 ,player.X, player.Y}//added player
 	for i:=0; i<32 ; i++ { 
-		if allNodes[z][i].xnodeID==allNodes[z][32].xnodeID {
+		if allNodes[z][i].xnodeID==allNodes[z][32].xnodeID  &&onladder(bot){
 			setter(i,32,z,true)
-		}	else if allNodes[z][i].ynodeID==allNodes[z][32].ynodeID {
+		}	else if allNodes[z][i].ynodeID==allNodes[z][32].ynodeID{
 			setter(i,32,z,false)
 		}
 	}
 	for i:=0; i<32+1; i++ {
-		if allNodes[z][i].xnodeID==allNodes[z][32+1].xnodeID {
+		if allNodes[z][i].xnodeID==allNodes[z][32+1].xnodeID  &&onladder(player){
 			setter(i,32+1,z,true)
-		}	else if allNodes[z][i].ynodeID==allNodes[z][32+1].ynodeID {
-			setter(i,32+1,z,false)
+		}	else if allNodes[z][i].ynodeID==allNodes[z][32+1].ynodeID{// if it is not on ladder do not add edge if y> bot 						
+			setter(i,32+1,z,false)										//position
 		}
 	}
 	
 }
 func minDistance(distance []int, cluster []bool, size int) int {
-	
-	 var min_index int;
-	 min := int(^uint(0)>> 1)  
+		
+		 var min_index int;
+		 min := int(^uint(0)>> 1)  
      for v:=0; v<size;v++{  // we have to impliment this parallaly
      	if cluster[v]==false&&distance[v]<=min {
      		min= distance[v]
@@ -190,13 +216,22 @@ func minDistance(distance []int, cluster []bool, size int) int {
      } 
      return min_index
 }
-func printPath(distance []int,z int,node int)  {
+func printPath(z int,node int)  {
 
 	if(parentarray[z][node]!=-1) {
 		if parentarray[z][node]!=32{
-			printPath(distance,z,parentarray[z][node])
+			printPath(z,parentarray[z][node])
 		}
-		fmt.Println(parentarray[z][node])
+		fmt.Println(node)
+	}
+}
+func markPath(z int,node int)  {
+
+	if(parentarray[z][node]!=-1) {
+		if parentarray[z][node]!=32{
+			markPath(z,parentarray[z][node])
+		}
+		path[z][node]=true;
 	}
 }
 func RunDijkstra(bot dtypes.Position,player dtypes.Position, z int)(dtypes.Position,int) {
@@ -226,7 +261,7 @@ func RunDijkstra(bot dtypes.Position,player dtypes.Position, z int)(dtypes.Posit
          // smaller than current value of dist[v] 
          for v:=0; v < 32+2; v++ {
 
-         	if  !cluster[v] && game.adjacencyMatrix[z][newnodeID][v]!=0 && distance[newnodeID] != int(^uint(0)>> 1)&& distance[newnodeID]+game.adjacencyMatrix[z][newnodeID][v]  < distance[v] {
+         	if  !cluster[v] && game.adjacencyMatrix[z][newnodeID][v]!=-1 && distance[newnodeID] != int(^uint(0)>> 1)&& distance[newnodeID]+game.adjacencyMatrix[z][newnodeID][v]  < distance[v] {
          			distance[v] = distance[newnodeID] + game.adjacencyMatrix[z][newnodeID][v]
          			parentarray[z][v]=newnodeID
          		}    
@@ -237,13 +272,16 @@ func RunDijkstra(bot dtypes.Position,player dtypes.Position, z int)(dtypes.Posit
     //and return that information to 
     var botNextmove dtypes.Position
     minimumDistance:=distance[33]
+    markPath(z,33)
     for i:=0;i<32+2;i++{
-    	if parentarray[z][i]==32{
+    	if parentarray[z][i]==32&&path[z][i]==true{
     		botNextmove=allNodes[z][i].location
     	}
     }
-    printPath(distance,z,33)
 
-    fmt.Println("distance :: ",minimumDistance)
+    //printPath(z,33)
+
+
+    //fmt.Println("distance :: ",minimumDistance)
     return botNextmove,minimumDistance
 }
