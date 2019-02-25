@@ -5,7 +5,7 @@ import (
 	"dtypes"
 	"fmt"
 	"channels"
-	"handler"
+	"metadata"
 )
 
 // StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
@@ -55,6 +55,34 @@ func GetBoundary(player dtypes.Position) dtypes.Rect {
   temp.YLo = player.Y+15
   return temp
 }
+func AllignedWithLadder(player dtypes.Rect) int{
+  var i int
+  var center int=(player.XLo+player.XHi)/2
+  for i=0;i<len(metadata.Ladder);i++{
+    if metadata.Ladder[i].YLo>=player.YLo && metadata.Ladder[i].YHi<=player.YLo {
+       if center>=metadata.Ladder[i].XHi && center<=metadata.Ladder[i].XLo{
+		   log.Println("AllignedWithLadder returns true.")
+			return 1
+          }
+      }
+  }
+  log.Println("AllignedWithLadder returns false.")
+  return 0
+}
+
+func OnPlatform(player dtypes.Rect) int{
+  var i int
+  log.Println("Executing OnPlatform")
+  for i=0;i<len(coords.Platform);i++ {
+  	//log.Println(player.XHi,coords.Platform[i].XHi, "---", player.YLo,"---",coords.Platform[i].YHi, "---", player.XLo,coords.Platform[i].XLo)
+    if player.YLo==coords.Platform[i].YHi && player.XLo>coords.Platform[i].XHi && player.XHi<coords.Platform[i].XLo{
+	  log.Println("OnPlatform returns true.")
+	  return 1
+    }
+  }
+  log.Println("OnPlatform returns false.")
+  return 0
+}
 func fallingon(entity dtypes.Position,z int)int{
 	var ymin=1200
 	for i:=0;i<32;i++  {
@@ -67,7 +95,7 @@ func fallingon(entity dtypes.Position,z int)int{
 	return ymin
 }
 func onladder(entity dtypes.Position)bool{//code from atharva.
-	output:=handler.AllignedWithLadder(GetBoundary(entity))
+	output:=AllignedWithLadder(GetBoundary(entity))
 	if output==1{
 		return true
 	} else{
