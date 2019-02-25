@@ -1,15 +1,16 @@
 package server
 
 import (
-	"github.com/IITH-SBJoshi/concurrency-3/src/client"
-	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
-	play "github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner"
 	"strconv"
+
+	"github.com/IITH-SBJoshi/concurrency-3/src/client"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
+	play "github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner"
 
 	"github.com/gorilla/websocket"
 )
@@ -159,8 +160,11 @@ func (gameServer *Server) SetHandlers() {
 		}
 
 		log.Println("handling pattern /game")
-		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameServer.GetClient(0), gameServer.GetClient(1))
+
+		gameWinChannel := make(chan int)
+		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameWinChannel, gameServer.GetClient(0), gameServer.GetClient(1))
 		// go play.Respond(gameServer)
+		go detectGameOver(gameOverChannels)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {

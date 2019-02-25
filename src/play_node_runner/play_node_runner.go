@@ -1,13 +1,16 @@
 package play_node_runner
 
 import (
+	"fmt"
+	"log"
+	"time"
+
 	"github.com/IITH-SBJoshi/concurrency-3/src/client"
 	"github.com/IITH-SBJoshi/concurrency-3/src/coords"
 	"github.com/IITH-SBJoshi/concurrency-3/src/dijkstra"
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
-	"fmt"
 	handler "github.com/IITH-SBJoshi/concurrency-3/src/handlers"
-	"time"
+	"github.com/IITH-SBJoshi/concurrency-3/src/health"
 	"github.com/IITH-SBJoshi/concurrency-3/src/platform"
 
 	"github.com/gorilla/websocket"
@@ -26,7 +29,7 @@ func regularUpdater(conn *websocket.Conn, requestChannelClient chan dtypes.Event
 			if err != nil {
 				fmt.Println("Error writing json.", err)
 			}
-			err := conn.ReadJSON(&event)
+			err = conn.ReadJSON(&event)
 			if err != nil {
 				fmt.Println("Error reading json.", err)
 			}
@@ -41,12 +44,16 @@ func sendResponse(receiveChannelClient chan dtypes.Event, conn *websocket.Conn) 
 }
 
 // PlayNodeRunner is the event loop of NodeRunner
-func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespondChannelServer chan dtypes.Event, firstClient, secondClient *client.Client) {
+func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespondChannelServer chan dtypes.Event, gameWinChannel chan int, firstClient, secondClient *client.Client) {
 	coords.Initialize()
 	platform.Initialize()
-	health.SetHealths(1000, 1000)
-	health.SetDecay(1, 500)
-	go health.DecayHealth()
+	handler.SetGameWinChannel(gameWinChannel)
+	health.SetHealth("p1", 1000)
+	health.SetHealth("p2", 1000)
+	health.SetDecayParams(1, 500)
+
+	go health.DecayPlayer1()
+	go health.DecayPlayer2()
 	go regularUpdater(firstClient.GetWSocket(), firstClient.GetRequestChannel())
 	go regularUpdater(secondClient.GetWSocket(), secondClient.GetRequestChannel())
 	go serverComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
@@ -54,10 +61,9 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 	go sendResponse(secondClient.GetReceiveChannel(), secondClient.GetWSocket())
 	go readConnections(firstClient.GetWSocket(), firstClient.GetRequestChannel())
 	go readConnections(secondClient.GetWSocket(), secondClient.GetRequestChannel())
-	}
 }
 
-func readConnections(conn *websocket.Conn, requestChannel) {
+func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event) {
 	for {
 		event := dtypes.Event{}
 		err := conn.ReadJSON(&event)
@@ -72,9 +78,9 @@ func serverComputations(firstClientRequestChannel, secondClientRequestChannel, f
 	var latestState dtypes.Event
 	for {
 		select {
-		case latestState <- firstClientRequestChannel:
+		case latestState = <-firstClientRequestChannel:
 			requestChannelServer <- latestState
-		case latestState <- secondClientRequestChannel:
+		case latestState = <-secondClientRequestChannel:
 			requestChannelServer <- latestState
 		}
 		updatedPlayerPositions := handler.Handle(<-requestChannelServer)

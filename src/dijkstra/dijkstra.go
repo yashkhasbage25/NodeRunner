@@ -191,7 +191,7 @@ func minimum(distance []int, i int, j int) int {
 		return j
 	}
 }
-func Updatebots(event dtypes.Event) dtypes.Event {
+func UpdateBots(event dtypes.Event) dtypes.Event {
 	replyEvent := event
 	minpathlen := make([]int, 6)
 	var update [6]dtypes.Position

@@ -9,7 +9,11 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/health"
 )
 
-func handleMotionEvent(event dtypes.Event) dtypes.Event {
+func SetGameWinChannel(gameWinChannel chan int) {
+	health.SetGameWinChannel(gameWinChannel)
+}
+
+func Handle(event dtypes.Event) dtypes.Event {
 
 	var replyEvent dtypes.Event
 	if event.EventType == "SendUpdate" {
