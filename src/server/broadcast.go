@@ -28,4 +28,6 @@ func (server *Server) ClearConnections() {
 
 	server.SetClient(0, nil)
 	server.SetClient(1, nil)
+
+	server.SetIDCounter(0)
 }

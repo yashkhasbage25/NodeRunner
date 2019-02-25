@@ -8,67 +8,68 @@ import (
 	"log"
 	"net"
 	"net/http"
+	play "play_node_runner"
+	"strconv"
 
 	"github.com/gorilla/websocket"
 )
 
-<<<<<<< HEAD
-func (s *Server) SetHandlers() {
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        indexContent, err := ioutil.ReadFile("web/index.html")
-        if err != nil {
-            fmt.Println("Could not open file.", err)
-        }
-        fmt.Fprintf(w, "%s", indexContent)
-    })
+func SetHandlers(gameServer *Server) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		indexContent, err := ioutil.ReadFile("web/index.html")
+		if err != nil {
+			fmt.Println("Could not open file.", err)
+		}
+		fmt.Fprintf(w, "%s", indexContent)
+	})
 
-    http.HandleFunc("/wait_to_join", func(w http.ResponseWriter, r *http.Request) {
-        waitContent, err := ioutil.ReadFile("web/wait.html")
-        if err != nil {
-            fmt.Println("Could not open file.", err)
-        }
-        fmt.Fprintf(w, "%s", waitContent)
-    })
+	http.HandleFunc("/wait_to_join", func(w http.ResponseWriter, r *http.Request) {
+		waitContent, err := ioutil.ReadFile("web/wait.html")
+		if err != nil {
+			fmt.Println("Could not open file.", err)
+		}
+		fmt.Fprintf(w, "%s", waitContent)
+	})
 
- 
-    http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-        conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
-        if err != nil {
-            fmt.Print(err)
-        }
-        fmt.Print("connecttion found")
+	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
+		conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+		if err != nil {
+			fmt.Print(err)
+		}
+		fmt.Print("connecttion found")
 
-        go play.PlayNodeRunner(conn)
-    })
+		go play.PlayNodeRunner(conn)
+	})
 
-    http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
-        content, err := ioutil.ReadFile("web/assets/img/front.png")
-        if err != nil {
-            fmt.Println("Could not open image.", err)
-        }
-        fmt.Fprintf(w, "%s", content)
-    })
+	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/front.png")
+		if err != nil {
+			fmt.Println("Could not open image.", err)
+		}
+		fmt.Fprintf(w, "%s", content)
+	})
 
-    http.HandleFunc("/css/index.css", func(w http.ResponseWriter, r *http.Request) {
-        content, err := ioutil.ReadFile("web/css/index.css")
-        if err != nil {
-            fmt.Println("Could not open image.", err)
-        }
-        w.Header().Add("Content-Type", "text/css")
-        fmt.Fprintf(w, "%s", content)
-    })
+	http.HandleFunc("/css/index.css", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/css/index.css")
+		if err != nil {
+			fmt.Println("Could not open image.", err)
+		}
+		w.Header().Add("Content-Type", "text/css")
+		fmt.Fprintf(w, "%s", content)
+	})
 
-    http.HandleFunc("/css/wait.css", func(w http.ResponseWriter, r *http.Request) {
-        content, err := ioutil.ReadFile("web/css/wait.css")
-        if err != nil {
-            fmt.Println("Could not open image.", err)
-        }
-        w.Header().Add("Content-Type", "text/css")
-        fmt.Fprintf(w, "%s", content)
-    })
-=======
+	http.HandleFunc("/css/wait.css", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/css/wait.css")
+		if err != nil {
+			fmt.Println("Could not open image.", err)
+		}
+		w.Header().Add("Content-Type", "text/css")
+		fmt.Fprintf(w, "%s", content)
+	})
+}
+
 // SetHandlers is sets all possible handlers for the server.
-func (s *Server) SetHandlers(gameServer *Server) {
+func (gameServer *Server) SetHandlers() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		indexContent, err := ioutil.ReadFile("web/index.html")
 		if err != nil {
@@ -101,14 +102,15 @@ func (s *Server) SetHandlers(gameServer *Server) {
 
 		log.Println("server client count is", gameServer.GetNextID())
 		if gameServer.CheckClientLimit() {
-			newClient := client.Client{
+			newClient := &client.Client{
 				IP:      ip,
 				Port:    port,
 				ID:      gameServer.GetNextID(),
 				WSocket: conn,
 			}
-			log.Println("New client object created.")
-			gameServer.AddNewClient(&newClient)
+			log.Println("New client object created.", newClient.GetInfoStr())
+			gameServer.AddNewClient(newClient)
+			log.Println("New server state: ", gameServer.GetInfoStr())
 		}
 	})
 
@@ -134,19 +136,31 @@ func (s *Server) SetHandlers(gameServer *Server) {
 		}
 
 		if gameServer.CheckClientLimit() {
-			newClient := client.Client{
-				IP:      ip,
-				Port:    port,
-				ID:      gameServer.GetNextID(),
-				WSocket: conn,
+			log.Println("Before getting sockets server is:", gameServer.GetInfoStr())
+			thisClientID := gameServer.GetNextID()
+			newChannel := make(chan dtypes.Event)
+			newClient := &client.Client{
+				IP:             ip,
+				Port:           port,
+				ID:             thisClientID,
+				WSocket:        conn,
+				RequestChannel: gameServer.GetRequestChannel(),
+				ReceiveChannel: newChannel,
 			}
-			log.Println("New client object created.")
-			gameServer.AddNewClient(&newClient)
+			gameServer.SetRespondChannel(thisClientID, newChannel)
+			log.Println("New client object created.", newClient.GetInfoStr())
+			gameServer.AddNewClient(newClient)
+			log.Println("New state of server: ", gameServer.GetInfoStr())
+			conn.WriteJSON(dtypes.Event{
+				EventType: "SetClientID",
+				Object:    strconv.Itoa(int(thisClientID)),
+			})
+			// gameServer.AddNewClient(newClient)
 		}
 
 		log.Println("handling pattern /game")
-		conn.WriteJSON(dtypes.Debug{Code: 0})
-		// go play.PlayNodeRunner(conn)
+		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameServer.GetClient(0), gameServer.GetClient(1))
+		// go play.Respond(gameServer)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
@@ -174,7 +188,17 @@ func (s *Server) SetHandlers(gameServer *Server) {
 			log.Println("Could not open image.", err)
 		}
 		w.Header().Add("Content-Type", "text/css")
-		log.Println("handling pattern /web/css/index.css")
+		log.Println("handling pattern /web/css/wait.css")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/css/game.css", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/css/game.css")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		w.Header().Add("Content-Type", "text/css")
+		log.Println("handling pattern /web/css/game.css")
 		fmt.Fprintf(w, "%s", content)
 	})
 
@@ -229,5 +253,58 @@ func (s *Server) SetHandlers(gameServer *Server) {
 		log.Println("handling pattern /web/assets/svg/level1.svg")
 		fmt.Fprintf(w, "%s", content)
 	})
->>>>>>> 4f128ae8fec6861a3b6cf97e93a73304b0f16166
+
+	http.HandleFunc("/web/assets/img/player1.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/player1.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/player1.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/player2.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/player2.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/player2.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/gem.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/gem.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/gem.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/pos_gem.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/pos_gem.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/pos_gem.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/neg_gem.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/neg_gem.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/neg_gem.png")
+		fmt.Fprintf(w, "%s", content)
+	})
+
+	http.HandleFunc("/web/assets/img/bot.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/bot.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/bot.png")
+		fmt.Fprintf(w, "%s", content)
+	})
 }

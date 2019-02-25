@@ -244,3 +244,4 @@ func runDijkstra(bot dtypes.Position,player dtypes.Position, z int, channel chan
     //fmt.Println("distance :: ",minimumDistance)
     channel <- channels.Data{updatedPosition,minimumDistance}
 }
+
