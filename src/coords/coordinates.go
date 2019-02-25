@@ -8,7 +8,7 @@ import (
 var platform [8]dtypes.Rect
 var ladder [6]dtypes.Rect
 var gem [5]dtypes.Gem
-var freepositions [10]dtypes.Freepos
+var Freepositions [10]dtypes.Freepos
 
 func initializePlatforms() {
 	platform[0] = dtypes.Rect{0, 45, 840, 75}
@@ -31,16 +31,29 @@ func initializePlatforms() {
 	gem[1] = dtypes.Gem{}
 	gem[2] = dtypes.Gem{}
 
-	freepositions[0] = dtypes.Freepos{}
-	freepositions[1] = dtypes.Freepos{}
-	freepositions[2] = dtypes.Freepos{}
-	freepositions[3] = dtypes.Freepos{}
-	freepositions[4] = dtypes.Freepos{}
+	Freepositions[0] = dtypes.Freepos{}
+	Freepositions[1] = dtypes.Freepos{}
+	Freepositions[2] = dtypes.Freepos{}
+	Freepositions[3] = dtypes.Freepos{}
+	Freepositions[4] = dtypes.Freepos{}
+
+	Randompos[0] = dtypes.Position{}
+	Randompos[1] = dtypes.Position{}
+	Randompos[2] = dtypes.Position{}
+	Randompos[3] = dtypes.Position{}
+	Randompos[4] = dtypes.Position{}
+	Randompos[5] = dtypes.Position{}
+	Randompos[6] = dtypes.Position{}
+	Randompos[7] = dtypes.Position{}
+	Randompos[8] = dtypes.Position{}
+	Randompos[9] = dtypes.Position{}
+
 }
 
 var Platform [8]dtypes.Rect
 var Ladder [6]dtypes.Rect
-var Gems [5]dtypes.Rect
+var Gems [5]dtypes.Gem
+var Randompos [10]dtypes.Position
 
 func Initialize() {
 	initializePlatforms()
@@ -161,7 +174,5 @@ func Initialize() {
 		for i := 0; i < 32+2; i++ {
 			dijkstra.Parentarray[z][i] = -1
 		}
-
 	}
-
 }

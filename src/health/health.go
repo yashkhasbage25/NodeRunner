@@ -77,7 +77,7 @@ func DecayPlayer1() {
 	for firstHealth > 0 {
 		firstMutex.Lock()
 		firstHealth -= rate
-		time.Sleep(time.Millisecond * pause)
+		time.Sleep(time.Duration(pause) * time.Millisecond)
 		firstMutex.Unlock()
 	}
 }
@@ -85,7 +85,7 @@ func DecayPlayer2() {
 	for secondHealth > 0 {
 		secondMutex.Lock()
 		secondHealth -= rate
-		time.Sleep(time.Millisecond * pause)
+		time.Sleep(time.Millisecond * time.Duration(pause))
 		secondMutex.Unlock()
 	}
 }

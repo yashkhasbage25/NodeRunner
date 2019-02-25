@@ -24,8 +24,8 @@ type Event struct {
 	G3Pos Position `json:"g3_pos"`
 	G4Pos Position `json:"g4_pos"`
 
-	Health1 int `json:"h1"`
-	Health2 int `json:"h2"`
+	P1Health int `json:"h1"`
+	P2Health int `json:"h2"`
 }
 
 // GameRedirector redirects when both clients are connected to server
@@ -51,6 +51,6 @@ type Gem struct {
 	Pos     Rect
 }
 type Freepos struct {
-	Avaiable bool
-	Pos      Rect
+	Available bool
+	Pos       Rect
 }
