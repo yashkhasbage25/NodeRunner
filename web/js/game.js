@@ -1,6 +1,3 @@
-// var player1 = document.getElementById("player1");
-// var player2 = document.getElementById("player2");
-
 function getElement(id) {
     item = document.getElementById(id);
     if(item == null) {
@@ -12,13 +9,13 @@ function getElement(id) {
         elem: item,
         height: itemHeight,
         width: itemWidth
-    }
+    };
 }
 
-ws = new WebSocket("ws://192.168.105.49:8080/game");
-var clientNumber = -1
-var clientID = ""
-var pressedKeys = []
+// ws = new WebSocket("ws://192.168.105.49:8080/game");
+var clientNumber = -1;
+var clientID = "";
+var pressedKeys = [];
 var playerOne = getElement("player1");
 var playerTwo = getElement("player2");
 
@@ -43,7 +40,7 @@ ws.onopen = function() {
 
 ws.onclose = function() {
     console.log("game.html websocket closed");
-    ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}))
+    ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}));
 }
 
 ws.onmessage = function(event) {
@@ -54,9 +51,13 @@ ws.onmessage = function(event) {
         clientNumber = parseInt(data.object);
         clientID = "p" + (clientNumber + 1).toString();
     } else if (data.etype == "SendUpdate") {
-        ws.send(JSON.stringify(getAllCurrentPositions()))
+        ws.send(JSON.stringify(getAllCurrentPositions()));
     } else if (data.etype == "Update") {
-        setAllPositions(data)
+        setAllPositions(data);
+    } else if (data.etype == "Win") {
+        alert("You Win");
+    } else if (data.etype == "Lose") {
+        alret("You Lose");
     }
     console.log("This client has ID:", clientID, clientNumber);
 }
@@ -102,7 +103,7 @@ function getPositionOfElement(element) {
 }
 
 function getHealth(elem) {
-    healthStr = elem.width
+    healthStr = elem.style.width;
     health = parseInt(healthStr.substring(0, healthStr.length-1));
 }
 
