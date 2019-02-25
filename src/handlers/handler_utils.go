@@ -12,14 +12,14 @@ const offsetY=15
 	Y int;
 }*/
 
-/*var coords.platform[3] dtypes.Rect
-var coords.ladder[3] dtypes.Rect*/
+/*var coords.Platform[3] dtypes.Rect
+var coords.Ladder[3] dtypes.Rect*/
 func OnPlatform(player dtypes.Rect) int{
   var i int
   log.Println("Executing OnPlatform")
-  for i=0;i<len(coords.platform);i++ {
-  	//log.Println(player.XHi,coords.platform[i].XHi, "---", player.YLo,"---",coords.platform[i].YHi, "---", player.XLo,coords.platform[i].XLo)
-    if player.YLo==coords.platform[i].YHi && player.XLo>coords.platform[i].XHi && player.XHi<coords.platform[i].XLo{
+  for i=0;i<len(coords.Platform);i++ {
+  	//log.Println(player.XHi,coords.Platform[i].XHi, "---", player.YLo,"---",coords.Platform[i].YHi, "---", player.XLo,coords.Platform[i].XLo)
+    if player.YLo==coords.Platform[i].YHi && player.XLo>coords.Platform[i].XHi && player.XHi<coords.Platform[i].XLo{
 	  log.Println("OnPlatform returns true.")
 	  return 1
     }
@@ -30,9 +30,9 @@ func OnPlatform(player dtypes.Rect) int{
 func AllignedWithLadder(player dtypes.Rect) int{
   var i int
   var center int=(player.XLo+player.XHi)/2
-  for i=0;i<len(coords.ladder);i++{
-    if coords.ladder[i].YLo>=player.YLo && coords.ladder[i].YHi<=player.YLo {
-       if center>=coords.ladder[i].XHi && center<=coords.ladder[i].XLo{
+  for i=0;i<len(coords.Ladder);i++{
+    if coords.Ladder[i].YLo>=player.YLo && coords.Ladder[i].YHi<=player.YLo {
+       if center>=coords.Ladder[i].XHi && center<=coords.Ladder[i].XLo{
 		   log.Println("AllignedWithLadder returns true.")
 			return 1
           }
@@ -44,11 +44,11 @@ func AllignedWithLadder(player dtypes.Rect) int{
 func SetAccordingToLadderTop(player dtypes.Rect) dtypes.Rect{ // originally was alligned but not not alligned
 	var i int
 	var center int = (player.XLo+player.XHi)/2
-	  for i=0;i<len(coords.ladder);i++{
-	    if coords.ladder[i].YLo>=player.YLo && coords.ladder[i].YHi<=player.YLo {
-	       if center>=coords.ladder[i].XHi && center<=coords.ladder[i].XLo{
-	  			log.Println("Executing",coords.ladder[i].YHi)
-	          	return dtypes.Rect{player.XHi,coords.ladder[i].YHi-2*offset,player.XLo,coords.ladder[i].YHi}
+	  for i=0;i<len(coords.Ladder);i++{
+	    if coords.Ladder[i].YLo>=player.YLo && coords.Ladder[i].YHi<=player.YLo {
+	       if center>=coords.Ladder[i].XHi && center<=coords.Ladder[i].XLo{
+	  			log.Println("Executing",coords.Ladder[i].YHi)
+	          	return dtypes.Rect{player.XHi,coords.Ladder[i].YHi-2*offset,player.XLo,coords.Ladder[i].YHi}
 	          }
 	      }
   }
@@ -57,30 +57,30 @@ func SetAccordingToLadderTop(player dtypes.Rect) dtypes.Rect{ // originally was 
 func SetAccordingToLadderBottom(player dtypes.Rect) dtypes.Rect{
 	var i int
 	var center int=(player.XLo+player.XHi)/2
-	  for i=0;i<len(coords.ladder);i++{
-	    if coords.ladder[i].YLo>=player.YLo && coords.ladder[i].YHi<=player.YLo {
-	       if center>=coords.ladder[i].XHi && center<=coords.ladder[i].XLo{
-	          	//return dtypes.Rect{coords.ladder[i].XHi-2*offset,coords.ladder[i].YLo-2*offset,coords.ladder[i].XHi,coords.ladder[i].YLo}
-	       		return dtypes.Rect{player.XHi,coords.ladder[i].YLo-2*offsetY,player.XLo,coords.ladder[i].YLo}
+	  for i=0;i<len(coords.Ladder);i++{
+	    if coords.Ladder[i].YLo>=player.YLo && coords.Ladder[i].YHi<=player.YLo {
+	       if center>=coords.Ladder[i].XHi && center<=coords.Ladder[i].XLo{
+	          	//return dtypes.Rect{coords.Ladder[i].XHi-2*offset,coords.Ladder[i].YLo-2*offset,coords.Ladder[i].XHi,coords.Ladder[i].YLo}
+	       		return dtypes.Rect{player.XHi,coords.Ladder[i].YLo-2*offsetY,player.XLo,coords.Ladder[i].YLo}
 	          }
 	      }
   }
    return dtypes.Rect{}
 }
-func FallsFromBlock(player dtypes.Rect) dtypes.Rect{ // originally was on coords.platform but not now
+func FallsFromBlock(player dtypes.Rect) dtypes.Rect{ // originally was on coords.Platform but not now
 	var i int;
-	for i=0;i<len(coords.platform);i++{
-      if(player.XHi>coords.platform[i].XLo || player.XLo<coords.platform[i].XHi){ // foot of player collides with top of block
-      	   	return dtypes.Rect{coords.platform[i].XLo,coords.platform[i].YLo-2*offsetY,coords.platform[i].XLo+2*offsetX,coords.platform[i].YHi}
+	for i=0;i<len(coords.Platform);i++{
+      if(player.XHi>coords.Platform[i].XLo || player.XLo<coords.Platform[i].XHi){ // foot of player collides with top of block
+      	   	return dtypes.Rect{coords.Platform[i].XLo,coords.Platform[i].YLo-2*offsetY,coords.Platform[i].XLo+2*offsetX,coords.Platform[i].YHi}
   	}
   }
    return dtypes.Rect{}
 }
 func CollidesWithBlockVertically(player dtypes.Rect) int{ // falling vertically
   var i int
-  for i=0;i<len(coords.platform);i++{
-  	 //log.Println(player.YLo,"---",coords.platform[i].YHi)
-      if(player.YLo>coords.platform[i].YHi && player.XLo>coords.platform[i].XHi && player.XHi<coords.platform[i].XLo){ // foot of player collides with top of block
+  for i=0;i<len(coords.Platform);i++{
+  	 //log.Println(player.YLo,"---",coords.Platform[i].YHi)
+      if(player.YLo>coords.Platform[i].YHi && player.XLo>coords.Platform[i].XHi && player.XHi<coords.Platform[i].XLo){ // foot of player collides with top of block
 	  log.Println("CollidesWithBlockVertically returns true.")
 	  return 1
   	}
@@ -90,9 +90,9 @@ func CollidesWithBlockVertically(player dtypes.Rect) int{ // falling vertically
 }
 func CollidesWithBlockOnRightMove(player dtypes.Rect) int{
 	var i int
-	for i=0;i<len(coords.platform);i++{
-		//log.Println(player.XLo,coords.platform[i].XHi, "---", player.YLo,"---",coords.platform[i].YHi, "---", player.YHi,coords.platform[i].YLo)
-		if player.XLo>coords.platform[i].XHi && player.YLo>coords.platform[i].YHi && player.YHi<coords.platform[i].YLo{
+	for i=0;i<len(coords.Platform);i++{
+		//log.Println(player.XLo,coords.Platform[i].XHi, "---", player.YLo,"---",coords.Platform[i].YHi, "---", player.YHi,coords.Platform[i].YLo)
+		if player.XLo>coords.Platform[i].XHi && player.YLo>coords.Platform[i].YHi && player.YHi<coords.Platform[i].YLo{
 			log.Println("CollidesWithBlockOnRightMove returns true.")
 			return 1
 		}
@@ -102,8 +102,8 @@ func CollidesWithBlockOnRightMove(player dtypes.Rect) int{
 }
 func CollidesWithBlockOnLeftMove(player dtypes.Rect) int{
 	var i int
-	for i=0;i<len(coords.platform);i++{
-		if player.XHi<coords.platform[i].XLo && player.YLo>coords.platform[i].YHi && player.YHi<coords.platform[i].YLo{
+	for i=0;i<len(coords.Platform);i++{
+		if player.XHi<coords.Platform[i].XLo && player.YLo>coords.Platform[i].YHi && player.YHi<coords.Platform[i].YLo{
 			log.Println("CollidesWithBlockOnLeftMove returns true.")
 			return 1
 		}
@@ -113,27 +113,27 @@ func CollidesWithBlockOnLeftMove(player dtypes.Rect) int{
 }
 func GetPositionCollidesWithBlockOnLeft(player dtypes.Rect) dtypes.Rect{
 	var i int
-	for i=0;i<len(coords.platform);i++{
-		if player.XHi<coords.platform[i].XLo && player.YLo>coords.platform[i].YHi && player.YHi<coords.platform[i].YLo{
-			return dtypes.Rect{coords.platform[i].XLo,player.YHi,coords.platform[i].XLo+2*offsetX,player.YLo}
+	for i=0;i<len(coords.Platform);i++{
+		if player.XHi<coords.Platform[i].XLo && player.YLo>coords.Platform[i].YHi && player.YHi<coords.Platform[i].YLo{
+			return dtypes.Rect{coords.Platform[i].XLo,player.YHi,coords.Platform[i].XLo+2*offsetX,player.YLo}
 		}
 	}
 	return dtypes.Rect{}
 }
 func GetPositionCollidesWithBlockOnRight(player dtypes.Rect)dtypes.Rect{
 	var i int
-	for i=0;i<len(coords.platform);i++{
-		if player.XLo>coords.platform[i].XHi && player.YLo>coords.platform[i].YHi && player.YHi<coords.platform[i].YLo{
-			return dtypes.Rect{coords.platform[i].XHi-2*offsetX,player.YHi,coords.platform[i].XHi,player.YLo}
+	for i=0;i<len(coords.Platform);i++{
+		if player.XLo>coords.Platform[i].XHi && player.YLo>coords.Platform[i].YHi && player.YHi<coords.Platform[i].YLo{
+			return dtypes.Rect{coords.Platform[i].XHi-2*offsetX,player.YHi,coords.Platform[i].XHi,player.YLo}
 		}
 	}
 	return dtypes.Rect{}
 }
 func GetPositionCollidesWithBlockVer(player dtypes.Rect)dtypes.Rect{
 	var i int
-  for i=0;i<len(coords.platform);i++{
-      if(player.YLo>coords.platform[i].YHi && player.XLo>coords.platform[i].XHi && player.XHi<coords.platform[i].XLo){ // foot of player collides with top of block
-      	return dtypes.Rect{player.XHi,coords.platform[i].YHi-2*offsetY,player.XLo,coords.platform[i].YHi}
+  for i=0;i<len(coords.Platform);i++{
+      if(player.YLo>coords.Platform[i].YHi && player.XLo>coords.Platform[i].XHi && player.XHi<coords.Platform[i].XLo){ // foot of player collides with top of block
+      	return dtypes.Rect{player.XHi,coords.Platform[i].YHi-2*offsetY,player.XLo,coords.Platform[i].YHi}
   	}
   }
   return dtypes.Rect{}
@@ -153,16 +153,16 @@ func GetPosition(player dtypes.Rect) dtypes.Position{
 	return temp
 }
 func CollidesGem(player dtypes.Rect,id string) {
-	for i:=0;i<len(coords.gems);i++ {
-		if player.XLo>=coords.gems[i].pos.XHi || player.XHi<=coords.gems[i].pos.XLo{
-			UpdateHealth(coords.gems[i].gemtype,coords.gems[i].value,id)
-				for j:=0;j<len(coords.freepositions);j++{
-					if coords.freepositions[i].available==true  {
-						coords.gems[i].XHi=coords.freepositions[i].XHi
-						coords.gems[i].XLo=coords.freepositions[i].XLo
-						coords.gems[i].YHi=coords.freepositions[i].YHi
-						coords.gems[i].XLo=coords.freepositions[i].YLo
-						coords.freepositions[i].available=false
+	for i:=0;i<len(coords.Gems);i++ {
+		if player.XLo>=coords.Gems[i].Pos.XHi || player.XHi<=coords.Gems[i].Pos.XLo{
+			UpdateHealth(coords.Gems[i].Gemtype,coords.Gems[i].Value,id)
+				for j:=0;j<len(coords.Freepositions);j++{
+					if coords.Freepositions[i].Available==true  {
+						coords.Gems[i].XHi=coords.Freepositions[i].XHi
+						coords.Gems[i].XLo=coords.Freepositions[i].XLo
+						coords.Gems[i].YHi=coords.Freepositions[i].YHi
+						coords.Gems[i].XLo=coords.Freepositions[i].YLo
+						coords.Freepositions[i].Available=false
 						break
 					}
 				}
@@ -174,29 +174,29 @@ func CollidesGem(player dtypes.Rect,id string) {
 func main() {
 	p1:=Position{45,35}
 	p2:=Position{50,55}
-	//coords.platform[0]=dtypes.Rect{0,39,100,40}
+	//coords.Platform[0]=dtypes.Rect{0,39,100,40}
 	var p11 dtypes.Rect =GetBoundary(p1);
-	//coords.platform[1]=dtypes.Rect{70,50,90,60}
-	coords.platform[0]=dtypes.Rect{20,50,160,80}
+	//coords.Platform[1]=dtypes.Rect{70,50,90,60}
+	coords.Platform[0]=dtypes.Rect{20,50,160,80}
 	var p22 dtypes.Rect =GetBoundary(p2);
-	//fmt.Println(coords.platform[0].XLo)
+	//fmt.Println(coords.Platform[0].XLo)
 	//fmt.Println(OnPlatform(p11))
 	//fmt.Println(CollidesWithBlockVertically(p11))
 	//fmt.Println(CollidesWithBlockOnRightMove(p22))
 	var p33 dtypes.Rect=GetPositionCollidesWithBlockVer(p22)
 	//var p33 dtypes.Rect=GetPositionCollidesWithBlockOnRight(p22)
 
-	/*	coords.platform[1]=dtypes.Rect{60,60,80,80}
-	coords.platform[2]=dtypes.Rect{0,30,50,50}
-	//coords.ladder[0]=dtypes.Rect{15,25,25,45}
-	coords.ladder[0]=dtypes.Rect{35,12,45,42}
+	/*	coords.Platform[1]=dtypes.Rect{60,60,80,80}
+	coords.Platform[2]=dtypes.Rect{0,30,50,50}
+	//coords.Ladder[0]=dtypes.Rect{15,25,25,45}
+	coords.Ladder[0]=dtypes.Rect{35,12,45,42}
 	//fmt.Println(AllignedWithLadder(p11))
 	//fmt.Println(AllignedWithLadder(p22))
 	log.Println(p33.XHi,p33.YHi,p33.XLo,p33.YLo)
 	fmt.Println(p11.XHi,p11.YHi,p11.XLo,p11.YLo);
 	/*
 
-	//fmt.Println(on_coords.platform(p11))
+	//fmt.Println(on_coords.Platform(p11))
 	fmt.Println(CollidesWithBlock_vertically(p11))
 
 }*/

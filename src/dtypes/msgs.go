@@ -46,11 +46,11 @@ type Rect struct {
 }
 
 type Gem struct{
-	gemtype byte
-	value int
-	pos   Rect
+	Gemtype byte
+	Value int
+	Pos   Rect
 }
 type Freepos struct{
-	bool avaiable
-	pos struct Rect
+	Avaiable bool
+	Pos struct Rect
 }

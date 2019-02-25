@@ -23,13 +23,47 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				G4Pos: event.G4Pos,
 			}
 		return replyEvent
+	} 
+	if event.EventType=="space"{
+		if event.Object=="p1"{
+				j:=rand.Intn(10)
+				replyEvent = dtypes.Event { 
+				EventType: "Teleport",
+				Object:event.Object,
+				B1Pos: event.B1Pos,
+				B2Pos: event.B2Pos,
+				B3Pos: event.B3Pos,
+				P1Pos: coords.Randompos[j]
+				P2Pos: event.P2Pos
+				G1Pos: event.G1Pos,
+				G2Pos: event.G2Pos,
+				G3Pos: event.G3Pos,
+				G4Pos: event.G4Pos,
+			}
+		}else if event.Object=="p2"{
+				j:=rand.Intn(10)
+				replyEvent = dtypes.Event { 
+				EventType: "Teleport",
+				Object:event.Object,
+				B1Pos: event.B1Pos,
+				B2Pos: event.B2Pos,
+				B3Pos: event.B3Pos,
+				P1Pos: event.P1Pos
+				P2Pos: coords.Randompos[j],
+				G1Pos: event.G1Pos,
+				G2Pos: event.G2Pos,
+				G3Pos: event.G3Pos,
+				G4Pos: event.G4Pos,
+			}
+		}
+		return replyEvent
 	}
-	direction := [4]string{"up", "down", "left", "right"}
+	direction := [4]string{"Up", "Down", "Left", "Right"}
 	var freeFallP1 bool = false
 	var freeFallP2 bool = false
 	var step int = 2
-	dx := [4]int{0, 0, -step, step}
-	dy := [4]int{-step, step, 0, 0}
+	dx := [5]int{0, 0, -step, step,}
+	dy := [5]int{-step, step, 0, 0,0}
 	for i := 0; i < 4 ; i++ {		
 		if direction[i] == event.EventType {
 			log.Println("Direction detected:", direction[i])
@@ -87,7 +121,7 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 					log.Println("freefall")
 					freeFallP1=true;
 				}else if !OnPlatform(p11){
-					log.Println("not on platform")
+					log.Println("not on Platform")
 					updatedRect Rect=p11
 				}else if(CollidesWithBlockOnLeftMove(p22)){
 					log.Println("collided with block on left")
@@ -108,7 +142,7 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 					freeFallP1=true
 					log.Println("freefall")
 				}else if !OnPlatform(p11){
-					log.Println("not on platform")
+					log.Println("not on Platform")
 					updatedRect Rect=p11
 				}else if(CollidesWithBlockOnRightMove(p22)){
 					log.Println("collided with block on right")
@@ -121,6 +155,8 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 					updatedRect Rect=p22
 				}
 				CollidesGem(updatedRect,"p1")
+			}else if(i==4){
+
 			}
 			var  dtypes.Position temporary =getposition(updated)
 
@@ -192,7 +228,7 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 					log.Println("freefall")
 					freeFallP2=true;
 				}else if !OnPlatform(p11){
-					log.Println("not on platform")
+					log.Println("not on Platform")
 					updatedRect Rect=p11
 				}else if(CollidesWithBlockOnLeftMove(p22)){
 					log.Println("collided with block on left")
@@ -213,7 +249,7 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 					freeFallP2=true
 					log.Println("freefall")
 				}else if !OnPlatform(p11){
-					log.Println("not on platform")
+					log.Println("not on Platform")
 					updatedRect Rect=p11
 				}else if(CollidesWithBlockOnRightMove(p22)){
 					log.Println("collided with block on right")
