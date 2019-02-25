@@ -34,11 +34,11 @@ func Handle(event dtypes.Event) dtypes.Event {
 		}
 		return replyEvent
 	}
-	if event.EventType == "space" {
+	if event.EventType == "Teleport" {
 		if event.Object == "p1" {
 			j := rand.Intn(10)
 			replyEvent = dtypes.Event{
-				EventType: "Teleport",
+				EventType: "Update",
 				Object:    event.Object,
 				B1Pos:     event.B1Pos,
 				B2Pos:     event.B2Pos,
@@ -55,7 +55,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 		} else if event.Object == "p2" {
 			j := rand.Intn(10)
 			replyEvent = dtypes.Event{
-				EventType: "Teleport",
+				EventType: "Update",
 				Object:    event.Object,
 				B1Pos:     event.B1Pos,
 				B2Pos:     event.B2Pos,
