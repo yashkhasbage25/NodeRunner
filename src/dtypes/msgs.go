@@ -45,12 +45,12 @@ type Rect struct {
 	YLo int
 }
 
-type Gem struct{
+type Gem struct {
 	Gemtype byte
-	Value int
-	Pos   Rect
+	Value   int
+	Pos     Rect
 }
-type Freepos struct{
+type Freepos struct {
 	Avaiable bool
-	Pos struct Rect
+	Pos      Rect
 }

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	handler "github.com/IITH-SBJoshi/concurrency-3/src/handlers"
 	"time"
+	"github.com/IITH-SBJoshi/concurrency-3/src/platform"
 
 	"github.com/gorilla/websocket"
 )
@@ -41,7 +42,8 @@ func sendResponse(receiveChannelClient chan dtypes.Event, conn *websocket.Conn) 
 
 // PlayNodeRunner is the event loop of NodeRunner
 func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespondChannelServer chan dtypes.Event, firstClient, secondClient *client.Client) {
-	coords.initialize()
+	coords.Initialize()
+	platform.Initialize()
 	health.SetHealths(1000, 1000)
 	health.SetDecay(1, 500)
 	go health.DecayHealth()
