@@ -4,7 +4,8 @@ import(
 )
 var platform[8] dtypes.Rect
 var ladder[6] dtypes.Rect
-var gem[5] dtypes.Rect
+var gem[5] dtypes.Gem
+var freepositions[10] dtypes.Freepos
 
 platform[0]={0,45,840,75}
 platform[1]={800,120,1200,150}
@@ -25,3 +26,11 @@ ladder[5]={400,325,430,550}
 gems[0]={}
 gems[1]={}
 gems[2]={}
+
+freepositions[0]={}
+freepositions[1]={}
+freepositions[2]={}
+freepositions[3]={}
+freepositions[4]={}
+
+

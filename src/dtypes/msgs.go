@@ -42,7 +42,11 @@ type Rect struct {
   YLo int
 }
 type Gem struct{
-	type byte
+	gemtype byte
 	value int
+	pos struct Rect
+}
+type Freepos struct{
+	bool avaiable
 	pos struct Rect
 }
