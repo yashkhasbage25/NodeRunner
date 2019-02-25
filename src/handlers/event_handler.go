@@ -21,6 +21,8 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				G2Pos: event.G2Pos,
 				G3Pos: event.G3Pos,
 				G4Pos: event.G4Pos,
+				P1health:GetHealth("p1"),
+				P2health:GetHealth("p2")
 			}
 		return replyEvent
 	} 
@@ -39,6 +41,8 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				G2Pos: event.G2Pos,
 				G3Pos: event.G3Pos,
 				G4Pos: event.G4Pos,
+				P1health:GetHealth("p1"),
+				P2health:GetHealth("p2")
 			}
 		}else if event.Object=="p2"{
 				j:=rand.Intn(10)
@@ -54,6 +58,8 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				G2Pos: event.G2Pos,
 				G3Pos: event.G3Pos,
 				G4Pos: event.G4Pos,
+				P1health: GetHealth("p1"),
+				P2health: GetHealth("p2")
 			}
 		}
 		return replyEvent
@@ -72,7 +78,7 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 				Object:    event.Object,
 				B1Pos:     event.B1Pos,
 				B2Pos:     event.B2Pos,
-				B3Pos:     event.B3Pos,
+				B3Pos:     event.B3Pos
 
 			}
 			log.Println("Set default attr for replyEvent")
@@ -175,8 +181,8 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 			}
 			replyEvent.P1Pos=getposition(updated)
 			replyEvent.P2Pos=event.P2Pos
-			replyEvent.P1health=GetHealth("p1");
-			replyEvent.P2health=GetHealth("p2");
+			replyEvent.P1health=GetHealth("p1")
+			replyEvent.P2health=GetHealth("p2")
 			replyEvent.G1Pos=getposition(coords.gems[0].pos)
 			replyEvent.G2Pos=getposition(coords.gems[1].pos)
 			replyEvent.G3Pos=getposition(coords.gems[2].pos)
@@ -280,8 +286,8 @@ func handleMotionEvent(event dtypes.Event) dtypes.Event {
 			}
 			replyEvent.P2Pos=getposition(updated)
 			replyEvent.P1Pos=event.P1Pos
-			replyEvent.P1health=GetHealth("p1");
-			replyEvent.P2health=GetHealth("p2");
+			replyEvent.P1health=GetHealth("p1")
+			replyEvent.P2health=GetHealth("p2")
 			replyEvent.G1Pos=getposition(coords.gems[0].pos)
 			replyEvent.G2Pos=getposition(coords.gems[1].pos)
 			replyEvent.G3Pos=getposition(coords.gems[2].pos)
