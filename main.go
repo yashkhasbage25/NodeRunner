@@ -1,19 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"dijkstra"
 	"dtypes"
-	"coords"
+	"log"
+	"net/http"
+	server "server"
 )
 
 func main() {
-	bot:=dtypes.Position{15,25}
-	player:=dtypes.Position{1185,530}
-	nxtmove,distance:=dijkstra.RunDijkstra(bot,player,0)
-	fmt.Println(nxtmove.X,"   ",nxtmove.Y)
-	fmt.Println(coords.Platform)
 
+	gameServer := server.Server{
+		IDCounter:      0,
+		RequestChannel: make(chan dtypes.Events),
+	}
 
-
+	gameServer.SetHandlers()
+	go gameServer.RedirectToGameIfConnected()
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

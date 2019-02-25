@@ -137,7 +137,7 @@ func initialize() {
 		
 	}
 	Platform[0]=dtypes.Rect{0,45,840,75}
-	Platform[1]=dtypes.Rect{800,120,1200,150}
+	Platform[1]=dtypes.Rect{800,125,1200,155}
 	Platform[2]=dtypes.Rect{0,200,400,230}
 	Platform[3]=dtypes.Rect{600,210,1200,240}
 	Platform[4]=dtypes.Rect{0,325,800,355}

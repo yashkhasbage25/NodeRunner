@@ -5,6 +5,7 @@ import (
 	"dtypes"
 	"fmt"
 	"channels"
+	"handler"
 )
 
 // StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
@@ -46,10 +47,19 @@ func setter(i int ,n int, z int,flag bool){
 	
 }
 
+func GetBoundary(player dtypes.Position) dtypes.Rect {
+  var temp dtypes.Rect
+  temp.XHi = player.X-20
+  temp.YHi = player.Y-15
+  temp.XLo = player.X+20
+  temp.YLo = player.Y+15
+  return temp
+}
 func fallingon(entity dtypes.Position,z int)int{
 	var ymin=1200
 	for i:=0;i<32;i++  {
-		if Allnodes[z][i].Location.Y > entity.Y &&	Allnodes[z][i].Location.Y < ymin /* &&(entity.x,Allnodes[z][i].Location.Y)must be on plank */{
+		temp:=dtypes.Position{entity.X,Allnodes[z][i].Location.Y}
+		if Allnodes[z][i].Location.Y > entity.Y &&	Allnodes[z][i].Location.Y < ymin  &&handler.OnPlatform(GetBoundary(temp))==1{
 			ymin=Allnodes[z][i].Location.Y
 		}
 
@@ -57,26 +67,33 @@ func fallingon(entity dtypes.Position,z int)int{
 	return ymin
 }
 func onladder(entity dtypes.Position)bool{//code from atharva.
-	return false
+	output:=handler.AllignedWithLadder(GetBoundary(entity))
+	if output==1{
+		return true
+	} else{
+		return false
+	}
 }
 
 func addDynamicnode(bot dtypes.Position,player dtypes.Position,z int) {
-	Allnodes[z][32]= StaticNode{dtypes.Position{bot.X,bot.Y},9,bot.X,bot.Y} //added bot at position equal to n.
-	/* if inair(player)=1{
-		Allnodes[z][32+1]=StaticNode{dtypes.Position{player.X,fallingon(player,z)},10 ,player.X, fallingon(player,z)}
 
-	}*/
-	//else
-	Allnodes[z][32+1]=StaticNode{dtypes.Position{player.X,player.Y},10 ,player.X, player.Y}//added player
+	Allnodes[z][32]= StaticNode{dtypes.Position{bot.X,bot.Y},9,bot.X,bot.Y} //added bot at position equal to n.
+	if OnPlatform(GetBoundary(player))==0&&AllignedWithLadder(GetBoundary(player))==0{
+		Allnodes[z][32+1]=StaticNode{dtypes.Position{player.X,fallingon(player,z)},10 ,player.X, fallingon(player,z)
+	} else {
+		Allnodes[z][32+1]=StaticNode{dtypes.Position{player.X,player.Y},10 ,player.X, player.Y}//added player
+	}
+	botonladder:=	AllignedWithLadder(GetBoundary(bot))
+	playeronladder:= AllignedWithLadder(GetBoundary(player))
 	for i:=0; i<32 ; i++ { 
-		if Allnodes[z][i].XNodeID==Allnodes[z][32].XNodeID  &&onladder(bot){
+		if Allnodes[z][i].XNodeID==Allnodes[z][32].XNodeID  &&botonladder==1{
 			setter(i,32,z,true)
 		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32].YNodeID{
 			setter(i,32,z,false)
 		}
 	}
 	for i:=0; i<32+1; i++ {
-		if Allnodes[z][i].XNodeID==Allnodes[z][32+1].XNodeID  &&onladder(player){
+		if Allnodes[z][i].XNodeID==Allnodes[z][32+1].XNodeID  &&playeronladder==1{
 			setter(i,32+1,z,true)
 		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32+1].YNodeID{// if it is not on ladder do not add edge if y> bot 						
 			setter(i,32+1,z,false)										//position
