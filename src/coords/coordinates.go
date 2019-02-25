@@ -154,8 +154,8 @@ func initialize() {
 		 	//initialization of parent
 		for i:=0;i<32+2;i++{
 			dijkstra.Parentarray[z][i]=-1
-		} 
-		
+		}
+
 	}
 
 }
@@ -165,5 +165,3 @@ freepositions[1]={}
 freepositions[2]={}
 freepositions[3]={}
 freepositions[4]={}
-
-

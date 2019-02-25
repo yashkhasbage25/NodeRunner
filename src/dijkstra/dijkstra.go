@@ -20,11 +20,11 @@ type StaticNode struct {
 type Matrix struct { // 32 is number of static node and we are adding 2 dynamic node.
 	AdjacencyMatrix [6][32+2][32+2]int
 	Size int; // 34
-	
+
 }
 
 
-// global game Matrix 
+// global game Matrix
 var Game Matrix
 var Parentarray [6][32+2] int
 var Allnodes [6][32+2] StaticNode
@@ -44,7 +44,7 @@ func setter(i int ,n int, z int,flag bool){
 		Game.AdjacencyMatrix[z][n][i]=Abs(Allnodes[z][i].Location.X-Allnodes[z][n].Location.X)
 		Game.AdjacencyMatrix[z][i][n]=Abs(Allnodes[z][i].Location.X-Allnodes[z][n].Location.X)
 	}
-	
+
 }
 
 func GetBoundary(player dtypes.Position) dtypes.Rect {
@@ -73,9 +73,9 @@ func AllignedWithLadder(player dtypes.Rect) int{
 func OnPlatform(player dtypes.Rect) int{
   var i int
   log.Println("Executing OnPlatform")
-  for i=0;i<len(coords.Platform);i++ {
-  	//log.Println(player.XHi,coords.Platform[i].XHi, "---", player.YLo,"---",coords.Platform[i].YHi, "---", player.XLo,coords.Platform[i].XLo)
-    if player.YLo==coords.Platform[i].YHi && player.XLo>coords.Platform[i].XHi && player.XHi<coords.Platform[i].XLo{
+  for i=0;i<len(metadata.Platform);i++ {
+  	//log.Println(player.XHi,metadata.Platform[i].XHi, "---", player.YLo,"---",metadata.Platform[i].YHi, "---", player.XLo,metadata.Platform[i].XLo)
+    if player.YLo==metadata.Platform[i].YHi && player.XLo>metadata.Platform[i].XHi && player.XHi<metadata.Platform[i].XLo{
 	  log.Println("OnPlatform returns true.")
 	  return 1
     }
@@ -113,7 +113,7 @@ func addDynamicnode(bot dtypes.Position,player dtypes.Position,z int) {
 	}
 	botonladder:=	AllignedWithLadder(GetBoundary(bot))
 	playeronladder:= AllignedWithLadder(GetBoundary(player))
-	for i:=0; i<32 ; i++ { 
+	for i:=0; i<32 ; i++ {
 		if Allnodes[z][i].XNodeID==Allnodes[z][32].XNodeID  &&botonladder==1{
 			setter(i,32,z,true)
 		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32].YNodeID{
@@ -123,22 +123,22 @@ func addDynamicnode(bot dtypes.Position,player dtypes.Position,z int) {
 	for i:=0; i<32+1; i++ {
 		if Allnodes[z][i].XNodeID==Allnodes[z][32+1].XNodeID  &&playeronladder==1{
 			setter(i,32+1,z,true)
-		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32+1].YNodeID{// if it is not on ladder do not add edge if y> bot 						
+		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32+1].YNodeID{// if it is not on ladder do not add edge if y> bot
 			setter(i,32+1,z,false)										//position
 		}
 	}
-	
+
 }
 func minDistance(distance []int, cluster []bool, size int) int {
-		
+
 		 var min_index int;
-		 min := int(^uint(0)>> 1)  
+		 min := int(^uint(0)>> 1)
      for v:=0; v<size;v++{  // we have to impliment this parallaly
      	if cluster[v]==false&&distance[v]<=min {
      		min= distance[v]
      		min_index=v
      	}
-     } 
+     }
      return min_index
 }
 func printPath(z int,node int)  {
@@ -216,7 +216,7 @@ func Updatebots(event dtypes.Event) dtypes.Event {
 	replyEvent.B2Pos=bestUpdate[1]
 	replyEvent.B3Pos=bestUpdate[2]
 	return replyEvent
-     
+
 }
 func runDijkstra(bot dtypes.Position,player dtypes.Position, z int, channel chan channels.Data )  {
 	var step int
@@ -226,8 +226,8 @@ func runDijkstra(bot dtypes.Position,player dtypes.Position, z int, channel chan
 	//we have source as node with NodeID
 	//var distance [32+2] int
 	distance := make([]int, 34)
-	cluster  := make([]bool, 34) 
-	//var cluster [32+2] bool // cluster[i] will be true if node i is included in shortest 
+	cluster  := make([]bool, 34)
+	//var cluster [32+2] bool // cluster[i] will be true if node i is included in shortest
                           // path tree or shortest distance from src to i is finalize
 
 	for i :=0;i<32+2;i++{
@@ -239,22 +239,22 @@ func runDijkstra(bot dtypes.Position,player dtypes.Position, z int, channel chan
     for i:=0;i<32+2;i++{
     	newNodeID:=minDistance(distance, cluster,32+2)
     	cluster[newNodeID]=true
-    	
-   
-         // Update dist[v] only if is not in cluster, there is an edge from  
-         // newNodeID to v, and total weight of path from src to  v through newNodeID is  
-         // smaller than current value of dist[v] 
+
+
+         // Update dist[v] only if is not in cluster, there is an edge from
+         // newNodeID to v, and total weight of path from src to  v through newNodeID is
+         // smaller than current value of dist[v]
          for v:=0; v < 32+2; v++ {
 
          	if  !cluster[v] && Game.AdjacencyMatrix[z][newNodeID][v]!=-1 && distance[newNodeID] != int(^uint(0)>> 1)&& distance[newNodeID]+Game.AdjacencyMatrix[z][newNodeID][v]  < distance[v] {
          			distance[v] = distance[newNodeID] + Game.AdjacencyMatrix[z][newNodeID][v]
          			Parentarray[z][v]=newNodeID
-         		}    
-         } 
+         		}
+         }
     }
     //send distance of[n+1]
     //find parent of node[i]
-    //and return that information to 
+    //and return that information to
     var botNextmove dtypes.Position
     minimumDistance:=distance[33]
     markPath(z,33)
