@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"sync"
 
 	"github.com/IITH-SBJoshi/concurrency-3/src/client"
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
@@ -15,8 +16,14 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+var serverLock sync.Mutex
+var gameRunning bool
+
 // SetHandlers is sets all possible handlers for the server.
 func (gameServer *Server) SetHandlers() {
+
+	go checkIfBothConnected(gameServer)
+	gameRunning = false
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		indexContent, err := ioutil.ReadFile("web/index.html")
 		if err != nil {
@@ -25,7 +32,6 @@ func (gameServer *Server) SetHandlers() {
 		log.Println("Handling pattern /")
 		fmt.Fprintf(w, "%s", indexContent)
 	})
-
 	http.HandleFunc("/web/wait.html", func(w http.ResponseWriter, r *http.Request) {
 		waitContent, err := ioutil.ReadFile("web/wait.html")
 		if err != nil {
@@ -71,7 +77,9 @@ func (gameServer *Server) SetHandlers() {
 	})
 
 	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-
+		serverLock.Lock()
+		gameRunning = true
+		serverLock.Unlock()
 		ip, port, err := net.SplitHostPort(r.RemoteAddr)
 		if err != nil {
 			log.Println("Could not separate ip and port.")
@@ -102,15 +110,8 @@ func (gameServer *Server) SetHandlers() {
 				EventType: "SetClientID",
 				Object:    strconv.Itoa(int(thisClientID)),
 			})
-			// gameServer.AddNewClient(newClient)
 		}
-
 		log.Println("handling pattern /game")
-
-		gameWinChannel := make(chan int)
-		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameWinChannel, gameServer.GetClient(0), gameServer.GetClient(1))
-		// go play.Respond(gameServer)
-		go detectGameOver(gameServer, gameWinChannel)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
@@ -263,4 +264,17 @@ func detectGameOver(server *Server, gameWinChanel chan int) {
 	winner := <-gameWinChanel
 	log.Println("Winner is client id", winner)
 	// server.
+}
+
+func checkIfBothConnected(server *Server) {
+	for true {
+		if server.GetIDCounter() == 2 && gameRunning {
+			break
+		}
+	}
+	gameWinChannel := make(chan int)
+	log.Println("Both clients are connected and ")
+	go play.PlayNodeRunner(server.GetRequestChannel(), server.GetRespondChannel(0), server.GetRespondChannel(1), gameWinChannel, server.GetClient(0), server.GetClient(1))
+	// go play.Respond(server)
+	go detectGameOver(server, gameWinChannel)
 }
