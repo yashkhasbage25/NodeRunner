@@ -8,7 +8,7 @@ jobs:
 
     environment:
       TEST_RESULTS: /tmp/test-results
-      GOPATH: $GOPATH:/go/src/src
+      GOPATH: /usr/local/go/bin:/go/src/src
 
     steps:
       - checkout
