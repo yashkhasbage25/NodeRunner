@@ -1,10 +1,10 @@
 package main
 
 import (
-	"dtypes"
+	dtypes "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"log"
 	"net/http"
-	server "server"
+	server "github.com/IITH-SBJoshi/concurrency-3/src/server"
 )
 
 func main() {

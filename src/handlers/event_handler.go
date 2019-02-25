@@ -2,7 +2,7 @@ package handler
 
 import (
 	"log"
-	"dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 )
 
 func handleMotionEvent(event dtypes.Event) dtypes.Event {

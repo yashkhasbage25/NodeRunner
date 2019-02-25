@@ -1,8 +1,8 @@
-package metadata
+package platform
 
 import(
-	"dtypes"
-	)
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
+)
 
 var Platform[8] dtypes.Rect
 var Ladder[6] dtypes.Rect

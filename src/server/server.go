@@ -1,7 +1,7 @@
 package server
 
 import (
-	"client"
+	"github.com/IITH-SBJoshi/concurrency-3/src/client"
 	"log"
 	"strconv"
 

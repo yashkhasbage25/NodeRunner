@@ -1,7 +1,7 @@
 package server
 
 import (
-	"dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 )
 
 // BroadcastGameRedirection broadcasts the redirection msg to clients

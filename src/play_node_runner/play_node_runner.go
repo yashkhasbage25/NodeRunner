@@ -1,12 +1,12 @@
 package play_node_runner
 
 import (
-	"client"
-	"coords"
-	"dijkstra"
-	"dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/client"
+	"github.com/IITH-SBJoshi/concurrency-3/src/coords"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dijkstra"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"fmt"
-	handler "handlers"
+	handler "github.com/IITH-SBJoshi/concurrency-3/src/handlers"
 	"time"
 
 	"github.com/gorilla/websocket"

@@ -1,9 +1,9 @@
 package handler
 import (
 	"fmt"
-	"dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"log"
-	"coords"
+	"github.com/IITH-SBJoshi/concurrency-3/src/coords"
 )
 const offsetX=20
 const offsetY=15

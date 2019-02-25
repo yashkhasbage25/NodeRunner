@@ -1,7 +1,7 @@
 package coords
 import(
-	"dtypes"
-	"dijkstra"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dijkstra"
 )
 
 var platform[8] dtypes.Rect

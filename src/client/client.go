@@ -1,10 +1,10 @@
 package client
 
 import (
-	"dtypes"
+	dtypes "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"strconv"
 
-	"github.com/gorilla/websocket"
+	websocket "github.com/gorilla/websocket"
 )
 
 // Client struct represents the connected client

@@ -1,7 +1,7 @@
 package channels
 
 import(
-	"dtypes"
+	dtypes "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	
 )
 

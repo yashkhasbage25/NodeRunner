@@ -1,14 +1,14 @@
 package server
 
 import (
-	"client"
-	"dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/client"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
-	play "play_node_runner"
+	play "github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner"
 	"strconv"
 
 	"github.com/gorilla/websocket"

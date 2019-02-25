@@ -2,10 +2,10 @@ package dijkstra
 
 import (
 
-	"dtypes"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"fmt"
-	"channels"
-	"metadata"
+	"github.com/IITH-SBJoshi/concurrency-3/src/channels"
+	"github.com/IITH-SBJoshi/concurrency-3/src/platform"
 )
 
 // StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
@@ -58,9 +58,9 @@ func GetBoundary(player dtypes.Position) dtypes.Rect {
 func AllignedWithLadder(player dtypes.Rect) int{
   var i int
   var center int=(player.XLo+player.XHi)/2
-  for i=0;i<len(metadata.Ladder);i++{
-    if metadata.Ladder[i].YLo>=player.YLo && metadata.Ladder[i].YHi<=player.YLo {
-       if center>=metadata.Ladder[i].XHi && center<=metadata.Ladder[i].XLo{
+  for i=0;i<len(platform.Ladder);i++{
+    if platform.Ladder[i].YLo>=player.YLo && platform.Ladder[i].YHi<=player.YLo {
+       if center>=platform.Ladder[i].XHi && center<=platform.Ladder[i].XLo{
 		   log.Println("AllignedWithLadder returns true.")
 			return 1
           }
@@ -73,9 +73,9 @@ func AllignedWithLadder(player dtypes.Rect) int{
 func OnPlatform(player dtypes.Rect) int{
   var i int
   log.Println("Executing OnPlatform")
-  for i=0;i<len(metadata.Platform);i++ {
-  	//log.Println(player.XHi,metadata.Platform[i].XHi, "---", player.YLo,"---",metadata.Platform[i].YHi, "---", player.XLo,metadata.Platform[i].XLo)
-    if player.YLo==metadata.Platform[i].YHi && player.XLo>metadata.Platform[i].XHi && player.XHi<metadata.Platform[i].XLo{
+  for i=0;i<len(platform.Platform);i++ {
+  	//log.Println(player.XHi,platform.Platform[i].XHi, "---", player.YLo,"---",platform.Platform[i].YHi, "---", player.XLo,platform.Platform[i].XLo)
+    if player.YLo==platform.Platform[i].YHi && player.XLo>platform.Platform[i].XHi && player.XHi<platform.Platform[i].XLo{
 	  log.Println("OnPlatform returns true.")
 	  return 1
     }
