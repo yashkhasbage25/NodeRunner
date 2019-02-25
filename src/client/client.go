@@ -1,6 +1,7 @@
 package client
 
 import (
+	"dtypes"
 	"strconv"
 
 	"github.com/gorilla/websocket"
@@ -8,10 +9,12 @@ import (
 
 // Client struct represents the connected client
 type Client struct {
-	IP      string
-	ID      uint32
-	Port    string
-	WSocket *websocket.Conn
+	IP             string
+	ID             uint32
+	Port           string
+	WSocket        *websocket.Conn
+	RequestChannel chan dtypes.Event
+	ReceiveChannel chan dtypes.Event
 }
 
 // GetIP is getter for IP
@@ -32,6 +35,15 @@ func (client *Client) GetPort() string {
 // GetWSocket is getter for Wsocket
 func (client *Client) GetWSocket() *websocket.Conn {
 	return client.WSocket
+}
+
+// GetRequestChannel is getter for update channel of a client
+func (client *Client) GetRequestChannel() chan dtypes.Event {
+	return client.RequestChannel
+}
+
+func (client *Client) GetReceiveChannel() chan dtypes.Event {
+	return client.ReceiveChannel
 }
 
 // GetInfoStr gives string of attributes of a client object
@@ -57,4 +69,13 @@ func (client *Client) SetPort(port string) {
 // SetWSocket is getter for Wsocket
 func (client *Client) SetWSocket(wsocket *websocket.Conn) {
 	client.WSocket = wsocket
+}
+
+// SetRequestChannel is setter for RequestChannel of client
+func (client *Client) SetRequestChannel(requestChannel chan dtypes.Event) {
+	client.RequestChannel = requestChannel
+}
+
+func (client *Client) SetReceiveChannel(receiveChannel chan dtypes.Event) {
+	client.ReceiveChannel = receiveChannel
 }

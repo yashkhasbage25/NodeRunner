@@ -3,7 +3,7 @@ import (
 	"fmt"
 	"dtypes"
 	"log"
-	"coordinate"
+	"coords"
 )
 const offsetX=20
 const offsetY=15
@@ -155,16 +155,17 @@ func GetPosition(player dtypes.Rect) dtypes.Position{
 func CollidesGem(player dtypes.Rect,id string) {
 	for i:=0;i<len(coords.gems);i++ {
 		if player.XLo>=coords.gems[i].pos.XHi || player.XHi<=coords.gems[i].pos.XLo{
-			UpdateHealth(coords.gems[i].type,coords.gems[i].value,id)
-				for j:=0;j<len(freepositions);j++{
-					if freepositions[i]==true  {
-						coords.gems[i].XHi=freepositions[i].XHi
-						coords.gems[i].XLo=freepositions[i].XLo
-						coords.gems[i].YHi=freepositions[i].YHi
-						coords.gems[i].XLo=freepositions[i].YLo
+			UpdateHealth(coords.gems[i].gemtype,coords.gems[i].value,id)
+				for j:=0;j<len(coords.freepositions);j++{
+					if coords.freepositions[i].available==true  {
+						coords.gems[i].XHi=coords.freepositions[i].XHi
+						coords.gems[i].XLo=coords.freepositions[i].XLo
+						coords.gems[i].YHi=coords.freepositions[i].YHi
+						coords.gems[i].XLo=coords.freepositions[i].YLo
+						coords.freepositions[i].available=false
 						break
 					}
-				}			
+				}
 			}
 		}
 	}
@@ -199,4 +200,3 @@ func main() {
 	fmt.Println(CollidesWithBlock_vertically(p11))
 
 }*/
-

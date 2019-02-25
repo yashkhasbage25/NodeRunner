@@ -1,4 +1,3 @@
-
 package dtypes
 
 // Position represents the coordinates of an object in the form (left, top)
@@ -24,6 +23,9 @@ type Event struct {
 	G2Pos Position `json:"g2_pos"`
 	G3Pos Position `json:"g3_pos"`
 	G4Pos Position `json:"g4_pos"`
+
+	Health1 int `json:"h1"`
+	Health2 int `json:"h2"`
 }
 
 // GameRedirector redirects when both clients are connected to server
@@ -35,14 +37,20 @@ type GameRedirector struct {
 type Debug struct {
 	Code int `json:"code"`
 }
+
 type Rect struct {
-  XHi int
-  YHi int
-  XLo int
-  YLo int
+	XHi int
+	YHi int
+	XLo int
+	YLo int
 }
+
 type Gem struct{
-	type byte
+	gemtype byte
 	value int
+	pos   Rect
+}
+type Freepos struct{
+	bool avaiable
 	pos struct Rect
 }
