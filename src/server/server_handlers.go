@@ -1,72 +1,19 @@
 package server
 
 import (
-	"github.com/IITH-SBJoshi/concurrency-3/src/client"
-	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
-	play "github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner"
 	"strconv"
+
+	"github.com/IITH-SBJoshi/concurrency-3/src/client"
+	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
+	play "github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner"
 
 	"github.com/gorilla/websocket"
 )
-
-func SetHandlers(gameServer *Server) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		indexContent, err := ioutil.ReadFile("web/index.html")
-		if err != nil {
-			fmt.Println("Could not open file.", err)
-		}
-		fmt.Fprintf(w, "%s", indexContent)
-	})
-
-	http.HandleFunc("/wait_to_join", func(w http.ResponseWriter, r *http.Request) {
-		waitContent, err := ioutil.ReadFile("web/wait.html")
-		if err != nil {
-			fmt.Println("Could not open file.", err)
-		}
-		fmt.Fprintf(w, "%s", waitContent)
-	})
-
-	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-		conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
-		if err != nil {
-			fmt.Print(err)
-		}
-		fmt.Print("connecttion found")
-
-		go play.PlayNodeRunner(conn)
-	})
-
-	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
-		content, err := ioutil.ReadFile("web/assets/img/front.png")
-		if err != nil {
-			fmt.Println("Could not open image.", err)
-		}
-		fmt.Fprintf(w, "%s", content)
-	})
-
-	http.HandleFunc("/css/index.css", func(w http.ResponseWriter, r *http.Request) {
-		content, err := ioutil.ReadFile("web/css/index.css")
-		if err != nil {
-			fmt.Println("Could not open image.", err)
-		}
-		w.Header().Add("Content-Type", "text/css")
-		fmt.Fprintf(w, "%s", content)
-	})
-
-	http.HandleFunc("/css/wait.css", func(w http.ResponseWriter, r *http.Request) {
-		content, err := ioutil.ReadFile("web/css/wait.css")
-		if err != nil {
-			fmt.Println("Could not open image.", err)
-		}
-		w.Header().Add("Content-Type", "text/css")
-		fmt.Fprintf(w, "%s", content)
-	})
-}
 
 // SetHandlers is sets all possible handlers for the server.
 func (gameServer *Server) SetHandlers() {
@@ -147,7 +94,7 @@ func (gameServer *Server) SetHandlers() {
 				RequestChannel: gameServer.GetRequestChannel(),
 				ReceiveChannel: newChannel,
 			}
-			gameServer.SetRespondChannel(thisClientID, newChannel)
+			gameServer.SetRespondChannel(int(thisClientID), newChannel)
 			log.Println("New client object created.", newClient.GetInfoStr())
 			gameServer.AddNewClient(newClient)
 			log.Println("New state of server: ", gameServer.GetInfoStr())
@@ -159,8 +106,11 @@ func (gameServer *Server) SetHandlers() {
 		}
 
 		log.Println("handling pattern /game")
-		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameServer.GetClient(0), gameServer.GetClient(1))
+
+		gameWinChannel := make(chan int)
+		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameWinChannel, gameServer.GetClient(0), gameServer.GetClient(1))
 		// go play.Respond(gameServer)
+		go detectGameOver(gameServer, gameWinChannel)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
@@ -307,4 +257,10 @@ func (gameServer *Server) SetHandlers() {
 		log.Println("handling pattern /web/assets/img/bot.png")
 		fmt.Fprintf(w, "%s", content)
 	})
+}
+
+func detectGameOver(server *Server, gameWinChanel chan int) {
+	winner := <-gameWinChanel
+	log.Println("Winner is client id", winner)
+	// server.
 }

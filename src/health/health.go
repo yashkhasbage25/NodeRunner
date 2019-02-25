@@ -12,6 +12,11 @@ var firstHealth int
 var secondHealth int
 var pause int
 var rate int
+var gameWinChannel chan int
+
+func SetGameWinChannel(winChannel chan int) {
+	gameWinChannel = winChannel
+}
 
 func SetHealth(player string, value int) {
 	if player == "p1" {
@@ -47,8 +52,14 @@ func UpdateHealth(operation byte, value int, player string) {
 		secondMutex.Lock()
 		if player == "p2" {
 			firstHealth -= value
+			if firstHealth <= 0 {
+				gameWinChannel <- 1
+			}
 		} else {
 			secondHealth -= value
+			if secondHealth <= 0 {
+				gameWinChannel <- 0
+			}
 		}
 		secondMutex.Unlock()
 	} else if operation == '*' {
@@ -66,8 +77,14 @@ func UpdateHealth(operation byte, value int, player string) {
 		secondMutex.Lock()
 		if player == "p2" {
 			firstHealth /= value
+			if firstHealth <= 0 {
+				gameWinChannel <- 1
+			}
 		} else {
 			secondHealth /= value
+			if secondHealth <= 0 {
+				gameWinChannel <- 0
+			}
 		}
 		secondMutex.Unlock()
 	}
@@ -77,15 +94,17 @@ func DecayPlayer1() {
 	for firstHealth > 0 {
 		firstMutex.Lock()
 		firstHealth -= rate
-		time.Sleep(time.Millisecond * pause)
+		time.Sleep(time.Duration(pause) * time.Millisecond)
 		firstMutex.Unlock()
 	}
+	gameWinChannel <- 1
 }
 func DecayPlayer2() {
 	for secondHealth > 0 {
 		secondMutex.Lock()
 		secondHealth -= rate
-		time.Sleep(time.Millisecond * pause)
+		time.Sleep(time.Millisecond * time.Duration(pause))
 		secondMutex.Unlock()
 	}
+	gameWinChannel <- 0
 }

@@ -1,9 +1,10 @@
 package main
 
 import (
-	dtypes "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"log"
 	"net/http"
+
+	dtypes "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	server "github.com/IITH-SBJoshi/concurrency-3/src/server"
 )
 
@@ -11,7 +12,7 @@ func main() {
 
 	gameServer := server.Server{
 		IDCounter:      0,
-		RequestChannel: make(chan dtypes.Events),
+		RequestChannel: make(chan dtypes.Event),
 	}
 
 	gameServer.SetHandlers()
