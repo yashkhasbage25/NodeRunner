@@ -71,3 +71,25 @@
     top: 400px;
     z-index: 101;
 }
+
+#myHealthBar {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myHealth {
+  width: 100%;
+  height: 30px;
+  background-color: #4CAF50;
+}
+
+#otherHealthBar {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#otherHealth {
+  width: 100%;
+  height: 30px;
+  background-color: #4CAF50;
+}

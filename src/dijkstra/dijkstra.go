@@ -4,151 +4,32 @@ import (
 
 	"dtypes"
 	"fmt"
+	"channels"
+	"handler"
 )
 
-// staticNode number of static nodes are 32 depended on construction of graph ..here manually measured
-type staticNode struct {
-	location dtypes.Position
-	nodeID int 
-	xnodeID int
-	ynodeID int
+// StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
+type StaticNode struct {
+	Location dtypes.Position
+	NodeID int 
+	XNodeID int
+	YNodeID int
 	//type of node ..ladder or ..end of path or ..
 }
 
-type matrix struct { // 32 is number of static node and we are adding 2 dynamic node.
-	adjacencyMatrix [6][32+2][32+2]int
-	size int; // 34
+type Matrix struct { // 32 is number of static node and we are adding 2 dynamic node.
+	AdjacencyMatrix [6][32+2][32+2]int
+	Size int; // 34
 	
 }
 
-// global game matrix 
-var game matrix
-var parentarray [6][32+2] int
-var allNodes [6][32+2] staticNode
-var path[6][32+2] bool
-func  initialize() {
-	for z:=0;z<6;z++{
-		// write all distances.
-		allNodes[z][0]=staticNode{dtypes.Position{15,25},1,15,25}
-		allNodes[z][1]=staticNode{dtypes.Position{385,25},1,385,25}
-		allNodes[z][2]=staticNode{dtypes.Position{855,25},1,855,25}
-		allNodes[z][3]=staticNode{dtypes.Position{785,105},2,785,105}
-		allNodes[z][4]=staticNode{dtypes.Position{855,105},2,855,105}
-		allNodes[z][5]=staticNode{dtypes.Position{1185,105},2,1185,105}
-		allNodes[z][6]=staticNode{dtypes.Position{15,180},3,15,180}
-		allNodes[z][7]=staticNode{dtypes.Position{385,180},3,385,180}
-		allNodes[z][8]=staticNode{dtypes.Position{415,180},3,415,180}
-		allNodes[z][9]=staticNode{dtypes.Position{585,190},4,585,190}
-		allNodes[z][10]=staticNode{dtypes.Position{785,190},4,785,190}
-		allNodes[z][11]=staticNode{dtypes.Position{815,190},4,815,190}
-		allNodes[z][12]=staticNode{dtypes.Position{1185,190},4,1185,190}
-		allNodes[z][13]=staticNode{dtypes.Position{15,305},5,15,305}
-		allNodes[z][14]=staticNode{dtypes.Position{415,305},5,415,305}
-		allNodes[z][15]=staticNode{dtypes.Position{585,305},5,585,305}
-		allNodes[z][16]=staticNode{dtypes.Position{815,305},5,815,305}
-		allNodes[z][17]=staticNode{dtypes.Position{155,430},6,155,430}
-		allNodes[z][18]=staticNode{dtypes.Position{185,430},6,185,430}
-		allNodes[z][19]=staticNode{dtypes.Position{415,430},6,415,430}
-		allNodes[z][20]=staticNode{dtypes.Position{545,430},6,545,430}
-		allNodes[z][21]=staticNode{dtypes.Position{785,420},7,785,440}
-		allNodes[z][22]=staticNode{dtypes.Position{815,420},7,815,440}
-		allNodes[z][23]=staticNode{dtypes.Position{1185,420},7,1185,440}
-		allNodes[z][24]=staticNode{dtypes.Position{15,530},8,15,530}
-		allNodes[z][25]=staticNode{dtypes.Position{155,530},8,155,530}
-		allNodes[z][26]=staticNode{dtypes.Position{185,530},8,185,530}
-		allNodes[z][27]=staticNode{dtypes.Position{545,530},8,545,530}
-		allNodes[z][28]=staticNode{dtypes.Position{785,530},8,785,530}
-		allNodes[z][29]=staticNode{dtypes.Position{1185,530},8,1185,530}
-		allNodes[z][30]=staticNode{dtypes.Position{115,180},3,115,180}
-		allNodes[z][31]=staticNode{dtypes.Position{115,305},32,115,305}
 
+// global game Matrix 
+var Game Matrix
+var Parentarray [6][32+2] int
+var Allnodes [6][32+2] StaticNode
+var Path[6][32+2] bool
 
-		//allNodes[z][]={{,},,,}
-		// if there is no edge between node i and j then value corresponding them will be -1
-		for i:=0;i<34;i++{
-			for j:=0;j<34;j++{
-				game.adjacencyMatrix[z][i][j]=-1
-			}
-		}
-
-		// initialize global adjacency matrix.
-		 game.adjacencyMatrix[z][0][1]=370
-		 game.adjacencyMatrix[z][1][0]=370
-		 game.adjacencyMatrix[z][1][2]=470
-		 game.adjacencyMatrix[z][2][1]=470
-		 game.adjacencyMatrix[z][1][7]=155
-		 game.adjacencyMatrix[z][7][1]=155
-		 game.adjacencyMatrix[z][2][4]=80
-		 game.adjacencyMatrix[z][3][4]=70
-		 game.adjacencyMatrix[z][4][3]=70
-		 game.adjacencyMatrix[z][4][5]=330
-		 game.adjacencyMatrix[z][5][4]=330
-		 game.adjacencyMatrix[z][6][30]=100
-		 game.adjacencyMatrix[z][30][6]=100
-		 game.adjacencyMatrix[z][7][30]=270s
-		 game.adjacencyMatrix[z][30][7]=270
-		 game.adjacencyMatrix[z][7][8]=30
-		 game.adjacencyMatrix[z][8][7]=30
-		 game.adjacencyMatrix[z][3][10]=85
-		 game.adjacencyMatrix[z][30][31]=125
-		 game.adjacencyMatrix[z][31][30]=125
-		 game.adjacencyMatrix[z][13][31]=100
-		 game.adjacencyMatrix[z][31][13]=100
-		 game.adjacencyMatrix[z][31][14]=300
-		 game.adjacencyMatrix[z][14][31]=300
-		 game.adjacencyMatrix[z][14][15]=170
-		 game.adjacencyMatrix[z][15][14]=170
-		 game.adjacencyMatrix[z][15][16]=230
-		 game.adjacencyMatrix[z][17][15]=230
-		 game.adjacencyMatrix[z][9][10]=200
-		 game.adjacencyMatrix[z][10][9]=200
-		 game.adjacencyMatrix[z][10][11]=30
-		 game.adjacencyMatrix[z][11][10]=30
-		 game.adjacencyMatrix[z][11][12]=370
-		 game.adjacencyMatrix[z][12][11]=370
-		 game.adjacencyMatrix[z][9][15]=115
-		 game.adjacencyMatrix[z][8][14]=125
-		 game.adjacencyMatrix[z][11][16]=115
-		 game.adjacencyMatrix[z][16][11]=115
-		 game.adjacencyMatrix[z][16][22]=115
-		 game.adjacencyMatrix[z][22][16]=115
-		 game.adjacencyMatrix[z][14][19]=125
-		 game.adjacencyMatrix[z][19][14]=125
-		 game.adjacencyMatrix[z][17][25]=100
-		 game.adjacencyMatrix[z][18][26]=100
-		 game.adjacencyMatrix[z][26][18]=100
-		 game.adjacencyMatrix[z][20][27]=100
-		 game.adjacencyMatrix[z][17][18]=30
-		 game.adjacencyMatrix[z][18][17]=30
-		 game.adjacencyMatrix[z][18][19]=230
-		 game.adjacencyMatrix[z][19][18]=230
-		 game.adjacencyMatrix[z][19][20]=130
-		 game.adjacencyMatrix[z][20][19]=130
-		 game.adjacencyMatrix[z][21][22]=30
-		 game.adjacencyMatrix[z][22][21]=30
-		 game.adjacencyMatrix[z][22][23]=370
-		 game.adjacencyMatrix[z][23][22]=370
-		 game.adjacencyMatrix[z][21][28]=110
-		 game.adjacencyMatrix[z][23][29]=110
-		 game.adjacencyMatrix[z][29][23]=110
-		 game.adjacencyMatrix[z][24][25]=100
-		 game.adjacencyMatrix[z][25][24]=100
-		 game.adjacencyMatrix[z][25][26]=30
-		 game.adjacencyMatrix[z][26][25]=30
-		 game.adjacencyMatrix[z][26][27]=360
-		 game.adjacencyMatrix[z][27][26]=360
-		 game.adjacencyMatrix[z][27][28]=240
-		 game.adjacencyMatrix[z][28][27]=240
-		 game.adjacencyMatrix[z][28][29]=400
-		 game.adjacencyMatrix[z][29][28]=400
-		 	//initialization of parent
-		for i:=0;i<32+2;i++{
-			parentarray[z][i]=-1
-		} 
-		
-	}
-
-}
 func Abs(x int) int{
 	if x < 0 {
 		return -x
@@ -157,48 +38,64 @@ func Abs(x int) int{
 }
 func setter(i int ,n int, z int,flag bool){
 	if flag==true{
-		game.adjacencyMatrix[z][n][i]=Abs(allNodes[z][i].location.Y-allNodes[z][n].location.Y)
-		game.adjacencyMatrix[z][i][n]=Abs(allNodes[z][i].location.Y-allNodes[z][n].location.Y)
+		Game.AdjacencyMatrix[z][n][i]=Abs(Allnodes[z][i].Location.Y-Allnodes[z][n].Location.Y)
+		Game.AdjacencyMatrix[z][i][n]=Abs(Allnodes[z][i].Location.Y-Allnodes[z][n].Location.Y)
 	}	else  {
-		game.adjacencyMatrix[z][n][i]=Abs(allNodes[z][i].location.X-allNodes[z][n].location.X)
-		game.adjacencyMatrix[z][i][n]=Abs(allNodes[z][i].location.X-allNodes[z][n].location.X)
+		Game.AdjacencyMatrix[z][n][i]=Abs(Allnodes[z][i].Location.X-Allnodes[z][n].Location.X)
+		Game.AdjacencyMatrix[z][i][n]=Abs(Allnodes[z][i].Location.X-Allnodes[z][n].Location.X)
 	}
 	
 }
 
+func GetBoundary(player dtypes.Position) dtypes.Rect {
+  var temp dtypes.Rect
+  temp.XHi = player.X-20
+  temp.YHi = player.Y-15
+  temp.XLo = player.X+20
+  temp.YLo = player.Y+15
+  return temp
+}
 func fallingon(entity dtypes.Position,z int)int{
 	var ymin=1200
 	for i:=0;i<32;i++  {
-		if allNodes[z][i].location.Y > entity.Y &&	allNodes[z][i].location.Y < ymin /* &&(entity.x,allNodes[z][i].location.Y)must be on plank */{
-			ymin=allNodes[z][i].location.Y
+		temp:=dtypes.Position{entity.X,Allnodes[z][i].Location.Y}
+		if Allnodes[z][i].Location.Y > entity.Y &&	Allnodes[z][i].Location.Y < ymin  &&handler.OnPlatform(GetBoundary(temp))==1{
+			ymin=Allnodes[z][i].Location.Y
 		}
 
 	}
 	return ymin
 }
 func onladder(entity dtypes.Position)bool{//code from atharva.
-	return false
+	output:=handler.AllignedWithLadder(GetBoundary(entity))
+	if output==1{
+		return true
+	} else{
+		return false
+	}
 }
 
 func addDynamicnode(bot dtypes.Position,player dtypes.Position,z int) {
-	allNodes[z][32]= staticNode{dtypes.Position{bot.X,bot.Y},9,bot.X,bot.Y} //added bot at position equal to n.
-	/* if inair(player)=1{
-		allNodes[z][32+1]=staticNode{dtypes.Position{player.X,fallingon(player,z)},10 ,player.X, fallingon(player,z)}
 
-	}*/
-	//else
-	allNodes[z][32+1]=staticNode{dtypes.Position{player.X,player.Y},10 ,player.X, player.Y}//added player
+	Allnodes[z][32]= StaticNode{dtypes.Position{bot.X,bot.Y},9,bot.X,bot.Y} //added bot at position equal to n.
+	if OnPlatform(GetBoundary(player))==0&&AllignedWithLadder(GetBoundary(player))==0{
+		Allnodes[z][32+1]=StaticNode{dtypes.Position{player.X,fallingon(player,z)},10 ,player.X, fallingon(player,z)
+	} else {
+		Allnodes[z][32+1]=StaticNode{dtypes.Position{player.X,player.Y},10 ,player.X, player.Y}//added player
+	}
+	botonladder:=	AllignedWithLadder(GetBoundary(bot))
+	playeronladder:= AllignedWithLadder(GetBoundary(player))
 	for i:=0; i<32 ; i++ { 
-		if allNodes[z][i].xnodeID==allNodes[z][32].xnodeID  &&onladder(bot){
+		if Allnodes[z][i].XNodeID==Allnodes[z][32].XNodeID  &&botonladder==1{
 			setter(i,32,z,true)
-		}	else if allNodes[z][i].ynodeID==allNodes[z][32].ynodeID{
+		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32].YNodeID{
 			setter(i,32,z,false)
 		}
 	}
 	for i:=0; i<32+1; i++ {
-		if allNodes[z][i].xnodeID==allNodes[z][32+1].xnodeID  &&onladder(player){
+		if Allnodes[z][i].XNodeID==Allnodes[z][32+1].XNodeID  &&playeronladder==1{
 			setter(i,32+1,z,true)
-		}	else if allNodes[z][i].ynodeID==allNodes[z][32+1].ynodeID{// if it is not on ladder do not add edge if y> bot 						
+		}	else if Allnodes[z][i].YNodeID==Allnodes[z][32+1].YNodeID{// if it is not on ladder do not add edge if y> bot 						
 			setter(i,32+1,z,false)										//position
 		}
 	}
@@ -218,27 +115,87 @@ func minDistance(distance []int, cluster []bool, size int) int {
 }
 func printPath(z int,node int)  {
 
-	if(parentarray[z][node]!=-1) {
-		if parentarray[z][node]!=32{
-			printPath(z,parentarray[z][node])
+	if(Parentarray[z][node]!=-1) {
+		if Parentarray[z][node]!=32{
+			printPath(z,Parentarray[z][node])
 		}
 		fmt.Println(node)
 	}
 }
 func markPath(z int,node int)  {
 
-	if(parentarray[z][node]!=-1) {
-		if parentarray[z][node]!=32{
-			markPath(z,parentarray[z][node])
+	if(Parentarray[z][node]!=-1) {
+		if Parentarray[z][node]!=32{
+			markPath(z,Parentarray[z][node])
 		}
-		path[z][node]=true;
+		Path[z][node]=true;
 	}
 }
-func RunDijkstra(bot dtypes.Position,player dtypes.Position, z int)(dtypes.Position,int) {
+func nextposition(currentPosition dtypes.Position,botNextmove dtypes.Position,step int) dtypes.Position{
+	var updatedPosition dtypes.Position
+	xcurrent:=currentPosition.X
+	ycurrent:=currentPosition.Y
+	xpropoposed:=botNextmove.X
+	ypropoposed:=botNextmove.Y
+	if  xcurrent==xpropoposed {
+		updatedPosition.X=xcurrent
+		if ypropoposed>ycurrent {
+		updatedPosition.Y=ycurrent+step
+	  	} else if ypropoposed<ycurrent {
+	  	updatedPosition.Y=ycurrent-step
+	  	} else {
+	  	updatedPosition.Y=ycurrent
+	  	}
+	  } else if  ycurrent==ypropoposed {
+		updatedPosition.Y=ycurrent
+		if xpropoposed>xcurrent {
+		updatedPosition.X=xcurrent+step
+	  	} else {
+	  	updatedPosition.X=xcurrent-step
+	  	}
+	}
+	return updatedPosition
+}
+func minimum (distance [] int,i int,j int ) int {
+	if distance[i]<distance [j] {
+		return i
+	} else {
+		return j
+	}
+}
+func Updatebots(event dtypes.Event) dtypes.Event {
+	replyEvent := event
+	minpathlen := make([]int, 6)
+	var update [6] dtypes.Position
+	var bestUpdate [3] dtypes.Position
 
-	initialize()
+	go runDijkstra(event.B1Pos,event.P1Pos,0,channels.Chans[0])
+	go runDijkstra(event.B1Pos,event.P2Pos,1,channels.Chans[1])
+	go runDijkstra(event.B2Pos,event.P1Pos,2,channels.Chans[2])
+	go runDijkstra(event.B2Pos,event.P2Pos,3,channels.Chans[3])
+	go runDijkstra(event.B3Pos,event.P1Pos,4,channels.Chans[4])
+	go runDijkstra(event.B3Pos,event.P2Pos,5,channels.Chans[5])
+	for i:=0;i<6;i++ {
+		var channeldata channels.Data
+		channeldata = (<- channels.Chans[i])
+		update[i]= channeldata.UpdatedPosition
+		minpathlen[i]= channeldata.MinimumDistance
+	}
+	for i:=0;i<3;i++ {
+		bestUpdate[i]=update[minimum(minpathlen,2*i,2*i+1)]
+	}
+	replyEvent.B1Pos=bestUpdate[0]
+	replyEvent.B2Pos=bestUpdate[1]
+	replyEvent.B3Pos=bestUpdate[2]
+	return replyEvent
+     
+}
+func runDijkstra(bot dtypes.Position,player dtypes.Position, z int, channel chan channels.Data )  {
+	var step int
+	step=2;
+	//initialize()
 	addDynamicnode(bot,player,z)
-	//we have source as node with nodeid
+	//we have source as node with NodeID
 	//var distance [32+2] int
 	distance := make([]int, 34)
 	cluster  := make([]bool, 34) 
@@ -252,18 +209,18 @@ func RunDijkstra(bot dtypes.Position,player dtypes.Position, z int)(dtypes.Posit
     distance[32]=0  // distance of src from src is 0
 
     for i:=0;i<32+2;i++{
-    	newnodeID:=minDistance(distance, cluster,32+2)
-    	cluster[newnodeID]=true
+    	newNodeID:=minDistance(distance, cluster,32+2)
+    	cluster[newNodeID]=true
     	
    
          // Update dist[v] only if is not in cluster, there is an edge from  
-         // newnodeID to v, and total weight of path from src to  v through newnodeID is  
+         // newNodeID to v, and total weight of path from src to  v through newNodeID is  
          // smaller than current value of dist[v] 
          for v:=0; v < 32+2; v++ {
 
-         	if  !cluster[v] && game.adjacencyMatrix[z][newnodeID][v]!=-1 && distance[newnodeID] != int(^uint(0)>> 1)&& distance[newnodeID]+game.adjacencyMatrix[z][newnodeID][v]  < distance[v] {
-         			distance[v] = distance[newnodeID] + game.adjacencyMatrix[z][newnodeID][v]
-         			parentarray[z][v]=newnodeID
+         	if  !cluster[v] && Game.AdjacencyMatrix[z][newNodeID][v]!=-1 && distance[newNodeID] != int(^uint(0)>> 1)&& distance[newNodeID]+Game.AdjacencyMatrix[z][newNodeID][v]  < distance[v] {
+         			distance[v] = distance[newNodeID] + Game.AdjacencyMatrix[z][newNodeID][v]
+         			Parentarray[z][v]=newNodeID
          		}    
          } 
     }
@@ -274,14 +231,16 @@ func RunDijkstra(bot dtypes.Position,player dtypes.Position, z int)(dtypes.Posit
     minimumDistance:=distance[33]
     markPath(z,33)
     for i:=0;i<32+2;i++{
-    	if parentarray[z][i]==32&&path[z][i]==true{
-    		botNextmove=allNodes[z][i].location
+    	if Parentarray[z][i]==32&&Path[z][i]==true{
+    		botNextmove=Allnodes[z][i].Location
     	}
     }
+    currentPosition:=Allnodes[z][32].Location
+    updatedPosition:=nextposition(currentPosition,botNextmove,step)
 
-    printPath(z,33)
+    //printPath(z,33)
 
 
-    fmt.Println("distance :: ",minimumDistance)
-    return botNextmove,minimumDistance
+    //fmt.Println("distance :: ",minimumDistance)
+    channel <- channels.Data{updatedPosition,minimumDistance}
 }

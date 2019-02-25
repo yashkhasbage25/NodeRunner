@@ -1,6 +1,3 @@
-// var player1 = document.getElementById("player1");
-// var player2 = document.getElementById("player2");
-
 function getElement(id) {
     item = document.getElementById(id);
     if(item == null) {
@@ -12,13 +9,13 @@ function getElement(id) {
         elem: item,
         height: itemHeight,
         width: itemWidth
-    }
+    };
 }
 
-ws = new WebSocket("ws://192.168.105.49:8080/game");
-var clientNumber = -1
-var clientID = ""
-var pressedKeys = []
+// ws = new WebSocket("ws://192.168.105.49:8080/game");
+var clientNumber = -1;
+var clientID = "";
+var pressedKeys = [];
 var playerOne = getElement("player1");
 var playerTwo = getElement("player2");
 
@@ -31,6 +28,9 @@ var botOne = getElement("bot1");
 var botTwo = getElement("bot2");
 var botThree = getElement("bot3");
 
+var myHealth = getElement("myHealth");
+var otherHealth = getElement("otherHealth");
+
 var playerHeight = playerOne.height;
 var playerWidth = playerOne.width;
 
@@ -40,7 +40,7 @@ ws.onopen = function() {
 
 ws.onclose = function() {
     console.log("game.html websocket closed");
-    ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}))
+    ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}));
 }
 
 ws.onmessage = function(event) {
@@ -51,21 +51,46 @@ ws.onmessage = function(event) {
         clientNumber = parseInt(data.object);
         clientID = "p" + (clientNumber + 1).toString();
     } else if (data.etype == "SendUpdate") {
-        ws.send(JSON.stringify(getAllCurrentPositions()))
+        ws.send(JSON.stringify(getAllCurrentPositions()));
+    } else if (data.etype == "Update") {
+        setAllPositions(data);
+    } else if (data.etype == "Win") {
+        alert("You Win");
+    } else if (data.etype == "Lose") {
+        alret("You Lose");
     }
     console.log("This client has ID:", clientID, clientNumber);
-    // document.getElementById("player2").style.left = data.px + "px";
-    // document.getElementById("player2").style.top = data.py + "px";
 }
-//
-// document.onkeyup = function(event) {
-//     var rect = player2.getBoundingClientRect();
-//     ws.send(JSON.stringify({etype: "up", px: rect.left, py: rect.top}));
-// }
-// document.onkeydown = function(event) {
-//     var rect = player2.getBoundingClientRect();
-//     ws.send(JSON.stringify({etype: "down", px: rect.left, py: rect.top}));
-// }
+
+function setPosition(elem, position) {
+    elem.left = position.x.toString() + "px";
+    elem.top = position.y.toString() + "px";
+}
+
+function setHealth(elem, health) {
+    health /= 10;
+    elem.style.width = health.toString() + "%";
+    elem.innerHTML = health + '%';
+}
+
+function setAllPositions(data) {
+    setPosition(playerOne, data.p1_pos);
+    setPosition(playerTwo, data.p2_pos);
+    setPosition(botOne, data.b1_pos);
+    setPosition(botTwo, data.b2_pos);
+    setPosition(botThree, data.b3_pos);
+    setPosition(gemOne, data.g1_pos);
+    setPosition(gemTwo, data.g2_pos);
+    setPosition(gemThree, data.g3_pos);
+    setPosition(gemFour, data.g4_pos);
+    if (clientID == "p1") {
+        setHealth(myHealth, data.h1);
+        setHealth(otherHealth, data.h2);
+    } else {
+        setHealth(myHealth, data.h2);
+        setHealth(otherHealth, data.h1);
+    }
+}
 
 function getPositionOfElement(element) {
 
@@ -75,6 +100,11 @@ function getPositionOfElement(element) {
         x: centerX,
         y: centerY
     };
+}
+
+function getHealth(elem) {
+    healthStr = elem.style.width;
+    health = parseInt(healthStr.substring(0, healthStr.length-1));
 }
 
 function getCurrentPositions() {
@@ -89,7 +119,9 @@ function getCurrentPositions() {
         g1_pos: getPositionOfElement(gemOne),
         g2_pos: getPositionOfElement(gemTwo),
         g3_pos: getPositionOfElement(gemThree),
-        g4_pos: getPositionOfElement(gemFour)
+        g4_pos: getPositionOfElement(gemFour),
+        h1: getHealth(myHealth) * 10,
+        h2: getHealth(otherHealth) * 10
     };
 }
 
@@ -112,7 +144,7 @@ document.onkeyup = function(event) {
 document.onkeypress = function(event) {
     currentPositions = getCurrentPositions();
     currentPositions.object = clientID;
-    if(event.keyCode == 37) {
+    if (event.keyCode == 37) {
         currentPositions.etype = "Left";
     } else if (event.keyCode == 38) {
         currentPositions.etype = "Up";
@@ -120,27 +152,10 @@ document.onkeypress = function(event) {
         currentPositions.etype = "Right";
     } else if (event.keyCode == 40) {
         currentPositions.etype = "Down";
+    } else if (event.keyCode == 32) {
+        currentPositions.etype = "Teleport";
+    } else {
+        console.log("Unknown keyCode detected", event.keyCode);
     }
     ws.send(JSON.stringify(currentPositions));
 }
-//
-// var keys = [];
-// window.addEventListener("keydown",
-//     function(e){
-//         keys[e.keyCode] = true;
-//         checkCombinations(e);
-//     },
-// );
-//
-// window.addEventListener('keyup',
-//     function(e){
-//         keys[e.keyCode] = false;
-//     },
-// false);
-//
-// function checkCombinations(e){
-//     if(keys["a".charCodeAt(0)] && e.ctrlKey){
-//         alert("You're not allowed to mark all content!");
-//         e.preventDefault();
-//     }
-// }
