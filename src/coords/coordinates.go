@@ -3,6 +3,7 @@ import(
 	"dtypes"
 	"dijkstra"
 )
+
 var platform[8] dtypes.Rect
 var ladder[6] dtypes.Rect
 var gem[5] dtypes.Gem
