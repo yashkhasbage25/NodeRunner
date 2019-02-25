@@ -3,7 +3,7 @@ import (
 	"fmt"
 	"dtypes"
 	"log"
-	"coordinate"
+	"coords"
 )
 const offsetX=20
 const offsetY=15
@@ -165,7 +165,7 @@ func CollidesGem(player dtypes.Rect,id string) {
 						coords.freepositions[i].available=false
 						break
 					}
-				}			
+				}
 			}
 		}
 	}
@@ -200,4 +200,3 @@ func main() {
 	fmt.Println(CollidesWithBlock_vertically(p11))
 
 }*/
-
