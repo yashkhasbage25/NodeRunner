@@ -8,6 +8,7 @@ jobs:
 
     environment:
       TEST_RESULTS: /tmp/test-results
+      GOPATH: $GOPATH:/go/src/src
 
     steps:
       - checkout
@@ -24,7 +25,7 @@ jobs:
       - run: go get github.com/mattes/migrate
       - run: go get github.com/jstemmer/go-junit-report
       - run: go get github.com/gorilla/websocket
-      - run: go build main.go
+      - run: go build main.go ./src/*
 
       #  CircleCi's Go Docker image includes netcat
       #  This allows polling the DB port to confirm it is open before proceeding
