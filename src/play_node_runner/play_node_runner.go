@@ -62,8 +62,8 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 
 	go health.DecayPlayer1()
 	go health.DecayPlayer2()
-	go regularUpdater(firstClient.GetWSocket(), firstClient.GetRequestChannel(), 0)
-	go regularUpdater(secondClient.GetWSocket(), secondClient.GetRequestChannel(), 1)
+	go regularUpdater(firstClient.GetWSocket(), firstClient.GetRequestChannel(), firstClient.GetReceiveChannel(), 0)
+	go regularUpdater(secondClient.GetWSocket(), secondClient.GetRequestChannel(), secondClient.GetReceiveChannel(), 1)
 	go serverComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
 	go serverReceiveComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
 	// go sendResponse(firstClient.GetReceiveChannel(), firstClient.GetWSocket(), 0)
@@ -102,6 +102,7 @@ func serverReceiveComputations(firstClientRequestChannel, secondClientRequestCha
 
 func serverComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
 	// var latestState dtypes.Event
+	go sendUpdatesToClient
 	for {
 		log.Println("Server received a event msg to compute at Server computations")
 		playerPositions := <-requestChannelServer

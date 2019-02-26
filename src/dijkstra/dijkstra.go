@@ -229,6 +229,9 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 	addDynamicnode(bot, player, z)
 	//we have source as node with NodeID
 	//var distance [32+2] int
+	for i := 0; i < 34; i++ {
+		log.Println("z: ", z, " ", i, Game.AdjacencyMatrix[z][20][i])
+	}
 	distance := make([]int, 34)
 	cluster := make([]bool, 34)
 	//var cluster [32+2] bool // cluster[i] will be true if node i is included in shortest
