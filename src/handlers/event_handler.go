@@ -9,14 +9,17 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/health"
 )
 
-func SetGameWinChannel(gameWinChannel chan int) {
-	health.SetGameWinChannel(gameWinChannel)
+var gameWinChannel chan int
+
+func SetGameWinChannel(winChannel chan int) {
+	gameWinChannel = winChannel
+	health.SetGameWinChannel(winChannel)
 }
 
 func Handle(event dtypes.Event) dtypes.Event {
 
 	var replyEvent dtypes.Event
-	if event.EventType == "SendUpdate" {
+	if event.EventType == "Update" {
 		replyEvent = dtypes.Event{
 			EventType: "Update",
 			Object:    event.Object,
@@ -32,7 +35,11 @@ func Handle(event dtypes.Event) dtypes.Event {
 			P1Health:  health.GetHealth("p1"),
 			P2Health:  health.GetHealth("p2"),
 		}
+		log.Println("handler replies with update eventtype", replyEvent.GetStr())
 		return replyEvent
+	}
+	if event.EventType == "SocketClosedUnexpectedly" {
+		log.Fatal("Unexpectedly closed:", event.Object)
 	}
 	if event.EventType == "Teleport" {
 		if event.Object == "p1" {
@@ -70,6 +77,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 				P2Health:  health.GetHealth("p2"),
 			}
 		}
+		log.Println("handler replies for teleport", replyEvent.GetStr())
 		return replyEvent
 	}
 	direction := [4]string{"Up", "Down", "Left", "Right"}
@@ -303,5 +311,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 
 		}
 	}
+	log.Println("handler replied with event ", event.GetStr())
 	return replyEvent
 }

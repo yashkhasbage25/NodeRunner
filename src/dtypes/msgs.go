@@ -1,5 +1,7 @@
 package dtypes
 
+import "strconv"
+
 // Position represents the coordinates of an object in the form (left, top)
 type Position struct {
 	X int `json:"x"`
@@ -26,6 +28,19 @@ type Event struct {
 
 	P1Health int `json:"h1"`
 	P2Health int `json:"h2"`
+}
+
+func (event *Event) GetStr() string {
+	replyStr := ""
+	replyStr += "EventType:" + event.EventType
+	replyStr += ",Object:" + event.Object
+	replyStr += "P!Pos:" + strconv.Itoa(event.P1Pos.X)
+	replyStr += "P1Pos:" + strconv.Itoa(event.P1Pos.Y)
+	replyStr += "P2Pos:" + strconv.Itoa(event.P2Pos.X)
+	replyStr += "P2pos:" + strconv.Itoa(event.P2Pos.Y)
+	replyStr += "B1Pos:" + strconv.Itoa(event.B1Pos.X)
+	replyStr += "B1Pos:" + strconv.Itoa(event.B1Pos.Y)
+	return replyStr
 }
 
 // GameRedirector redirects when both clients are connected to server

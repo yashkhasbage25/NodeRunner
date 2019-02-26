@@ -1,7 +1,6 @@
 package play_node_runner
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -17,21 +16,31 @@ import (
 )
 
 func regularUpdater(conn *websocket.Conn, requestChannelClient chan dtypes.Event) {
-
-	ticker := time.NewTicker(50 * time.Millisecond)
+	var event dtypes.Event
+	ticker := time.NewTicker(1000 * time.Millisecond)
 	go func() {
 		for range ticker.C {
-			event := dtypes.Event{
+			event = dtypes.Event{
 				EventType: "SendUpdate",
 			}
 
 			err := conn.WriteJSON(event)
+			log.Println("written sendupdate json")
 			if err != nil {
-				fmt.Println("Error writing json.", err)
+				log.Println("Error writing json.", err)
 			}
+			// err = json.Unmarshal([]byte(), v)
+
+			// msgType, msg, err := conn.ReadMessage()
+			// if err != nil {
+			//
+			// }
 			err = conn.ReadJSON(&event)
+			// r := "                                                                                                                                                                          "
+			// err = json.Unmarshal([]byte(r), &event)
+			log.Println("read json from regular updater", event.GetStr())
 			if err != nil {
-				fmt.Println("Error reading json.", err)
+				log.Println("Error reading jsonn message.", err)
 			}
 			requestChannelClient <- event
 		}
@@ -40,7 +49,11 @@ func regularUpdater(conn *websocket.Conn, requestChannelClient chan dtypes.Event
 
 func sendResponse(receiveChannelClient chan dtypes.Event, conn *websocket.Conn) {
 	responseMsg := <-receiveChannelClient
-	conn.WriteJSON(responseMsg)
+	err := conn.WriteJSON(responseMsg)
+	if err != nil {
+		log.Println("Error writing json.", err)
+	}
+	log.Println("written json from send response")
 }
 
 // PlayNodeRunner is the event loop of NodeRunner
@@ -57,6 +70,7 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 	go regularUpdater(firstClient.GetWSocket(), firstClient.GetRequestChannel())
 	go regularUpdater(secondClient.GetWSocket(), secondClient.GetRequestChannel())
 	go serverComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
+	go serverReceiveComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
 	go sendResponse(firstClient.GetReceiveChannel(), firstClient.GetWSocket())
 	go sendResponse(secondClient.GetReceiveChannel(), secondClient.GetWSocket())
 	go readConnections(firstClient.GetWSocket(), firstClient.GetRequestChannel())
@@ -67,6 +81,7 @@ func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event) {
 	for {
 		event := dtypes.Event{}
 		err := conn.ReadJSON(&event)
+		log.Println("read json from readConnections", event.GetStr())
 		if err != nil {
 			log.Println("Error reading json.", err)
 		}
@@ -74,18 +89,32 @@ func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event) {
 	}
 }
 
-func serverComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
-	var latestState dtypes.Event
+func serverReceiveComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
+	// var latestState dtypes.Event
 	for {
+		log.Println("running servercomputations loop begining")
 		select {
-		case latestState = <-firstClientRequestChannel:
+		case latestState := <-firstClientRequestChannel:
+			log.Println("first client request chanel passed the info to server")
 			requestChannelServer <- latestState
-		case latestState = <-secondClientRequestChannel:
+		case latestState := <-secondClientRequestChannel:
+			log.Println("second client request channel passed the info to server")
 			requestChannelServer <- latestState
 		}
-		updatedPlayerPositions := handler.Handle(<-requestChannelServer)
+	}
+}
+
+func serverComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
+	// var latestState dtypes.Event
+	for {
+		log.Println("Server received a event msg to compute at Server computations")
+		playerPositions := <-requestChannelServer
+		updatedPlayerPositions := handler.Handle(playerPositions)
+		log.Println("updated positions of players ", updatedPlayerPositions.GetStr())
 		updatedBotPositions := dijkstra.UpdateBots(updatedPlayerPositions)
+		log.Println("upadted positions of bots", updatedBotPositions.GetStr())
 		firstRespondChannelServer <- updatedBotPositions
 		secondRespondChannelServer <- updatedBotPositions
+		log.Println("Updated bot positons send to client objects")
 	}
 }

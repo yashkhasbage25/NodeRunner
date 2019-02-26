@@ -42,7 +42,7 @@ func (gameServer *Server) SetHandlers() {
 	})
 
 	http.HandleFunc("/wait", func(w http.ResponseWriter, r *http.Request) {
-		conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+		conn, err := websocket.Upgrade(w, r, w.Header(), 100, 100)
 		if err != nil {
 			log.Fatal("Could not upgrade to websocket at web/wait.html (wait.html)", err)
 		}
@@ -85,7 +85,8 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("Could not separate ip and port.")
 		}
 
-		conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+		conn, err := websocket.Upgrade(w, r, w.Header(), 0, 0)
+		// conn, err := websocket.Upgrade(w, r, nil)
 		if err != nil {
 			fmt.Print(err)
 		}
@@ -263,6 +264,12 @@ func (gameServer *Server) SetHandlers() {
 func detectGameOver(server *Server, gameWinChanel chan int) {
 	winner := <-gameWinChanel
 	log.Println("Winner is client id", winner)
+	server.GetClient(winner).GetWSocket().WriteJSON(dtypes.Event{
+		EventType: "Win",
+	})
+	server.GetClient(1 - winner).GetWSocket().WriteJSON(dtypes.Event{
+		EventType: "Lose",
+	})
 	// server.
 }
 
