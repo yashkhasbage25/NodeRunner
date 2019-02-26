@@ -32,8 +32,8 @@ type Event struct {
 
 func (pos Position) GetStr() string {
 	replyStr := ""
-	replyStr += "X:" + strconv.Itoa(pos.X)
-	replyStr += "Y:" + strconv.Itoa(pos.Y)
+	replyStr += " X:" + strconv.Itoa(pos.X)
+	replyStr += " Y:" + strconv.Itoa(pos.Y)
 	return replyStr
 }
 
@@ -41,12 +41,15 @@ func (event *Event) GetStr() string {
 	replyStr := ""
 	replyStr += "EventType:" + event.EventType
 	replyStr += ",Object:" + event.Object
-	replyStr += "P!Pos:" + strconv.Itoa(event.P1Pos.X)
-	replyStr += "P1Pos:" + strconv.Itoa(event.P1Pos.Y)
-	replyStr += "P2Pos:" + strconv.Itoa(event.P2Pos.X)
-	replyStr += "P2pos:" + strconv.Itoa(event.P2Pos.Y)
-	replyStr += "B1Pos:" + strconv.Itoa(event.B1Pos.X)
-	replyStr += "B1Pos:" + strconv.Itoa(event.B1Pos.Y)
+	replyStr += "P1Pos:" + event.P1Pos.GetStr()
+	replyStr += "P2Pos:" + event.P2Pos.GetStr()
+	replyStr += "B1pos:" + event.B1Pos.GetStr()
+	replyStr += "B2Pos:" + event.B2Pos.GetStr()
+	replyStr += "B3Pos:" + event.B3Pos.GetStr()
+	replyStr += "G1Pos:" + event.G1Pos.GetStr()
+	replyStr += "G2Pos:" + event.G2Pos.GetStr()
+	replyStr += "G3Pos:" + event.G3Pos.GetStr()
+	replyStr += "G4Pos:" + event.G4Pos.GetStr()
 	return replyStr
 }
 
