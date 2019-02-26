@@ -25,7 +25,7 @@ func initializePlatforms() {
 	ladder[2] = dtypes.Rect{800, 210, 830, 440}
 	ladder[3] = dtypes.Rect{370, 45, 400, 200}
 	ladder[4] = dtypes.Rect{100, 200, 130, 325}
-	ladder[5] = dtypes.Rect{400, 325, 430, 550}
+	ladder[5] = dtypes.Rect{400, 325, 430, 450}
 
 	gem[0] = dtypes.Gem{}
 	gem[1] = dtypes.Gem{}

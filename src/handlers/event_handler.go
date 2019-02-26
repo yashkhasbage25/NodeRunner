@@ -17,7 +17,7 @@ func SetGameWinChannel(winChannel chan int) {
 }
 
 func Handle(event dtypes.Event) dtypes.Event {
-
+	log.Println("event obtained in handler.Handle is ", event.GetStr())
 	var replyEvent dtypes.Event
 	if event.EventType == "Update" {
 		replyEvent = dtypes.Event{
@@ -35,7 +35,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 			P1Health:  health.GetHealth("p1"),
 			P2Health:  health.GetHealth("p2"),
 		}
-		log.Println("handler replies with update eventtype", replyEvent.GetStr())
+		log.Println("handler replies with ordinary update eventtype", replyEvent.GetStr())
 		return replyEvent
 	}
 	if event.EventType == "SocketClosedUnexpectedly" {

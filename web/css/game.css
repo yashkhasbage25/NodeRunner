@@ -11,57 +11,57 @@
 
 #player1 {
     position: absolute;
-    left: 500px;
-    top: 500px;
+    left: 20px;
+    top: 510px;
     z-index: 100;
 }
 
 #player2 {
     position: absolute;
-    left: 50px;
-    top: 500px;
+    left: 400px;
+    top: 510px;
     z-index: 101;
 }
 
 #bot1 {
     position: absolute;
-    left: 400px;
-    top: 500px;
+    left: 20px;
+    top: 5px;
     z-index: 101;
 }
 
 #bot2 {
     position: absolute;
-    left: 600px;
-    top: 500px;
+    left: 220px;
+    top: 5px;
     z-index: 101;
 }
 
 #bot3 {
     position: absolute;
-    left: 99px;
-    top: 400px;
+    left: 420px;
+    top: 5px;
     z-index: 101;
 }
 
 #gem1 {
     position: absolute;
-    left: 350px;
-    top: 240px;
+    left: 200px;
+    top: 285px;
     z-index: 101;
 }
 
 #gem2 {
     position: absolute;
-    left: 150px;
-    top: 360px;
+    left: 500px;
+    top: 285px;
     z-index: 101;
 }
 
 #gem3 {
     position: absolute;
-    left: 490px;
-    top: 50px;
+    left: 450px;
+    top: 285px;
     z-index: 101;
 }
 

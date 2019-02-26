@@ -1,7 +1,6 @@
 package dijkstra
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/IITH-SBJoshi/concurrency-3/src/channels"
@@ -139,6 +138,7 @@ func minDistance(distance []int, cluster []bool, size int) int {
 			min_index = v
 		}
 	}
+	// log.Println("some min distacne is", min_index)
 	return min_index
 }
 func printPath(z int, node int) {
@@ -147,7 +147,7 @@ func printPath(z int, node int) {
 		if Parentarray[z][node] != 32 {
 			printPath(z, Parentarray[z][node])
 		}
-		fmt.Println(node)
+		log.Println(node)
 	}
 }
 func markPath(z int, node int) {
@@ -196,25 +196,29 @@ func UpdateBots(event dtypes.Event) dtypes.Event {
 	minpathlen := make([]int, 6)
 	var update [6]dtypes.Position
 	var bestUpdate [3]dtypes.Position
-
+	log.Println("Inside Updatebots eith event", event.GetStr())
 	go runDijkstra(event.B1Pos, event.P1Pos, 0, channels.Chans[0])
 	go runDijkstra(event.B1Pos, event.P2Pos, 1, channels.Chans[1])
 	go runDijkstra(event.B2Pos, event.P1Pos, 2, channels.Chans[2])
 	go runDijkstra(event.B2Pos, event.P2Pos, 3, channels.Chans[3])
 	go runDijkstra(event.B3Pos, event.P1Pos, 4, channels.Chans[4])
 	go runDijkstra(event.B3Pos, event.P2Pos, 5, channels.Chans[5])
+	log.Println("Total 6 dijkstra are initiated")
 	for i := 0; i < 6; i++ {
 		var channeldata channels.Data
 		channeldata = (<-channels.Chans[i])
 		update[i] = channeldata.UpdatedPosition
 		minpathlen[i] = channeldata.MinimumDistance
 	}
+	log.Println("In updated bots, obtained all channels after completing dijkstra")
 	for i := 0; i < 3; i++ {
 		bestUpdate[i] = update[minimum(minpathlen, 2*i, 2*i+1)]
 	}
+	log.Println("In update bots best updates are", bestUpdate[0].GetStr(), bestUpdate[1].GetStr(), bestUpdate[2].GetStr())
 	replyEvent.B1Pos = bestUpdate[0]
 	replyEvent.B2Pos = bestUpdate[1]
 	replyEvent.B3Pos = bestUpdate[2]
+	log.Println("Update bots replies with event", replyEvent.B1Pos.GetStr(), replyEvent.B2Pos.GetStr(), replyEvent.B3Pos.GetStr())
 	return replyEvent
 
 }
@@ -268,5 +272,7 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 	//printPath(z,33)
 
 	//fmt.Println("distance :: ",minimumDistance)
+	log.Println("Completed dijkstra for channel", z)
 	channel <- channels.Data{updatedPosition, minimumDistance}
+	log.Println("Completed dijkstra for channel and put to channel", z, minimumDistance)
 }

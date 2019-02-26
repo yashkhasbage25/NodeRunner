@@ -30,6 +30,13 @@ type Event struct {
 	P2Health int `json:"h2"`
 }
 
+func (pos Position) GetStr() string {
+	replyStr := ""
+	replyStr += "X:" + strconv.Itoa(pos.X)
+	replyStr += "Y:" + strconv.Itoa(pos.Y)
+	return replyStr
+}
+
 func (event *Event) GetStr() string {
 	replyStr := ""
 	replyStr += "EventType:" + event.EventType

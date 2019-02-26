@@ -113,8 +113,8 @@ function setAllPositions(data) {
 
 function getPositionOfElement(element) {
     // console.log(element, "is undefined.");
-    let centerX = element.offsetLeft + element.offsetWidth / 2;
-    let centerY = element.offsetTop + element.offsetHeight / 2;
+    let centerX = (element.offsetLeft + 15);
+    let centerY = (element.offsetTop + 20);
     return {
         x: centerX,
         y: centerY
@@ -168,12 +168,12 @@ function getCurrentPositions() {
     };
 }
 
-// window.addEventListener("keydown", function(e) {
-//     // space and arrow keys
-//     if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-//         e.preventDefault();
-//     }
-// }, false);
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
 
 document.onkeydown = function(event) {
     type = "";
@@ -190,7 +190,7 @@ document.onkeydown = function(event) {
     } else {
         console.log("Unknown keyCode detected", event.keyCode);
     }
-    if (type != "") {
+    if (type.localeCompare("") != 0) {
         currentPositions = getCurrentPositions();
         currentPositions.object = clientID;
         currentPositions.etype = type;

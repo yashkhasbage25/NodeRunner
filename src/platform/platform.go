@@ -91,6 +91,6 @@ func Initialize() {
 		XHi: 400,
 		YHi: 325,
 		XLo: 430,
-		YLo: 550,
+		YLo: 450,
 	}
 }
