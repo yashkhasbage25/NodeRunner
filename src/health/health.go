@@ -6,13 +6,16 @@ import (
 	"time"
 )
 
-// firstMutex provides safety while updating health of first 
+// firstMutex provides safety while updating health of first
 // player
 var firstMutex sync.Mutex
 
-// secondMutex provides safety while updating health of second 
+// secondMutex provides safety while updating health of second
 // player
 var secondMutex sync.Mutex
+
+var thirdMutex sync.Mutex
+var fourthMutex sync.Mutex
 
 // firstHealth is the health of first player
 var firstHealth int
@@ -20,12 +23,14 @@ var firstHealth int
 // secondHealth is the health of second player
 var secondHealth int
 
-// pause is the time for which health updater pauses while 
+// pause is the time for which health updater pauses while
 // updating health
 var pause int
 
 // rate is the rate by which health decreases in every update
 var rate int
+
+var maxHealth int
 
 // gameWinChannel communicates the winner info to server
 var gameWinChannel chan int
@@ -37,12 +42,10 @@ func SetGameWinChannel(winChannel chan int) {
 }
 
 // SetHealth is the setter for initial health of a player
-func SetHealth(player string, value int) {
-	if player == "p1" {
-		firstHealth = value
-	} else if player == "p2" {
-		secondHealth = value
-	}
+func SetHealth(value int) {
+	firstHealth = value
+	secondHealth = value
+	maxHealth = value
 }
 
 // GetHealth is a getter for health of a player
@@ -54,27 +57,33 @@ func GetHealth(player string) int {
 	}
 }
 
-// SetDecayParams is a setter for rate and pause as explained 
+// SetDecayParams is a setter for rate and pause as explained
 // above
 func SetDecayParams(rate_val, pause_val int) {
 	rate = rate_val
 	pause = pause_val
 }
 
-// UpdateHealth updated health on collision with gem. Health can be 
+// UpdateHealth updated health on collision with gem. Health can be
 // updated in various ways depending on the gem
 func UpdateHealth(operation byte, value int, player string) {
 	if operation == '+' {
 		log.Println("plus detected")
-		firstMutex.Lock()
+		thirdMutex.Lock()
 		if player == "p1" {
 			firstHealth += value
+			if firstHealth > maxHealth {
+				firstHealth = maxHealth
+			}
 		} else {
 			secondHealth += value
+			if secondHealth > maxHealth {
+				secondHealth = maxHealth
+			}
 		}
-		firstMutex.Unlock()
+		thirdMutex.Unlock()
 	} else if operation == '-' {
-		secondMutex.Lock()
+		fourthMutex.Lock()
 		if player == "p2" {
 			firstHealth -= value
 			if firstHealth <= 0 {
@@ -86,20 +95,26 @@ func UpdateHealth(operation byte, value int, player string) {
 				gameWinChannel <- 0
 			}
 		}
-		secondMutex.Unlock()
+		fourthMutex.Unlock()
 	} else if operation == '*' {
 
-		firstMutex.Lock()
+		thirdMutex.Lock()
 		if player == "p1" {
 			firstHealth *= value
+			if firstHealth > maxHealth {
+				firstHealth = maxHealth
+			}
 		} else {
 			secondHealth *= value
+			if secondHealth > maxHealth {
+				secondHealth = maxHealth
+			}
 		}
-		firstMutex.Unlock()
+		thirdMutex.Unlock()
 
 	} else if operation == '/' {
 
-		secondMutex.Lock()
+		fourthMutex.Lock()
 		if player == "p2" {
 			firstHealth /= value
 			if firstHealth <= 0 {
@@ -111,7 +126,7 @@ func UpdateHealth(operation byte, value int, player string) {
 				gameWinChannel <- 0
 			}
 		}
-		secondMutex.Unlock()
+		fourthMutex.Unlock()
 	}
 
 }

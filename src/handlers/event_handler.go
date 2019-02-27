@@ -108,15 +108,15 @@ func Handle(event dtypes.Event) dtypes.Event {
 				}
 				var p11 = GetBoundary(event.P1Pos)
 				var p22 = GetBoundary(replyEvent.P1Pos)
-				if(p22.XHi<0){
+				if p22.XHi < 0 {
 					log.Println("out of bounds p1")
-					p22.XHi=0
-					p22.XLo=30
+					p22.XHi = 0
+					p22.XLo = 30
 				}
-				if(p22.XLo>1200){
+				if p22.XLo > 1200 {
 					log.Println("out of bounds p1")
-					p22.XLo=1200
-					p22.XHi=1170
+					p22.XLo = 1200
+					p22.XHi = 1170
 				}
 				var updatedRect dtypes.Rect
 				if i == 0 {
@@ -212,7 +212,8 @@ func Handle(event dtypes.Event) dtypes.Event {
 				}
 
 				if CollidesWithBot(updatedRect, b11, b22, b33) {
-					replyEvent.EventType = "P1Looses"
+					replyEvent.EventType = "Lose"
+					replyEvent.Object = "p1"
 				}
 				replyEvent.P1Pos = GetPosition(updatedRect)
 				replyEvent.P2Pos = event.P2Pos
@@ -232,15 +233,15 @@ func Handle(event dtypes.Event) dtypes.Event {
 				}
 				p11 := GetBoundary(event.P2Pos)
 				p22 := GetBoundary(replyEvent.P2Pos)
-				if(p22.XHi<0){
+				if p22.XHi < 0 {
 					log.Println("out of bounds p2")
-					p22.XHi=0
-					p22.XLo=30
+					p22.XHi = 0
+					p22.XLo = 30
 				}
-				if(p22.XLo>1200){
+				if p22.XLo > 1200 {
 					log.Println("out of bounds p2")
-					p22.XLo=1200
-					p22.XHi=1170
+					p22.XLo = 1200
+					p22.XHi = 1170
 				}
 				var updatedRect dtypes.Rect
 				if i == 0 {
@@ -335,7 +336,8 @@ func Handle(event dtypes.Event) dtypes.Event {
 					}
 				}
 				if CollidesWithBot(updatedRect, b11, b22, b33) {
-					replyEvent.EventType = "P2Looses"
+					replyEvent.EventType = "Lose"
+					replyEvent.Object = "p2"
 				}
 				replyEvent.P2Pos = GetPosition(updatedRect)
 				replyEvent.P1Pos = event.P1Pos

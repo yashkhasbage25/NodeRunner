@@ -19,7 +19,7 @@ import (
 // serverLock is a lock for safety of gameRunning
 var serverLock sync.Mutex
 
-// gameRunning is a bool representing whether a the game is running or 
+// gameRunning is a bool representing whether a the game is running or
 // not
 var gameRunning bool
 
@@ -111,10 +111,12 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("New client object created.", newClient.GetInfoStr())
 			gameServer.AddNewClient(newClient)
 			log.Println("New state of server: ", gameServer.GetInfoStr())
+			serverLock.Lock()
 			conn.WriteJSON(dtypes.Event{
 				EventType: "SetClientID",
 				Object:    strconv.Itoa(int(thisClientID)),
 			})
+			serverLock.Unlock()
 		}
 		log.Println("handling pattern /game")
 	})

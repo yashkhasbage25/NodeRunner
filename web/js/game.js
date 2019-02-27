@@ -13,7 +13,7 @@ function getElement(id) {
     };
 }
 
-ws = new WebSocket("ws://localhost:8080/game");
+ws = new WebSocket("ws://192.168.105.49:8080/game");
 var clientNumber = -1;
 var clientID = "";
 var pressedKeys = [];
@@ -67,10 +67,14 @@ ws.onmessage = function(event) {
     } else if (data.etype == "Update") {
         setAllPositions(data);
         console.log("set positions");
-    } else if (data.etype == "Win") {
+    } else if (data.etype == "Win" && data.object == clientID) {
         alert("You Win");
-    } else if (data.etype == "Lose") {
+    } else if (data.etype == "Lose" && data.object != clientID) {
+        alert("You Win");
+    } else if (data.etype == "Lose" && data.object == clientID) {
         alert("You Lose");
+    } else if (data.etype == "Win" && data.object != clientID) { 
+        alert("You Lose")
     } else {
         console.log("Unknown event");
     }
