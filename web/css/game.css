@@ -11,15 +11,15 @@
 
 #player1 {
     position: absolute;
-    left: 20px;
-    top: 510px;
+    left: 500px;
+    top: 410px;
     z-index: 100;
 }
 
 #player2 {
     position: absolute;
-    left: 400px;
-    top: 510px;
+    left: 515px;
+    top: 430px;
     z-index: 101;
 }
 

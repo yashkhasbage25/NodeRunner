@@ -4,9 +4,14 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 )
 
+// Platform stores rectangles describing platforms
 var Platform [8]dtypes.Rect
+
+// Ladder stores rectangles describing ladders
 var Ladder [6]dtypes.Rect
 
+
+// Initialize initializes positions of platforms and ladders
 func Initialize() {
 	Platform[0] = dtypes.Rect{
 		XHi: 0,

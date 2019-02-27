@@ -141,10 +141,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						updatedRect = p22
 						log.Println("was alligned with ladder on pressing left")
-					} else if AllignedWithLadder(p11) && !AllignedWithLadder(p22) {
-						log.Println("freefall")
-						freeFallP1 = true
-					} else if !OnPlatform(p11) {
+					}  else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
 					} else if CollidesWithBlockOnLeftMove(p22) {
@@ -162,10 +159,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						updatedRect = p22
 						log.Println("was alligned with ladder on pressing right")
-					} else if AllignedWithLadder(p11) && !AllignedWithLadder(p22) {
-						freeFallP1 = true
-						log.Println("freefall")
-					} else if !OnPlatform(p11) {
+					}  else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
 					} else if CollidesWithBlockOnRightMove(p22) {
@@ -180,10 +174,11 @@ func Handle(event dtypes.Event) dtypes.Event {
 					}
 					CollidesGem(updatedRect, "p1")
 				}
-				temporary := GetPosition(updatedRect)
+				var temporary = GetPosition(updatedRect)
 
 				if freeFallP1 {
 					log.Println("freefall")
+					log.Println(temporary.X, temporary.Y,"---------")
 					temporary2 := dtypes.Position{temporary.X, temporary.Y + 2*step}
 					p11 = GetBoundary(temporary)
 					p22 = GetBoundary(temporary2)
@@ -250,10 +245,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						updatedRect = p22
 						log.Println("was alligned with ladder on pressing left")
-					} else if AllignedWithLadder(p11) && !AllignedWithLadder(p22) {
-						log.Println("freefall")
-						freeFallP2 = true
-					} else if !OnPlatform(p11) {
+					}  else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
 					} else if CollidesWithBlockOnLeftMove(p22) {
@@ -271,10 +263,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
 						updatedRect = p22
 						log.Println("was alligned with ladder on pressing right")
-					} else if AllignedWithLadder(p11) && !AllignedWithLadder(p22) {
-						freeFallP2 = true
-						log.Println("freefall")
-					} else if !OnPlatform(p11) {
+					}  else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
 					} else if CollidesWithBlockOnRightMove(p22) {
@@ -290,9 +279,12 @@ func Handle(event dtypes.Event) dtypes.Event {
 					CollidesGem(updatedRect, "p2")
 				}
 				temporary := GetPosition(updatedRect)
+				log.Println(temporary.X, temporary.Y,"---------")
+				
 
 				if freeFallP2 {
 					log.Println("freefall")
+					log.Println(temporary.X, temporary.Y,"---------")
 					temporary2 := dtypes.Position{temporary.X, temporary.Y + 2*step}
 					p11 = GetBoundary(temporary)
 					p22 = GetBoundary(temporary2)

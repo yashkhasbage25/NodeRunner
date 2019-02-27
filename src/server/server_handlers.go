@@ -16,7 +16,11 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// serverLock is a lock for safety of gameRunning
 var serverLock sync.Mutex
+
+// gameRunning is a bool representing whether a the game is running or 
+// not
 var gameRunning bool
 
 // SetHandlers is sets all possible handlers for the server.
@@ -261,6 +265,8 @@ func (gameServer *Server) SetHandlers() {
 	})
 }
 
+// detectGameOver reads from gameWinChannel. Reading from game win channel
+// means that winner is declared and game has to be stopped.
 func detectGameOver(server *Server, gameWinChanel chan int) {
 	winner := <-gameWinChanel
 	log.Println("Winner is client id", winner)
@@ -270,9 +276,9 @@ func detectGameOver(server *Server, gameWinChanel chan int) {
 	server.GetClient(1 - winner).GetWSocket().WriteJSON(dtypes.Event{
 		EventType: "Lose",
 	})
-	// server.
 }
 
+// checIfBothConnected checks if both clients are connected to server
 func checkIfBothConnected(server *Server) {
 	for true {
 		if server.GetIDCounter() == 2 && gameRunning {
@@ -282,6 +288,5 @@ func checkIfBothConnected(server *Server) {
 	gameWinChannel := make(chan int)
 	log.Println("Both clients are connected and ")
 	go play.PlayNodeRunner(server.GetRequestChannel(), server.GetRespondChannel(0), server.GetRespondChannel(1), gameWinChannel, server.GetClient(0), server.GetClient(1))
-	// go play.Respond(server)
 	go detectGameOver(server, gameWinChannel)
 }

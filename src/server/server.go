@@ -40,6 +40,7 @@ func (server *Server) GetRespondChannel(index int) chan dtypes.Event {
 	return server.RespondChannels[index]
 }
 
+// GetRequestChannel is a getter for request channel for a server object
 func (server *Server) GetRequestChannel() chan dtypes.Event {
 	return server.RequestChannel
 }
@@ -62,6 +63,7 @@ func (server *Server) SetRespondChannel(index int, respondChannel chan dtypes.Ev
 	server.RespondChannels[index] = respondChannel
 }
 
+// SetRequestChannel is a setter for request channel of a server object
 func (server *Server) SetRequestChannel(requestChannel chan dtypes.Event) {
 	server.RequestChannel = requestChannel
 }
