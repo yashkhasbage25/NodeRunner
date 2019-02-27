@@ -299,12 +299,12 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 		updatedPosition = nextposition(currentPosition, botnextnextmove, step)
     
 	}
-	log.Println("dijkstra path for ", z," aimed at node ",nxtid)
-	printPath(z, 33)
+	//log.Println("dijkstra path for ", z," aimed at node ",nxtid)
+	//printPath(z, 33)
 
 	//fmt.Println("distance :: ",minimumDistance)
 	//log.Println("Completed dijkstra for channel", z)
 	removeDynamicnode(z)
 	channel <- channels.Data{updatedPosition, minimumDistance}
-	log.Println("Completed dijkstra for channel and put to channel", z, minimumDistance)
+	//log.Println("Completed dijkstra for channel and put to channel", z, minimumDistance)
 }

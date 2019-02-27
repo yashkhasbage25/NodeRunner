@@ -108,15 +108,15 @@ func GetCurrentLocations(event dtypes.Event) dtypes.Event {
 	return dtypes.Event{
 		EventType: event.EventType,
 		Object:    event.Object,
-		P1Pos:     GetPlayerPos(1),
-		P2Pos:     GetPlayerPos(2),
-		B1Pos:     GetBotPos(1),
-		B2Pos:     GetBotPos(2),
-		B3Pos:     GetBotPos(3),
-		G1Pos:     GetGemPos(1),
-		G2Pos:     GetGemPos(2),
-		G3Pos:     GetGemPos(3),
-		G4Pos:     GetGemPos(4),
+		P1Pos:     GetPlayerPos(0),
+		P2Pos:     GetPlayerPos(1),
+		B1Pos:     GetBotPos(0),
+		B2Pos:     GetBotPos(1),
+		B3Pos:     GetBotPos(2),
+		G1Pos:     GetGemPos(0),
+		G2Pos:     GetGemPos(1),
+		G3Pos:     GetGemPos(2),
+		G4Pos:     GetGemPos(3),
 	}
 }
 
