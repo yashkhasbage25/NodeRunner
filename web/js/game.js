@@ -52,11 +52,12 @@ ws.onmessage = function(event) {
     if(data.etype == "SetClientID") {
         clientNumber = parseInt(data.object);
         clientID = "p" + (clientNumber + 1).toString();
-        currentPositions = getCurrentPositions();
-        currentPositions.object = clientID;
-        currentPositions.etype = "Update";
-        console.log("msg as reply to setclientid", JSON.stringify(currentPositions));
-        ws.send(JSON.stringify(currentPositions));
+        // currentPositions = getCurrentPositions();
+        // currentPositions.object = clientID;
+        // currentPositions.etype = "Update";
+        // console.log("msg as reply to setclientid", JSON.stringify(currentPositions));
+        console.log("This client has ID:", clientID, clientNumber);
+        // ws.send(JSON.stringify(currentPositions));
     } else if (data.etype == "SendUpdate") {
         currentPositions = getCurrentPositions();
         currentPositions.etype = "Update";
@@ -73,20 +74,19 @@ ws.onmessage = function(event) {
     } else {
         console.log("Unknown event");
     }
-    console.log("This client has ID:", clientID, clientNumber);
 }
 
 function setPosition(elem, position) {
     if (typeof elem == undefined) {
         console.log(elem, "is undefined.");
     }
-    elem.style.left = position.x.toString() + "px";
-    elem.style.top = position.y.toString() + "px";
+    elem.style.left = (position.x - 15).toString() + "px";
+    elem.style.top = (position.y - 20).toString() + "px";
 }
 
 function setHealth(elem, health) {
     health /= 10;
-    console.log(elem, "is undefined.");
+    // console.log(elem, "is undefined.");
     elem.style.width = health.toString() + "%";
     elem.innerHTML = health + '%';
 }

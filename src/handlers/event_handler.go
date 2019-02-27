@@ -88,6 +88,9 @@ func Handle(event dtypes.Event) dtypes.Event {
 	dy := [5]int{-step, step, 0, 0, 0}
 	for i := 0; i < 4; i++ {
 		if direction[i] == event.EventType {
+			var b11 = GetBoundary(event.B1Pos)
+			var b22 = GetBoundary(event.B2Pos)
+			var b33 = GetBoundary(event.B3Pos)
 			log.Println("Direction detected:", direction[i])
 			replyEvent = dtypes.Event{
 				EventType: "Update",
@@ -176,8 +179,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 						updatedRect = p22
 					}
 					CollidesGem(updatedRect, "p1")
-				} else if i == 4 {
-
 				}
 				temporary := GetPosition(updatedRect)
 
@@ -193,6 +194,10 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else {
 						updatedRect = p22
 					}
+				}
+
+				if CollidesWithBot(updatedRect, b11, b22, b33) {
+					replyEvent.EventType = "P1Looses"
 				}
 				replyEvent.P1Pos = GetPosition(updatedRect)
 				replyEvent.P2Pos = event.P2Pos
@@ -298,6 +303,9 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else {
 						updatedRect = p22
 					}
+				}
+				if CollidesWithBot(updatedRect, b11, b22, b33) {
+					replyEvent.EventType = "P2Looses"
 				}
 				replyEvent.P2Pos = GetPosition(updatedRect)
 				replyEvent.P1Pos = event.P1Pos

@@ -85,7 +85,7 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("Could not separate ip and port.")
 		}
 
-		conn, err := websocket.Upgrade(w, r, w.Header(), 10240, 10240)
+		conn, err := websocket.Upgrade(w, r, w.Header(), 0, 0)
 		// conn, err := websocket.Upgrade(w, r, nil)
 		if err != nil {
 			fmt.Print(err)

@@ -5,31 +5,53 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 )
 
-var platform [8]dtypes.Rect
-var ladder [6]dtypes.Rect
-var gem [5]dtypes.Gem
+// var platform [8]dtypes.Rect
+// var ladder [6]dtypes.Rect
+// var gem [4]dtypes.Gem
 var Freepositions [10]dtypes.Freepos
 
+var Platform [8]dtypes.Rect
+var Ladder [6]dtypes.Rect
+var Gems [5]dtypes.Gem
+var Randompos [10]dtypes.Position
+
 func initializePlatforms() {
-	platform[0] = dtypes.Rect{0, 45, 840, 75}
-	platform[1] = dtypes.Rect{800, 125, 1200, 155}
-	platform[2] = dtypes.Rect{0, 200, 400, 230}
-	platform[3] = dtypes.Rect{600, 210, 1200, 240}
-	platform[4] = dtypes.Rect{0, 325, 800, 355}
-	platform[5] = dtypes.Rect{170, 450, 530, 480}
-	platform[6] = dtypes.Rect{800, 440, 400, 470}
-	platform[7] = dtypes.Rect{0, 550, 1200, 50}
+	Platform[0] = dtypes.Rect{0, 45, 840, 75}
+	Platform[1] = dtypes.Rect{800, 125, 1200, 155}
+	Platform[2] = dtypes.Rect{0, 200, 400, 230}
+	Platform[3] = dtypes.Rect{600, 210, 1200, 240}
+	Platform[4] = dtypes.Rect{0, 325, 800, 355}
+	Platform[5] = dtypes.Rect{170, 450, 530, 480}
+	Platform[6] = dtypes.Rect{800, 440, 400, 470}
+	Platform[7] = dtypes.Rect{0, 550, 1200, 50}
 
-	ladder[0] = dtypes.Rect{170, 450, 200, 550}
-	ladder[1] = dtypes.Rect{1170, 440, 1200, 550}
-	ladder[2] = dtypes.Rect{800, 210, 830, 440}
-	ladder[3] = dtypes.Rect{370, 45, 400, 200}
-	ladder[4] = dtypes.Rect{100, 200, 130, 325}
-	ladder[5] = dtypes.Rect{400, 325, 430, 450}
+	Ladder[0] = dtypes.Rect{170, 450, 200, 550}
+	Ladder[1] = dtypes.Rect{1170, 440, 1200, 550}
+	Ladder[2] = dtypes.Rect{800, 210, 830, 440}
+	Ladder[3] = dtypes.Rect{370, 45, 400, 200}
+	Ladder[4] = dtypes.Rect{100, 200, 130, 325}
+	Ladder[5] = dtypes.Rect{400, 325, 430, 450}
 
-	gem[0] = dtypes.Gem{}
-	gem[1] = dtypes.Gem{}
-	gem[2] = dtypes.Gem{}
+	Gems[0] = dtypes.Gem{
+		Gemtype: '-',
+		Value:   50,
+		Pos:     dtypes.Rect{200, 285, 230, 325},
+	}
+	Gems[1] = dtypes.Gem{
+		Gemtype: '/',
+		Value:   10,
+		Pos:     dtypes.Rect{500, 285, 530, 325},
+	}
+	Gems[2] = dtypes.Gem{
+		Gemtype: '+',
+		Value:   50,
+		Pos:     dtypes.Rect{450, 285, 480, 325},
+	}
+	Gems[3] = dtypes.Gem{
+		Gemtype: '*',
+		Value:   10,
+		Pos:     dtypes.Rect{600, 400, 630, 440},
+	}
 
 	Freepositions[0] = dtypes.Freepos{}
 	Freepositions[1] = dtypes.Freepos{}
@@ -49,11 +71,6 @@ func initializePlatforms() {
 	Randompos[9] = dtypes.Position{}
 
 }
-
-var Platform [8]dtypes.Rect
-var Ladder [6]dtypes.Rect
-var Gems [5]dtypes.Gem
-var Randompos [10]dtypes.Position
 
 func Initialize() {
 	initializePlatforms()

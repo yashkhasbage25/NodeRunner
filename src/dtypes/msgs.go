@@ -39,17 +39,17 @@ func (pos Position) GetStr() string {
 
 func (event *Event) GetStr() string {
 	replyStr := ""
-	replyStr += "EventType:" + event.EventType
-	replyStr += ",Object:" + event.Object
-	replyStr += "P1Pos:" + event.P1Pos.GetStr()
-	replyStr += "P2Pos:" + event.P2Pos.GetStr()
-	replyStr += "B1pos:" + event.B1Pos.GetStr()
-	replyStr += "B2Pos:" + event.B2Pos.GetStr()
-	replyStr += "B3Pos:" + event.B3Pos.GetStr()
-	replyStr += "G1Pos:" + event.G1Pos.GetStr()
-	replyStr += "G2Pos:" + event.G2Pos.GetStr()
-	replyStr += "G3Pos:" + event.G3Pos.GetStr()
-	replyStr += "G4Pos:" + event.G4Pos.GetStr()
+	replyStr += " EventType:" + event.EventType
+	replyStr += " Object:" + event.Object
+	replyStr += " P1Pos:" + event.P1Pos.GetStr()
+	replyStr += " P2Pos:" + event.P2Pos.GetStr()
+	replyStr += " B1pos:" + event.B1Pos.GetStr()
+	replyStr += " B2Pos:" + event.B2Pos.GetStr()
+	replyStr += " B3Pos:" + event.B3Pos.GetStr()
+	replyStr += " G1Pos:" + event.G1Pos.GetStr()
+	replyStr += " G2Pos:" + event.G2Pos.GetStr()
+	replyStr += " G3Pos:" + event.G3Pos.GetStr()
+	replyStr += " G4Pos:" + event.G4Pos.GetStr()
 	return replyStr
 }
 
