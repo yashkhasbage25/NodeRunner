@@ -87,7 +87,7 @@ func CollidesWithBlockVertically(player dtypes.Rect) bool { // falling verticall
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
 		//log.Println(player.YLo,"---",coords.Platform[i].YHi)
-		if player.YLo > coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
+		if player.YLo < coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
 			log.Println("CollidesWithBlockVertically returns true.")
 			return true
 		}
@@ -139,7 +139,7 @@ func GetPositionCollidesWithBlockOnRight(player dtypes.Rect) dtypes.Rect {
 func GetPositionCollidesWithBlockVer(player dtypes.Rect) dtypes.Rect {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
-		if player.YLo > coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
+		if player.YLo < coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
 			return dtypes.Rect{player.XHi, coords.Platform[i].YHi - 2*offsetY, player.XLo, coords.Platform[i].YHi}
 		}
 	}
@@ -160,8 +160,9 @@ func GetPosition(player dtypes.Rect) dtypes.Position {
 	return temp
 }
 func CollidesGem(player dtypes.Rect, id string) {
+	log.Println("gem collected---------------")
 	for i := 0; i < len(coords.Gems); i++ {
-		if (player.XLo >= coords.Gems[i].Pos.XHi && player.YLo == coords.Gems[i].Pos.YLo) || (player.YLo == coords.Gems[i].Pos.YLo && player.XHi <= coords.Gems[i].Pos.XLo) {
+		if (player.XLo >= coords.Gems[i].Pos.XHi && player.XHi <= coords.Gems[i].Pos.XLo && player.YLo == coords.Gems[i].Pos.YLo) {
 			health.UpdateHealth(coords.Gems[i].Gemtype, coords.Gems[i].Value, id)
 			for j := 0; j < len(coords.Freepositions); j++ {
 				if coords.Freepositions[i].Available == true {

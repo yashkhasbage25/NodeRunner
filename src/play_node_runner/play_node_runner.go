@@ -25,7 +25,7 @@ var lock sync.Mutex
 // specified in its ticker
 func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelClient chan dtypes.Event, id int) {
 
-	ticker := time.NewTicker(100 * time.Millisecond)
+	ticker := time.NewTicker(10 * time.Millisecond)
 	go func() {
 		for range ticker.C {
 			var event dtypes.Event

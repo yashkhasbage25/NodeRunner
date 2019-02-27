@@ -48,22 +48,22 @@ func initializePlatforms() {
 
 	Gems[0] = dtypes.Gem{
 		Gemtype: '-',
-		Value:   50,
+		Value:   5,
 		Pos:     dtypes.Rect{200, 285, 230, 325},
 	}
 	Gems[1] = dtypes.Gem{
 		Gemtype: '/',
-		Value:   10,
+		Value:   1,
 		Pos:     dtypes.Rect{500, 285, 530, 325},
 	}
 	Gems[2] = dtypes.Gem{
 		Gemtype: '+',
-		Value:   50,
+		Value:   5,
 		Pos:     dtypes.Rect{450, 285, 480, 325},
 	}
 	Gems[3] = dtypes.Gem{
 		Gemtype: '*',
-		Value:   10,
+		Value:   1,
 		Pos:     dtypes.Rect{600, 400, 630, 440},
 	}
 

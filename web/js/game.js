@@ -13,7 +13,7 @@ function getElement(id) {
     };
 }
 
-ws = new WebSocket("ws://192.168.105.49:8080/game");
+ws = new WebSocket("ws://localhost:8080/game");
 var clientNumber = -1;
 var clientID = "";
 var pressedKeys = [];
