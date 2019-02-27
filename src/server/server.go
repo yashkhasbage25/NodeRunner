@@ -26,7 +26,7 @@ func (server *Server) GetIDCounter() uint32 {
 // GetClient is a getter for clients connected to server
 func (server *Server) GetClient(index int) *client.Client {
 	if index >= 2 || index < 0 {
-		log.Println("Client index requested is out of bounds")
+		log.Println("Client index requested is out of bounds", index)
 		return nil
 	}
 	return server.ConnectedClient[index]
@@ -35,11 +35,12 @@ func (server *Server) GetClient(index int) *client.Client {
 // GetRespondChannel is a getter for update channel of a server
 func (server *Server) GetRespondChannel(index int) chan dtypes.Event {
 	if index >= 2 || index < 0 {
-		log.Fatalln("Client index requested is out of bounds")
+		log.Fatalln("Client index requested is out of bounds", index)
 	}
 	return server.RespondChannels[index]
 }
 
+// GetRequestChannel is a getter for request channel for a server object
 func (server *Server) GetRequestChannel() chan dtypes.Event {
 	return server.RequestChannel
 }
@@ -57,11 +58,12 @@ func (server *Server) SetClient(index uint32, newClient *client.Client) {
 // SetRespondChannel is setter for update channel of a server
 func (server *Server) SetRespondChannel(index int, respondChannel chan dtypes.Event) {
 	if index >= 2 || index < 0 {
-		log.Println("Index requested is out of bounds")
+		log.Println("Index requested is out of bounds", index)
 	}
 	server.RespondChannels[index] = respondChannel
 }
 
+// SetRequestChannel is a setter for request channel of a server object
 func (server *Server) SetRequestChannel(requestChannel chan dtypes.Event) {
 	server.RequestChannel = requestChannel
 }

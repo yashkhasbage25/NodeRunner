@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"sync"
 
 	"github.com/IITH-SBJoshi/concurrency-3/src/client"
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
@@ -15,8 +16,18 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// serverLock is a lock for safety of gameRunning
+var serverLock sync.Mutex
+
+// gameRunning is a bool representing whether a the game is running or 
+// not
+var gameRunning bool
+
 // SetHandlers is sets all possible handlers for the server.
 func (gameServer *Server) SetHandlers() {
+
+	go checkIfBothConnected(gameServer)
+	gameRunning = false
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		indexContent, err := ioutil.ReadFile("web/index.html")
 		if err != nil {
@@ -25,7 +36,6 @@ func (gameServer *Server) SetHandlers() {
 		log.Println("Handling pattern /")
 		fmt.Fprintf(w, "%s", indexContent)
 	})
-
 	http.HandleFunc("/web/wait.html", func(w http.ResponseWriter, r *http.Request) {
 		waitContent, err := ioutil.ReadFile("web/wait.html")
 		if err != nil {
@@ -36,7 +46,7 @@ func (gameServer *Server) SetHandlers() {
 	})
 
 	http.HandleFunc("/wait", func(w http.ResponseWriter, r *http.Request) {
-		conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+		conn, err := websocket.Upgrade(w, r, w.Header(), 100, 100)
 		if err != nil {
 			log.Fatal("Could not upgrade to websocket at web/wait.html (wait.html)", err)
 		}
@@ -71,13 +81,16 @@ func (gameServer *Server) SetHandlers() {
 	})
 
 	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-
+		serverLock.Lock()
+		gameRunning = true
+		serverLock.Unlock()
 		ip, port, err := net.SplitHostPort(r.RemoteAddr)
 		if err != nil {
 			log.Println("Could not separate ip and port.")
 		}
 
-		conn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+		conn, err := websocket.Upgrade(w, r, w.Header(), 0, 0)
+		// conn, err := websocket.Upgrade(w, r, nil)
 		if err != nil {
 			fmt.Print(err)
 		}
@@ -102,15 +115,8 @@ func (gameServer *Server) SetHandlers() {
 				EventType: "SetClientID",
 				Object:    strconv.Itoa(int(thisClientID)),
 			})
-			// gameServer.AddNewClient(newClient)
 		}
-
 		log.Println("handling pattern /game")
-
-		gameWinChannel := make(chan int)
-		go play.PlayNodeRunner(gameServer.GetRequestChannel(), gameServer.GetRespondChannel(0), gameServer.GetRespondChannel(1), gameWinChannel, gameServer.GetClient(0), gameServer.GetClient(1))
-		// go play.Respond(gameServer)
-		go detectGameOver(gameServer, gameWinChannel)
 	})
 
 	http.HandleFunc("/web/assets/img/front.png", func(w http.ResponseWriter, r *http.Request) {
@@ -259,8 +265,28 @@ func (gameServer *Server) SetHandlers() {
 	})
 }
 
+// detectGameOver reads from gameWinChannel. Reading from game win channel
+// means that winner is declared and game has to be stopped.
 func detectGameOver(server *Server, gameWinChanel chan int) {
 	winner := <-gameWinChanel
 	log.Println("Winner is client id", winner)
-	// server.
+	server.GetClient(winner).GetWSocket().WriteJSON(dtypes.Event{
+		EventType: "Win",
+	})
+	server.GetClient(1 - winner).GetWSocket().WriteJSON(dtypes.Event{
+		EventType: "Lose",
+	})
+}
+
+// checIfBothConnected checks if both clients are connected to server
+func checkIfBothConnected(server *Server) {
+	for true {
+		if server.GetIDCounter() == 2 && gameRunning {
+			break
+		}
+	}
+	gameWinChannel := make(chan int)
+	log.Println("Both clients are connected and ")
+	go play.PlayNodeRunner(server.GetRequestChannel(), server.GetRespondChannel(0), server.GetRespondChannel(1), gameWinChannel, server.GetClient(0), server.GetClient(1))
+	go detectGameOver(server, gameWinChannel)
 }

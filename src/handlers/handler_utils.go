@@ -8,8 +8,8 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/health"
 )
 
-const offsetX = 20
-const offsetY = 15
+const offsetX = 15
+const offsetY = 20
 
 /*type Position struct {
 	X int;
@@ -22,7 +22,7 @@ func OnPlatform(player dtypes.Rect) bool {
 	var i int
 	log.Println("Executing OnPlatform")
 	for i = 0; i < len(coords.Platform); i++ {
-		//log.Println(player.XHi,coords.Platform[i].XHi, "---", player.YLo,"---",coords.Platform[i].YHi, "---", player.XLo,coords.Platform[i].XLo)
+		log.Println(player.YLo, "---", coords.Platform[i].YHi, "---", player.XLo, coords.Platform[i].XLo)
 		if player.YLo == coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo {
 			log.Println("OnPlatform returns true.")
 			return true
@@ -74,17 +74,20 @@ func SetAccordingToLadderBottom(player dtypes.Rect) dtypes.Rect {
 func FallsFromBlock(player dtypes.Rect) bool { // originally was on coords.Platform but not now
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
-		if player.XHi > coords.Platform[i].XLo || player.XLo < coords.Platform[i].XHi { // foot of player collides with top of block
+		log.Println("platform number", i)
+		if (player.YLo == coords.Platform[i].YHi) && (player.XHi > coords.Platform[i].XLo || player.XLo < coords.Platform[i].XHi) { // foot of player collides with top of block
+			log.Println("fallsfromblock returns true", player.YLo, coords.Platform[i].YHi, player.XHi, coords.Platform[i].XLo, player.XLo, coords.Platform[i].XHi)
 			return true
 		}
 	}
+	// log.Println("fallsfromblock returns false", player.XHi, coords.Platform[i].XLo, player.XLo, coords.Platform[i].XHi)
 	return false
 }
 func CollidesWithBlockVertically(player dtypes.Rect) bool { // falling vertically
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
 		//log.Println(player.YLo,"---",coords.Platform[i].YHi)
-		if player.YLo > coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
+		if player.YLo < coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
 			log.Println("CollidesWithBlockVertically returns true.")
 			return true
 		}
@@ -136,7 +139,7 @@ func GetPositionCollidesWithBlockOnRight(player dtypes.Rect) dtypes.Rect {
 func GetPositionCollidesWithBlockVer(player dtypes.Rect) dtypes.Rect {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
-		if player.YLo > coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
+		if player.YLo < coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
 			return dtypes.Rect{player.XHi, coords.Platform[i].YHi - 2*offsetY, player.XLo, coords.Platform[i].YHi}
 		}
 	}
@@ -157,8 +160,9 @@ func GetPosition(player dtypes.Rect) dtypes.Position {
 	return temp
 }
 func CollidesGem(player dtypes.Rect, id string) {
+	log.Println("gem collected---------------")
 	for i := 0; i < len(coords.Gems); i++ {
-		if player.XLo >= coords.Gems[i].Pos.XHi || player.XHi <= coords.Gems[i].Pos.XLo {
+		if (player.XLo >= coords.Gems[i].Pos.XHi && player.XHi <= coords.Gems[i].Pos.XLo && player.YLo == coords.Gems[i].Pos.YLo) {
 			health.UpdateHealth(coords.Gems[i].Gemtype, coords.Gems[i].Value, id)
 			for j := 0; j < len(coords.Freepositions); j++ {
 				if coords.Freepositions[i].Available == true {
@@ -173,7 +177,14 @@ func CollidesGem(player dtypes.Rect, id string) {
 		}
 	}
 }
-
+func CollidesWithBot(player dtypes.Rect,b11 dtypes.Rect,b22 dtypes.Rect,b33 dtypes.Rect) bool {
+	if  (player.YLo>=b11.YHi && player.YHi<=b11.YLo && player.XHi<=b11.XLo && player.XLo>=b11.XHi) || 
+		(player.YLo>=b22.YHi && player.YHi<=b22.YLo && player.XHi<=b22.XLo && player.XLo>=b22.XHi) || 
+		(player.YLo>=b33.YHi && player.YHi<=b33.YLo && player.XHi<=b33.XLo && player.XLo>=b33.XHi) {
+			return true
+		}
+	return false
+}
 /*// testing part
 func main() {
 	p1:=Position{45,35}
