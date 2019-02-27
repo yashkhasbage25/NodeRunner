@@ -162,9 +162,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
-					} else if CollidesWithBlockOnLeftMove(p22) {
-						log.Println("collided with block on left")
-						updatedRect = GetPositionCollidesWithBlockOnLeft(p22)
 					} else {
 						log.Println("successfull left move")
 						updatedRect = p22
@@ -185,9 +182,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
-					} else if CollidesWithBlockOnRightMove(p22) {
-						log.Println("collided with block on right")
-						updatedRect = GetPositionCollidesWithBlockOnRight(p22)
 					} else {
 						log.Println("successfull right move")
 						updatedRect = p22
@@ -287,9 +281,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
-					} else if CollidesWithBlockOnLeftMove(p22) {
-						log.Println("collided with block on left")
-						updatedRect = GetPositionCollidesWithBlockOnLeft(p22)
 					} else {
 						log.Println("successfull left move")
 						updatedRect = p22
@@ -310,9 +301,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
-					} else if CollidesWithBlockOnRightMove(p22) {
-						log.Println("collided with block on right")
-						updatedRect = GetPositionCollidesWithBlockOnRight(p22)
 					} else {
 						log.Println("successfull right move")
 						updatedRect = p22
