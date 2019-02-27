@@ -8,13 +8,27 @@ import (
 // var platform [8]dtypes.Rect
 // var ladder [6]dtypes.Rect
 // var gem [4]dtypes.Gem
+
+// Freepositions represents the free positions on which 
+// gems can land
 var Freepositions [10]dtypes.Freepos
 
+// Platform stores the diagonally opposite coordinates of
+// a platform
 var Platform [8]dtypes.Rect
+
+// Ladder stores the diagonally opposite coordinates of 
+// a Ladder
 var Ladder [6]dtypes.Rect
+
+// Gems stores the details of a gem
 var Gems [5]dtypes.Gem
+
+// Random pos stores the teleporting random positions
 var Randompos [10]dtypes.Position
 
+// iniializePlatforms initializes positios of all platforms, 
+// ladders and gems
 func initializePlatforms() {
 	Platform[0] = dtypes.Rect{0, 45, 840, 75}
 	Platform[1] = dtypes.Rect{800, 125, 1200, 155}
@@ -72,6 +86,8 @@ func initializePlatforms() {
 
 }
 
+
+// Initialize initializes the position of all static nodes for running dijkstra
 func Initialize() {
 	initializePlatforms()
 	for z := 0; z < 6; z++ {

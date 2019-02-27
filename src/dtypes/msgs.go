@@ -30,6 +30,7 @@ type Event struct {
 	P2Health int `json:"h2"`
 }
 
+// GetStr returns a debugging string of a position object
 func (pos Position) GetStr() string {
 	replyStr := ""
 	replyStr += " X:" + strconv.Itoa(pos.X)
@@ -37,6 +38,7 @@ func (pos Position) GetStr() string {
 	return replyStr
 }
 
+// GetStr returns a debugging string of a event object
 func (event *Event) GetStr() string {
 	replyStr := ""
 	replyStr += " EventType:" + event.EventType
@@ -63,6 +65,8 @@ type Debug struct {
 	Code int `json:"code"`
 }
 
+// Rect stores the diagonally opposite points of a rectangle
+// Diagonally opposite points are top-left and bottom-right
 type Rect struct {
 	XHi int
 	YHi int
@@ -70,11 +74,14 @@ type Rect struct {
 	YLo int
 }
 
+// Gem struct stores the attributes of a gem
 type Gem struct {
 	Gemtype byte
 	Value   int
 	Pos     Rect
 }
+
+// Freepos stores the attributes of a free position
 type Freepos struct {
 	Available bool
 	Pos       Rect

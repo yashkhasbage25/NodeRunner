@@ -206,7 +206,7 @@ func UpdateBots(event dtypes.Event) dtypes.Event {
 	minpathlen := make([]int, 6)
 	var update [6]dtypes.Position
 	var bestUpdate [3]dtypes.Position
-	//log.Println("Inside Updatebots eith event", event.GetStr())
+	log.Println("Inside Updatebots eith event", event.GetStr())
 	lock.Lock()
 	go runDijkstra(event.B1Pos, event.P1Pos, 0, channels.Chans[0])
 	go runDijkstra(event.B1Pos, event.P2Pos, 1, channels.Chans[1])
@@ -230,81 +230,90 @@ func UpdateBots(event dtypes.Event) dtypes.Event {
 	replyEvent.B1Pos = bestUpdate[0]
 	replyEvent.B2Pos = bestUpdate[1]
 	replyEvent.B3Pos = bestUpdate[2]
-	//log.Println("Update bots replies with event", replyEvent.B1Pos.GetStr(), replyEvent.B2Pos.GetStr(), replyEvent.B3Pos.GetStr())
+	log.Println("Update bots replies with event", replyEvent.B1Pos.GetStr(), replyEvent.B2Pos.GetStr(), replyEvent.B3Pos.GetStr())
 	return replyEvent
 
 }
 func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel chan channels.Data) {
 	//log.Println(bot, player)
 	var step int
-	step = 2
+	step = 1
 	//initialize()
-	addDynamicnode(bot, player, z)
-	//we have source as node with NodeID
-	//var distance [32+2] int
-	for i := 0; i < 34; i++ {
-		// log.Println("z: ", z, " ", i, Game.AdjacencyMatrix[z][20][i])
-		//	log.Println(Allnodes[z][32], Allnodes[z][33])
-	}
-	distance := make([]int, 34)
-	cluster := make([]bool, 34)
-	//var cluster [32+2] bool // cluster[i] will be true if node i is included in shortest
-	// path tree or shortest distance from src to i is finalize
+	if OnPlatform(GetBoundary(bot)) == 1 || AllignedWithLadder(GetBoundary(bot)) == 1 {
+		addDynamicnode(bot, player, z)
+		//we have source as node with NodeID
+		//var distance [32+2] int
+		for i := 0; i < 34; i++ {
+			// log.Println("z: ", z, " ", i, Game.AdjacencyMatrix[z][20][i])
+			//	log.Println(Allnodes[z][32], Allnodes[z][33])
+		}
+		distance := make([]int, 34)
+		cluster := make([]bool, 34)
+		//var cluster [32+2] bool // cluster[i] will be true if node i is included in shortest
+		// path tree or shortest distance from src to i is finalize
 
-	for i := 0; i < 32+2; i++ {
-		distance[i] = int(^uint(0) >> 1) // it is int_max in golang
-		cluster[i] = false
-	}
-	distance[32] = 0 // distance of src from src is 0
+		for i := 0; i < 32+2; i++ {
+			distance[i] = int(^uint(0) >> 1) // it is int_max in golang
+			cluster[i] = false
+		}
+		distance[32] = 0 // distance of src from src is 0
 
-	for i := 0; i < 32+2; i++ {
-		newNodeID := minDistance(distance, cluster, 32+2)
-		cluster[newNodeID] = true
+		for i := 0; i < 32+2; i++ {
+			newNodeID := minDistance(distance, cluster, 32+2)
+			cluster[newNodeID] = true
 
-		// Update dist[v] only if is not in cluster, there is an edge from
-		// newNodeID to v, and total weight of path from src to  v through newNodeID is
-		// smaller than current value of dist[v]
-		for v := 0; v < 32+2; v++ {
+			// Update dist[v] only if is not in cluster, there is an edge from
+			// newNodeID to v, and total weight of path from src to  v through newNodeID is
+			// smaller than current value of dist[v]
+			for v := 0; v < 32+2; v++ {
 
-			if !cluster[v] && Game.AdjacencyMatrix[z][newNodeID][v] != -1 && distance[newNodeID] != int(^uint(0)>>1) && distance[newNodeID]+Game.AdjacencyMatrix[z][newNodeID][v] < distance[v] {
-				distance[v] = distance[newNodeID] + Game.AdjacencyMatrix[z][newNodeID][v]
-				Parentarray[z][v] = newNodeID
+				if !cluster[v] && Game.AdjacencyMatrix[z][newNodeID][v] != -1 && distance[newNodeID] != int(^uint(0)>>1) && distance[newNodeID]+Game.AdjacencyMatrix[z][newNodeID][v] < distance[v] {
+					distance[v] = distance[newNodeID] + Game.AdjacencyMatrix[z][newNodeID][v]
+					Parentarray[z][v] = newNodeID
+				}
 			}
 		}
-	}
-	//send distance of[n+1]
-	//find parent of node[i]
-	//and return that information to
-	var botNextmove dtypes.Position
-	var botnextnextmove dtypes.Position
-	var nxtid int
-	minimumDistance := distance[33]
-	markPath(z, 33)
-	for i := 0; i < 32+2; i++ {
-		if Parentarray[z][i] == 32 && Path[z][i] == true {
-			botNextmove = Allnodes[z][i].Location
-			nxtid = i
+		//send distance of[n+1]
+		//find parent of node[i]
+		//and return that information to
+		var botNextmove dtypes.Position
+		//var botnextnextmove dtypes.Position
+		var nxtid int
+		minimumDistance := distance[33]
+		markPath(z, 33)
+		for i := 0; i < 32+2; i++ {
+			if Parentarray[z][i] == 32 && Path[z][i] == true {
+				botNextmove = Allnodes[z][i].Location
+				nxtid = i
+			}
 		}
-	}
-	for i := 0; i < 32+2; i++ {
-		if Parentarray[z][i] == nxtid && Path[z][i] == true {
-			botnextnextmove = Allnodes[z][i].Location
-			//nxtnxtid:= i
-		}
-	}
+		/*	for i := 0; i < 32+2; i++ {
+			if Parentarray[z][i] == nxtid && Path[z][i] == true {
+				botnextnextmove = Allnodes[z][i].Location
+				//nxtnxtid:= i
+			}
+		}*/
 
-	currentPosition := Allnodes[z][32].Location
-	updatedPosition := nextposition(currentPosition, botNextmove, step)
-	if updatedPosition==currentPosition {
-		updatedPosition = nextposition(currentPosition, botnextnextmove, step)
-    
-	}
-	//log.Println("dijkstra path for ", z," aimed at node ",nxtid)
-	//printPath(z, 33)
+		currentPosition := Allnodes[z][32].Location
+		updatedPosition := nextposition(currentPosition, botNextmove, step)
+		/*if updatedPosition == currentPosition {
+			updatedPosition = nextposition(currentPosition, botnextnextmove, step)
 
-	//fmt.Println("distance :: ",minimumDistance)
-	//log.Println("Completed dijkstra for channel", z)
-	removeDynamicnode(z)
-	channel <- channels.Data{updatedPosition, minimumDistance}
-	//log.Println("Completed dijkstra for channel and put to channel", z, minimumDistance)
+		}*/
+		log.Println("dijkstra path for ", z, " aimed at node ", nxtid)
+		//printPath(z, 33)
+		log.Println("z:", z, "CP:", currentPosition, "UPdated", updatedPosition)
+
+		//fmt.Println("distance :: ",minimumDistance)
+		//log.Println("Completed dijkstra for channel", z)
+		removeDynamicnode(z)
+		channel <- channels.Data{updatedPosition, minimumDistance}
+		log.Println("Completed dijkstra for channel and put to channel", z, minimumDistance)
+	} else {
+		updatedposition := bot
+		updatedposition.Y = updatedposition.Y + step
+		channel <- channels.Data{updatedposition, 0}
+		log.Println("z:", z, "in the air UPdated:", updatedposition)
+
+	}
 }

@@ -42,6 +42,8 @@ func (client *Client) GetRequestChannel() chan dtypes.Event {
 	return client.RequestChannel
 }
 
+// GetReceiveChannel is a getter for receive channel of client 
+// object
 func (client *Client) GetReceiveChannel() chan dtypes.Event {
 	return client.ReceiveChannel
 }
@@ -76,6 +78,8 @@ func (client *Client) SetRequestChannel(requestChannel chan dtypes.Event) {
 	client.RequestChannel = requestChannel
 }
 
+// SetReceiveChannel is a setter for receive channel of 
+// a client object
 func (client *Client) SetReceiveChannel(receiveChannel chan dtypes.Event) {
 	client.ReceiveChannel = receiveChannel
 }

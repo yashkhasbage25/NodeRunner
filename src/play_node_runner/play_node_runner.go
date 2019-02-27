@@ -18,8 +18,11 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// lock for reading and writing to websockets
 var lock sync.Mutex
 
+// regularUpdater regularly asks clients for update in time 
+// specified in its ticker
 func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelClient chan dtypes.Event, id int) {
 
 	ticker := time.NewTicker(10 * time.Millisecond)
@@ -112,6 +115,9 @@ func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event, id 
 	}
 }
 
+// serverReceiveComputations sends comptations randomly from request channels 
+// of clients to request channel of server. the select block selects randomly 
+// from the two player channels thus ensuring fairness among the players 
 func serverReceiveComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
 	log.Println("started running servercomputations")
 	for {
@@ -148,6 +154,8 @@ func serverReceiveComputations(firstClientRequestChannel, secondClientRequestCha
 // 	}
 // }
 
+// serverComputations handles the position computations need to be done 
+// by the server
 func serverComputations(firstClientRequestChannel, secondClientRequestChannel chan dtypes.Event, firstConn, secondConn *websocket.Conn, requestChannelServer chan dtypes.Event) {
 	// var latestState dtypes.Event
 	for {
