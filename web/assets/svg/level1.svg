@@ -9,7 +9,7 @@
 	<rect x="0" y="325" width="800" height="30" style="fill:blue;"/>
 	<rect x="0" y="200" width="400"	 height="30" style="fill:blue;"/>
 	<rect x="600" y="210" width="600"	 height="30" style="fill:blue;"/>
-	<rect x="800" y="120" width="400"	 height="30" style="fill:blue;"/>
+	<rect x="800" y="125" width="400"	 height="30" style="fill:blue;"/>
 	<rect x="0" y="45" width="840"	 height="30" style="fill:blue;"/>
 	<rect x="170" y="450" width="30" height="100" style="fill: white;"/>
 	<rect x="1170" y="440" width="30" height="110" style="fill: white;"/>
