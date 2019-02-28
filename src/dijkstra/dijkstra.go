@@ -42,10 +42,12 @@ func setter(i int, n int, z int, flag bool) {
 	if flag == true {
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
+		log.Println("added  vertical edge between ", i, n, "for ", z)
 	} else {
-		if i==32&&n==33{
+		if i == 32 && n == 33 {
 			log.Println(" edge added betn bot and player.")
 		}
+		log.Println("added  horizental edge between ", i, n, "for ", z)
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 	}
@@ -113,6 +115,7 @@ func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 	botonladder := AllignedWithLadder(GetBoundary(bot))
 	playeronladder := AllignedWithLadder(GetBoundary(player))
 	playeronplatform := OnPlatform(GetBoundary(player))
+	log.Println(z, " botonladder ", botonladder, "playeronladder", botonplatform, "playeronladder", playeronladder, " playeronplatform ", playeronplatform)
 	Allnodes[z][32] = StaticNode{dtypes.Position{bot.X, bot.Y}, 9, bot.X, bot.Y}
 	//	println("dynamic", OnPlatform(GetBoundary(player)), AllignedWithLadder(GetBoundary(player))) //added bot at position equal to n.
 	if playeronplatform == 0 && playeronladder == 0 {
@@ -122,22 +125,24 @@ func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 	}
 	//	log.Println(" add dynamic", Allnodes[z][32], Allnodes[z][33])
 	for i := 0; i < 32; i++ {
-		if Allnodes[z][i].XNodeID == Allnodes[z][32].XNodeID && botonladder == 1&& Allnodes[z][i].YNodeID!=Allnodes[z][32].YNodeID {
+		if Allnodes[z][i].XNodeID == Allnodes[z][32].XNodeID && botonladder == 1 && Allnodes[z][i].YNodeID != Allnodes[z][32].YNodeID {
 			setter(i, 32, z, true)
-		} else if Allnodes[z][i].YNodeID == Allnodes[z][32].YNodeID&& Allnodes[z][i].XNodeID!=Allnodes[z][32].XNodeID && !( botonladder==1 &&botonplatform==0){
+		} else if Allnodes[z][i].YNodeID == Allnodes[z][32].YNodeID && Allnodes[z][i].XNodeID != Allnodes[z][32].XNodeID && !(botonladder == 1 && botonplatform == 0) {
 			setter(i, 32, z, false)
 		}
 	}
 	for i := 0; i < 32+1; i++ {
-		if Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1 && i!=32 {
+		log.Println("* *", Allnodes[z][i].YNodeID, Allnodes[z][32+1].YNodeID, z)
+
+		if Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1 && i != 32 {
 			setter(i, 32+1, z, true)
-		} else if Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID &&i!=32 { // if it is not on ladder do not add edge if y> bot
+		} else if Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID && i != 32 { // if it is not on ladder do not add edge if y> bot
 			setter(i, 32+1, z, false) //position
-		} else if i==32 && Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1&&botonladder==1{
-			setter(i, 32, z, true)
-		} else if i==32 && Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID &&botonplatform==1 {
+		} else if i == 32 && Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1 && botonladder == 1 {
+			setter(i, 32+1, z, true)
+		} else if i == 32 && Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID && botonplatform == 1 {
 			setter(i, 32+1, z, false) //position
-			log.Println(z,"botonplatform :",botonplatform)
+			log.Println(z, "botonplatform :", botonplatform)
 		}
 
 	}
@@ -288,13 +293,14 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 				}
 			}
 		}
+		printPath(z, 33)
 		//send distance of[n+1]
 		//find parent of node[i]
 		//and return that information to
 		var botNextmove dtypes.Position
 		//var botnextnextmove dtypes.Position
 		var nxtid int
-		//var nxtnxtid int 
+		//var nxtnxtid int
 		minimumDistance := distance[33]
 		markPath(z, 33)
 		for i := 0; i < 32+2; i++ {
@@ -321,7 +327,7 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 			log.Println("z:", z, "CP:", currentPosition, "botnextnextmove: ", botnextnextmove)
 
 		}*/
-		for i:=0;i<34;i++ {
+		for i := 0; i < 34; i++ {
 
 			//log.Println(z," parentarray :",i,parentarray[z][i]," path ",i,path[z][i])
 		}
@@ -342,4 +348,3 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 
 	}
 }
-

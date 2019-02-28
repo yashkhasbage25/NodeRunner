@@ -19,8 +19,24 @@ func SetGameWinChannel(winChannel chan int) {
 func Handle(event dtypes.Event) dtypes.Event {
 	log.Println("event obtained in handler.Handle is ", event.GetStr())
 	var replyEvent dtypes.Event
+	var b11 = GetBoundary(event.B1Pos)
+	var b22 = GetBoundary(event.B2Pos)
+	var b33 = GetBoundary(event.B3Pos)
+	var p11 = GetBoundary(event.P1Pos)  
+	var p22 = GetBoundary(event.P2Pos)
+	if CollidesWithBot(p11, b11, b22, b33) {
+					replyEvent.EventType = "Lose"
+					replyEvent.Object = "p1"
+					gameWinChannel <- 1
+				}
+	if CollidesWithBot(p22, b11, b22, b33) {
+					replyEvent.EventType = "Lose"
+					replyEvent.Object = "p2"
+					gameWinChannel <- 0
+				}
 	// Ordinary Update event no change in positions
-	if event.EventType == "Update" {
+	if event.EventType == "Update" {		
+		
 		replyEvent = dtypes.Event{
 			EventType: "Update",
 			Object:    event.Object,
@@ -35,6 +51,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 			G4Pos:     event.G4Pos,
 			P1Health:  health.GetHealth("p1"),
 			P2Health:  health.GetHealth("p2"),
+			
 		}
 		log.Println("handler replies with ordinary update eventtype", replyEvent.GetStr())
 		return replyEvent

@@ -9,7 +9,7 @@ import (
 // var ladder [6]dtypes.Rect
 // var gem [4]dtypes.Gem
 
-// Freepositions represents the free positions on which 
+// Freepositions represents the free positions on which
 // gems can land
 var Freepositions [10]dtypes.Freepos
 
@@ -17,7 +17,7 @@ var Freepositions [10]dtypes.Freepos
 // a platform
 var Platform [8]dtypes.Rect
 
-// Ladder stores the diagonally opposite coordinates of 
+// Ladder stores the diagonally opposite coordinates of
 // a Ladder
 var Ladder [6]dtypes.Rect
 
@@ -27,7 +27,7 @@ var Gems [5]dtypes.Gem
 // Random pos stores the teleporting random positions
 var Randompos [10]dtypes.Position
 
-// iniializePlatforms initializes positios of all platforms, 
+// iniializePlatforms initializes positios of all platforms,
 // ladders and gems
 func initializePlatforms() {
 	Platform[0] = dtypes.Rect{0, 45, 840, 75}
@@ -64,14 +64,13 @@ func initializePlatforms() {
 	Gems[3] = dtypes.Gem{
 		Gemtype: '*',
 		Value:   2,
-		Pos:     dtypes.Rect{600, 400, 630, 440},
+		Pos:     dtypes.Rect{600, 510, 630, 550},
 	}
 
-	Freepositions[0] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{900, 80, 915, 100}}
-	Freepositions[1] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{700, 510, 715, 530}}
-	Freepositions[2] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{280, 285, 295, 305}}
-	Freepositions[3] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{900, 400, 915, 420}}
-	Freepositions[4] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{100, 5, 115, 25}}
+	Freepositions[0] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{900, 80, 930, 120}}
+	Freepositions[1] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{700, 510, 730, 550}}
+	Freepositions[2] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{280, 285, 310, 325}}
+	Freepositions[3] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{900, 400, 930, 440}}
 
 	Randompos[0] = dtypes.Position{715, 25}
 	Randompos[1] = dtypes.Position{215, 180}
@@ -80,12 +79,11 @@ func initializePlatforms() {
 	Randompos[4] = dtypes.Position{25, 530}   // 10 , 510
 	Randompos[5] = dtypes.Position{1115, 530} // 1100, 510
 	Randompos[6] = dtypes.Position{315, 430}  // 300, 410
-	Randompos[7] = dtypes.Position{1015, 415} // 1000, 400
+	Randompos[7] = dtypes.Position{1015, 420} // 1000, 400
 	Randompos[8] = dtypes.Position{715, 190}  // 700, 170
-	Randompos[9] = dtypes.Position{25, 305} // 10, 285
+	Randompos[9] = dtypes.Position{25, 305}   // 10, 285
 
 }
-
 
 // Initialize initializes the position of all static nodes for running dijkstra
 func Initialize() {
@@ -113,9 +111,9 @@ func Initialize() {
 		dijkstra.Allnodes[z][18] = dijkstra.StaticNode{dtypes.Position{185, 430}, 6, 185, 430}
 		dijkstra.Allnodes[z][19] = dijkstra.StaticNode{dtypes.Position{415, 430}, 6, 415, 430}
 		dijkstra.Allnodes[z][20] = dijkstra.StaticNode{dtypes.Position{545, 430}, 6, 545, 430}
-		dijkstra.Allnodes[z][21] = dijkstra.StaticNode{dtypes.Position{785, 420}, 7, 785, 440}
-		dijkstra.Allnodes[z][22] = dijkstra.StaticNode{dtypes.Position{815, 420}, 7, 815, 440}
-		dijkstra.Allnodes[z][23] = dijkstra.StaticNode{dtypes.Position{1185, 420}, 7, 1185, 440}
+		dijkstra.Allnodes[z][21] = dijkstra.StaticNode{dtypes.Position{785, 420}, 7, 785, 420}
+		dijkstra.Allnodes[z][22] = dijkstra.StaticNode{dtypes.Position{815, 420}, 7, 815, 420}
+		dijkstra.Allnodes[z][23] = dijkstra.StaticNode{dtypes.Position{1185, 420}, 7, 1185, 420}
 		dijkstra.Allnodes[z][24] = dijkstra.StaticNode{dtypes.Position{15, 530}, 8, 15, 530}
 		dijkstra.Allnodes[z][25] = dijkstra.StaticNode{dtypes.Position{155, 530}, 8, 155, 530}
 		dijkstra.Allnodes[z][26] = dijkstra.StaticNode{dtypes.Position{185, 530}, 8, 185, 530}

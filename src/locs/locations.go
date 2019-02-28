@@ -48,7 +48,7 @@ func InitializeLocations() {
 		Y: 305,
 	}
 	gem[1] = dtypes.Position{
-		X: 515,
+		X: 535,
 		Y: 305,
 	}
 	gem[2] = dtypes.Position{
@@ -57,7 +57,7 @@ func InitializeLocations() {
 	}
 	gem[3] = dtypes.Position{
 		X: 615,
-		Y: 420,
+		Y: 530,
 	}
 }
 

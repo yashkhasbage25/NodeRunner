@@ -7,6 +7,7 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 	"github.com/IITH-SBJoshi/concurrency-3/src/health"
 )
+
 // offsetx and offsety are declared to get rectangle boundaray from center positions
 const offsetX = 15
 const offsetY = 20
@@ -25,6 +26,7 @@ func OnPlatform(player dtypes.Rect) bool {
 	log.Println("OnPlatform returns false.")
 	return false
 }
+
 // AllignedWithLadder returns true if x coordinate of center point lies within x coordinates of ladder
 // and y coordinate of bottom point of player lies between y coordinates of ladder
 func AllignedWithLadder(player dtypes.Rect) bool {
@@ -41,7 +43,8 @@ func AllignedWithLadder(player dtypes.Rect) bool {
 	log.Println("AllignedWithLadder returns false.")
 	return false
 }
-// As it excedded ladder height lower y coordinate of player is set to upper y coordinate of platform
+
+// SetAccordingToLadderTop As it excedded ladder height lower y coordinate of player is set to upper y coordinate of platform
 // and according top y coordinate of ladder is adjusted using offset
 func SetAccordingToLadderTop(player dtypes.Rect) dtypes.Rect { // originally was alligned but not not alligned
 	var i int
@@ -56,7 +59,8 @@ func SetAccordingToLadderTop(player dtypes.Rect) dtypes.Rect { // originally was
 	}
 	return dtypes.Rect{}
 }
-// As it excedded ladder height while moving lower y coordinate of player is set to lower y coordinate of platform
+
+// SetAccordingToLadderBottom As it excedded ladder height while moving lower y coordinate of player is set to lower y coordinate of platform
 // and according top y coordinate of ladder is adjusted using offset
 func SetAccordingToLadderBottom(player dtypes.Rect) dtypes.Rect {
 	var i int
@@ -71,7 +75,8 @@ func SetAccordingToLadderBottom(player dtypes.Rect) dtypes.Rect {
 	}
 	return dtypes.Rect{}
 }
-// Checks if player fell form block
+
+// FallsFromBlock Checks if player fell form block
 func FallsFromBlock(player dtypes.Rect) bool { // originally was on coords.Platform but not now
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
@@ -84,11 +89,12 @@ func FallsFromBlock(player dtypes.Rect) bool { // originally was on coords.Platf
 	// log.Println("fallsfromblock returns false", player.XHi, coords.Platform[i].XLo, player.XLo, coords.Platform[i].XHi)
 	return false
 }
-// Checks if player collided vertically
+
+// CollidesWithBlockVertically Checks if player collided vertically
 func CollidesWithBlockVertically(player dtypes.Rect) bool { // falling vertically
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
-		log.Println(i,player.YLo,"---",coords.Platform[i].YHi,player.XLo,coords.Platform[i].XHi,player.XHi,coords.Platform[i].XLo)
+		log.Println(i, player.YLo, "---", coords.Platform[i].YHi, player.XLo, coords.Platform[i].XHi, player.XHi, coords.Platform[i].XLo)
 		if player.YLo < coords.Platform[i].YHi && player.XLo > coords.Platform[i].XHi && player.XHi < coords.Platform[i].XLo { // foot of player collides with top of block
 			log.Println("CollidesWithBlockVertically returns true.")
 			return true
@@ -97,7 +103,8 @@ func CollidesWithBlockVertically(player dtypes.Rect) bool { // falling verticall
 	log.Println("CollidesWithBlockVertically returns false.")
 	return false
 }
-// Checks if player collided with a block while moving right
+
+// CollidesWithBlockOnRightMove Checks if player collided with a block while moving right
 func CollidesWithBlockOnRightMove(player dtypes.Rect) bool {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
@@ -110,7 +117,8 @@ func CollidesWithBlockOnRightMove(player dtypes.Rect) bool {
 	log.Println("CollidesWithBlockOnRightMove returns false.")
 	return false
 }
-// Checks if player collided with a block while moving left
+
+// CollidesWithBlockOnLeftMove Checks if player collided with a block while moving left
 func CollidesWithBlockOnLeftMove(player dtypes.Rect) bool {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
@@ -122,7 +130,8 @@ func CollidesWithBlockOnLeftMove(player dtypes.Rect) bool {
 	log.Println("CollidesWithBlockOnLeftMove returns false.")
 	return false
 }
-// get updated Position of player when it collided with block on left move
+
+// GetPositionCollidesWithBlockOnLeft get updated Position of player when it collided with block on left move
 func GetPositionCollidesWithBlockOnLeft(player dtypes.Rect) dtypes.Rect {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
@@ -132,7 +141,8 @@ func GetPositionCollidesWithBlockOnLeft(player dtypes.Rect) dtypes.Rect {
 	}
 	return dtypes.Rect{}
 }
-// get updated Position of player when it collided with block on right move
+
+// GetPositionCollidesWithBlockOnRight get updated Position of player when it collided with block on right move
 func GetPositionCollidesWithBlockOnRight(player dtypes.Rect) dtypes.Rect {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
@@ -142,7 +152,8 @@ func GetPositionCollidesWithBlockOnRight(player dtypes.Rect) dtypes.Rect {
 	}
 	return dtypes.Rect{}
 }
-// get updated Position of player when it collided with block on vertical move
+
+// GetPositionCollidesWithBlockVer get updated Position of player when it collided with block on vertical move
 func GetPositionCollidesWithBlockVer(player dtypes.Rect) dtypes.Rect {
 	var i int
 	for i = 0; i < len(coords.Platform); i++ {
@@ -152,7 +163,8 @@ func GetPositionCollidesWithBlockVer(player dtypes.Rect) dtypes.Rect {
 	}
 	return dtypes.Rect{}
 }
-// get bounding rectangle using coordinates of center point
+
+// GetBoundary get bounding rectangle using coordinates of center point
 func GetBoundary(player dtypes.Position) dtypes.Rect {
 	var temp dtypes.Rect
 	temp.XHi = player.X - offsetX
@@ -161,21 +173,23 @@ func GetBoundary(player dtypes.Position) dtypes.Rect {
 	temp.YLo = player.Y + offsetY
 	return temp
 }
-// get center point using bounding rectangle
+
+// GetPosition get center point using bounding rectangle
 func GetPosition(player dtypes.Rect) dtypes.Position {
 	var temp dtypes.Position
 	temp.X = (player.XHi + player.XLo) / 2
 	temp.Y = (player.YHi + player.YLo) / 2
 	return temp
 }
-// Check whether collided with gem
+
+// CollidesGem Check whether collided with gem
 func CollidesGem(player dtypes.Rect, id string) {
 	for i := 0; i < len(coords.Gems); i++ {
-		if (player.XLo >= coords.Gems[i].Pos.XHi && player.XHi <= coords.Gems[i].Pos.XLo && player.YLo == coords.Gems[i].Pos.YLo) {
+		if player.XLo >= coords.Gems[i].Pos.XHi && player.XHi <= coords.Gems[i].Pos.XLo && player.YLo == coords.Gems[i].Pos.YLo {
 			health.UpdateHealth(coords.Gems[i].Gemtype, coords.Gems[i].Value, id)
-				log.Println("gem collected") 
-				// collided with gem
-				// now change position of gems
+			log.Println("gem collected")
+			// collided with gem
+			// now change position of gems
 			for j := 0; j < len(coords.Freepositions); j++ {
 				if coords.Freepositions[i].Available == true {
 					coords.Gems[i].Pos.XHi = coords.Freepositions[i].Pos.XHi
@@ -189,15 +203,19 @@ func CollidesGem(player dtypes.Rect, id string) {
 		}
 	}
 }
+
 // Check if player collides with bots
-func CollidesWithBot(player dtypes.Rect,b11 dtypes.Rect,b22 dtypes.Rect,b33 dtypes.Rect) bool {
-	if  (player.YLo>=b11.YHi && player.YHi<=b11.YLo && player.XHi<=b11.XLo && player.XLo>=b11.XHi) || 
-		(player.YLo>=b22.YHi && player.YHi<=b22.YLo && player.XHi<=b22.XLo && player.XLo>=b22.XHi) || 
-		(player.YLo>=b33.YHi && player.YHi<=b33.YLo && player.XHi<=b33.XLo && player.XLo>=b33.XHi) {
-			return true
-		}
+func CollidesWithBot(player dtypes.Rect, b11 dtypes.Rect, b22 dtypes.Rect, b33 dtypes.Rect) bool {
+	if (player.YLo >= b11.YHi && player.YHi <= b11.YLo && player.XHi <= b11.XLo && player.XLo >= b11.XHi) ||
+		(player.YLo >= b22.YHi && player.YHi <= b22.YLo && player.XHi <= b22.XLo && player.XLo >= b22.XHi) ||
+		(player.YLo >= b33.YHi && player.YHi <= b33.YLo && player.XHi <= b33.XLo && player.XLo >= b33.XHi) {
+		log.Println("Collision with bot returns true")
+		return true
+	}
+	log.Println("Collision with bot returns false")
 	return false
 }
+
 /*// testing part
 func main() {
 	p1:=Position{45,35}
