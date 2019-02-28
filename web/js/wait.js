@@ -1,4 +1,4 @@
-ws = new WebSocket("ws://localhost:8080/wait");
+ws = new WebSocket("ws://192.168.105.49:8080/wait");
 
 ws.onopen = function() {
     console.log("wait.js websocket opened");

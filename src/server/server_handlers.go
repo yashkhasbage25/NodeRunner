@@ -19,7 +19,7 @@ import (
 // serverLock is a lock for safety of gameRunning
 var serverLock sync.Mutex
 
-// gameRunning is a bool representing whether a the game is running or 
+// gameRunning is a bool representing whether a the game is running or
 // not
 var gameRunning bool
 
@@ -270,11 +270,19 @@ func (gameServer *Server) SetHandlers() {
 func detectGameOver(server *Server, gameWinChanel chan int) {
 	winner := <-gameWinChanel
 	log.Println("Winner is client id", winner)
+	winnerID := ""
+	if winner == 0 {
+		winnerID = "p1"
+	} else {
+		winnerID = "p2"
+	}
 	server.GetClient(winner).GetWSocket().WriteJSON(dtypes.Event{
 		EventType: "Win",
+		Object:    winnerID,
 	})
 	server.GetClient(1 - winner).GetWSocket().WriteJSON(dtypes.Event{
-		EventType: "Lose",
+		EventType: "Win",
+		Object:    winnerID,
 	})
 }
 

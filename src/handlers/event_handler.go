@@ -88,12 +88,12 @@ func Handle(event dtypes.Event) dtypes.Event {
 	var freeFallP1 bool = false // boolean variable stores if player is freefalling
 	var freeFallP2 bool = false
 	var step int = 4
-	dx := [5]int{0, 0, -step, step} // dx[i] is the change in x coordinate 
+	dx := [5]int{0, 0, -step, step}    // dx[i] is the change in x coordinate
 	dy := [5]int{-step, step, 0, 0, 0} // dy[i] is the change in x coordinate
 	for i := 0; i < 4; i++ {
 		if direction[i] == event.EventType {
 			// initializes rectangle from bot positions
-			var b11 = GetBoundary(event.B1Pos) 
+			var b11 = GetBoundary(event.B1Pos)
 			var b22 = GetBoundary(event.B2Pos)
 			var b33 = GetBoundary(event.B3Pos)
 			log.Println("Direction detected:", direction[i])
@@ -111,18 +111,18 @@ func Handle(event dtypes.Event) dtypes.Event {
 					X: event.P1Pos.X + dx[i],
 					Y: event.P1Pos.Y + dy[i],
 				}
-				var p11 = GetBoundary(event.P1Pos) // original event 
+				var p11 = GetBoundary(event.P1Pos)      // original event
 				var p22 = GetBoundary(replyEvent.P1Pos) // modified event on keypress
 				// boundary check so that does not go out of screen
-				if(p22.XHi<0){
+				if p22.XHi < 0 {
 					log.Println("out of bounds p1")
-					p22.XHi=0
-					p22.XLo=30
+					p22.XHi = 0
+					p22.XLo = 30
 				}
-				if(p22.XLo>1200){
+				if p22.XLo > 1200 {
 					log.Println("out of bounds p1")
-					p22.XLo=1200
-					p22.XHi=1170
+					p22.XLo = 1200
+					p22.XHi = 1170
 				}
 				var updatedRect dtypes.Rect // stores updated position on keypress
 				if i == 0 {
@@ -198,7 +198,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 						// was not on platform when left key was pressed so no change
 						log.Println("not on Platform")
 						updatedRect = p11
-					}  else {
+					} else {
 						// succesfull left move
 						log.Println("successfull right move")
 						updatedRect = p22
@@ -210,7 +210,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 
 				if freeFallP1 {
 					log.Println("freefall")
-					log.Println(temporary.X, temporary.Y,)
+					log.Println(temporary.X, temporary.Y)
 					// increase y coordinate untill it hits a block
 					temporary2 := dtypes.Position{temporary.X, temporary.Y + 2*step}
 					p11 = GetBoundary(temporary)
@@ -226,7 +226,9 @@ func Handle(event dtypes.Event) dtypes.Event {
 
 				// check if collides with bots
 				if CollidesWithBot(updatedRect, b11, b22, b33) {
-					replyEvent.EventType = "P1Looses"
+					replyEvent.EventType = "Lose"
+					replyEvent.Object = "p1"
+					gameWinChannel <- 1
 				}
 				// return updated parameters such as players heath position,gem position,
 				replyEvent.P1Pos = GetPosition(updatedRect)
@@ -247,15 +249,15 @@ func Handle(event dtypes.Event) dtypes.Event {
 				}
 				p11 := GetBoundary(event.P2Pos)
 				p22 := GetBoundary(replyEvent.P2Pos)
-				if(p22.XHi<0){
+				if p22.XHi < 0 {
 					log.Println("out of bounds p2")
-					p22.XHi=0
-					p22.XLo=30
+					p22.XHi = 0
+					p22.XLo = 30
 				}
-				if(p22.XLo>1200){
+				if p22.XLo > 1200 {
 					log.Println("out of bounds p2")
-					p22.XLo=1200
-					p22.XHi=1170
+					p22.XLo = 1200
+					p22.XHi = 1170
 				}
 				var updatedRect dtypes.Rect
 				if i == 0 {
@@ -301,7 +303,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else if !OnPlatform(p11) {
 						log.Println("not on Platform")
 						updatedRect = p11
-					}  else {
+					} else {
 						log.Println("successfull left move")
 						updatedRect = p22
 					}
@@ -344,7 +346,9 @@ func Handle(event dtypes.Event) dtypes.Event {
 					}
 				}
 				if CollidesWithBot(updatedRect, b11, b22, b33) {
-					replyEvent.EventType = "P2Looses"
+					replyEvent.EventType = "Lose"
+					replyEvent.Object = "p2"
+					gameWinChannel <- 0
 				}
 				replyEvent.P2Pos = GetPosition(updatedRect)
 				replyEvent.P1Pos = event.P1Pos

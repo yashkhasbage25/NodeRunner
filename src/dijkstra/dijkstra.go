@@ -43,6 +43,9 @@ func setter(i int, n int, z int, flag bool) {
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
 	} else {
+		if i==32&&n==33{
+			log.Println(" edge added betn bot and player.")
+		}
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 	}
@@ -106,36 +109,48 @@ func onladder(entity dtypes.Position) bool { //code from atharva.
 
 func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 
+	botonplatform := OnPlatform(GetBoundary(bot))
+	botonladder := AllignedWithLadder(GetBoundary(bot))
+	playeronladder := AllignedWithLadder(GetBoundary(player))
+	playeronplatform := OnPlatform(GetBoundary(player))
 	Allnodes[z][32] = StaticNode{dtypes.Position{bot.X, bot.Y}, 9, bot.X, bot.Y}
 	//	println("dynamic", OnPlatform(GetBoundary(player)), AllignedWithLadder(GetBoundary(player))) //added bot at position equal to n.
-	if OnPlatform(GetBoundary(player)) == 0 && AllignedWithLadder(GetBoundary(player)) == 0 {
+	if playeronplatform == 0 && playeronladder == 0 {
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, fallingon(player, z)}, 10, player.X, fallingon(player, z)}
 	} else {
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, player.Y}, 10, player.X, player.Y} //added player
 	}
 	//	log.Println(" add dynamic", Allnodes[z][32], Allnodes[z][33])
-	botonladder := AllignedWithLadder(GetBoundary(bot))
-	playeronladder := AllignedWithLadder(GetBoundary(player))
 	for i := 0; i < 32; i++ {
-		if Allnodes[z][i].XNodeID == Allnodes[z][32].XNodeID && botonladder == 1 {
+		if Allnodes[z][i].XNodeID == Allnodes[z][32].XNodeID && botonladder == 1&& Allnodes[z][i].YNodeID!=Allnodes[z][32].YNodeID {
 			setter(i, 32, z, true)
-		} else if Allnodes[z][i].YNodeID == Allnodes[z][32].YNodeID {
+		} else if Allnodes[z][i].YNodeID == Allnodes[z][32].YNodeID&& Allnodes[z][i].XNodeID!=Allnodes[z][32].XNodeID && !( botonladder==1 &&botonplatform==0){
 			setter(i, 32, z, false)
 		}
 	}
 	for i := 0; i < 32+1; i++ {
-		if Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1 {
+		if Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1 && i!=32 {
 			setter(i, 32+1, z, true)
-		} else if Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID { // if it is not on ladder do not add edge if y> bot
+		} else if Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID &&i!=32 { // if it is not on ladder do not add edge if y> bot
 			setter(i, 32+1, z, false) //position
+		} else if i==32 && Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1&&botonladder==1{
+			setter(i, 32, z, true)
+		} else if i==32 && Allnodes[z][i].YNodeID == Allnodes[z][32+1].YNodeID &&botonplatform==1 {
+			setter(i, 32+1, z, false) //position
+			log.Println(z,"botonplatform :",botonplatform)
 		}
+
 	}
 
 }
 func removeDynamicnode(z int) {
 	for i := 0; i < 34; i++ {
 		Game.AdjacencyMatrix[z][32][i] = -1
+		Game.AdjacencyMatrix[z][i][32] = -1
 		Game.AdjacencyMatrix[z][33][i] = -1
+		Game.AdjacencyMatrix[z][i][33] = -1
+		Path[z][i] = false
+		Parentarray[z][i] = -1
 	}
 }
 func minDistance(distance []int, cluster []bool, size int) int {
@@ -279,6 +294,7 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 		var botNextmove dtypes.Position
 		//var botnextnextmove dtypes.Position
 		var nxtid int
+		//var nxtnxtid int 
 		minimumDistance := distance[33]
 		markPath(z, 33)
 		for i := 0; i < 32+2; i++ {
@@ -287,21 +303,30 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 				nxtid = i
 			}
 		}
-		/*	for i := 0; i < 32+2; i++ {
+		/*for i := 0; i < 32+2; i++ {
 			if Parentarray[z][i] == nxtid && Path[z][i] == true {
 				botnextnextmove = Allnodes[z][i].Location
-				//nxtnxtid:= i
+				nxtnxtid = i
 			}
 		}*/
 
 		currentPosition := Allnodes[z][32].Location
 		updatedPosition := nextposition(currentPosition, botNextmove, step)
-		/*if updatedPosition == currentPosition {
+		log.Println("z:", z, "CP:", currentPosition, "UPdated", updatedPosition)
+		/*if updatedPosition == currentPosition && (OnPlatform(GetBoundary(player)) == 1 || AllignedWithLadder(GetBoundary(player)) == 1){
+			log.Println("path ",z)
+			printPath(z, 33)
 			updatedPosition = nextposition(currentPosition, botnextnextmove, step)
+			log.Println("dijkstra path for ", z, "with botnextnextmove aimed at node ", nxtnxtid)
+			log.Println("z:", z, "CP:", currentPosition, "botnextnextmove: ", botnextnextmove)
 
 		}*/
+		for i:=0;i<34;i++ {
+
+			//log.Println(z," parentarray :",i,parentarray[z][i]," path ",i,path[z][i])
+		}
 		log.Println("dijkstra path for ", z, " aimed at node ", nxtid)
-		//printPath(z, 33)
+		printPath(z, 33)
 		log.Println("z:", z, "CP:", currentPosition, "UPdated", updatedPosition)
 
 		//fmt.Println("distance :: ",minimumDistance)
@@ -317,3 +342,4 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 
 	}
 }
+

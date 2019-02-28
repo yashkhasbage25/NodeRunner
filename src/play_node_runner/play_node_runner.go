@@ -82,7 +82,7 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 	channels.ChannelInitialization()
 	handler.SetGameWinChannel(gameWinChannel)
 	health.SetHealth(1000)
-	health.SetDecayParams(1, 500)
+	health.SetDecayParams(10, 500)
 
 	go health.DecayPlayer1()
 	go health.DecayPlayer2()
