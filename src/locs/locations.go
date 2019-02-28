@@ -35,12 +35,12 @@ var gem [4]dtypes.Position
 // bots and gems
 func InitializeLocations() {
 	player[0] = dtypes.Position{
-		X: 375,
-		Y: 180,
+		X: 900,
+		Y: 420,
 	}
 	player[1] = dtypes.Position{
-		X: 415,
-		Y: 530,
+		X: 1000,
+		Y: 420,
 	}
 	bot[0] = dtypes.Position{
 		X: 355,
@@ -48,7 +48,7 @@ func InitializeLocations() {
 	}
 	bot[1] = dtypes.Position{
 		X: 235,
-		Y: 125,
+		Y: 25,
 	}
 	bot[2] = dtypes.Position{
 		X: 435,
