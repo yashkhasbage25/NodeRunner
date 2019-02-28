@@ -1,0 +1,181 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/coords"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="#Initialize">func Initialize()</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/coords/coordinates.go">coordinates.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+Freepositions represents the free positions on which
+gems can land
+</p>
+
+				<pre>var <span id="Freepositions">Freepositions</span> [10]<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Freepos">Freepos</a></pre>
+			
+				<p>
+Gems stores the details of a gem
+</p>
+
+				<pre>var <span id="Gems">Gems</span> [5]<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Gem">Gem</a></pre>
+			
+				<p>
+Ladder stores the diagonally opposite coordinates of
+a Ladder
+</p>
+
+				<pre>var <span id="Ladder">Ladder</span> [6]<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			
+				<p>
+Platform stores the diagonally opposite coordinates of
+a platform
+</p>
+
+				<pre>var <span id="Platform">Platform</span> [8]<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			
+				<p>
+Random pos stores the teleporting random positions
+</p>
+
+				<pre>var <span id="Randompos">Randompos</span> [10]<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Position">Position</a></pre>
+			
+		
+		
+			
+			
+			<h2 id="Initialize">func <a href="/src/target/coordinates.go?s=2789:2806#L79">Initialize</a>
+				<a class="permalink" href="#Initialize">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Initialize()</pre>
+			<p>
+Initialize initializes the position of all static nodes for running dijkstra
+</p>
+
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+

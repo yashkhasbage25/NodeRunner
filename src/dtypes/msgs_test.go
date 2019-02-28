@@ -75,7 +75,7 @@ func TestGetStr(t *testing.T) {
 		got := sample.ev.GetStr()
 		want := sample.answer
 		if got != want {
-			t.Error("(*Event) GetStr was incorrect, want: len",len(want), want, " \ngot: len", len(got), got)
+			t.Error("(*Event) GetStr was incorrect, want: len", len(want), want, " \ngot: len", len(got), got)
 		}
 	}
 }

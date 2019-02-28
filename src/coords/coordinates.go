@@ -24,7 +24,7 @@ var Ladder [6]dtypes.Rect
 // Gems stores the details of a gem
 var Gems [5]dtypes.Gem
 
-// Random pos stores the teleporting random positions
+// Randompos stores the teleporting random positions
 var Randompos [10]dtypes.Position
 
 // iniializePlatforms initializes positios of all platforms,
@@ -37,7 +37,7 @@ func initializePlatforms() {
 	Platform[4] = dtypes.Rect{0, 325, 800, 355}
 	Platform[5] = dtypes.Rect{170, 450, 530, 480}
 	Platform[6] = dtypes.Rect{800, 440, 1200, 470}
-	Platform[7] = dtypes.Rect{0, 550, 1200, 50}
+	Platform[7] = dtypes.Rect{0, 550, 1200, 600}
 
 	Ladder[0] = dtypes.Rect{170, 450, 200, 550}
 	Ladder[1] = dtypes.Rect{1170, 440, 1200, 550}

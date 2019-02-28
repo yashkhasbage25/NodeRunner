@@ -1,10 +1,10 @@
 package channels
 
-import(
+import (
 	dtypes "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 )
 
-// Data struct represents data that has to be communicated 
+// Data struct represents data that has to be communicated
 // through channels while executing dijkstra
 type Data struct {
 	UpdatedPosition dtypes.Position
@@ -15,8 +15,8 @@ type Data struct {
 var Chans [6]chan Data
 
 // ChannelInitialization initializes channels
-func ChannelInitialization(){
+func ChannelInitialization() {
 	for i := range Chans {
-   	Chans[i] = make(chan Data)
+		Chans[i] = make(chan Data)
 	}
 }

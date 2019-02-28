@@ -1,0 +1,260 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/health"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="#DecayPlayer1">func DecayPlayer1()</a></dd>
+			
+				
+				<dd><a href="#DecayPlayer2">func DecayPlayer2()</a></dd>
+			
+				
+				<dd><a href="#GetHealth">func GetHealth(player string) int</a></dd>
+			
+				
+				<dd><a href="#SetDecayParams">func SetDecayParams(rate_val, pause_val int)</a></dd>
+			
+				
+				<dd><a href="#SetGameWinChannel">func SetGameWinChannel(winChannel chan int)</a></dd>
+			
+				
+				<dd><a href="#SetHealth">func SetHealth(value int)</a></dd>
+			
+				
+				<dd><a href="#UpdateHealth">func UpdateHealth(operation byte, value int, player string)</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/health/health.go">health.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+			
+			
+			<h2 id="DecayPlayer1">func <a href="/src/target/health.go?s=2710:2729#L125">DecayPlayer1</a>
+				<a class="permalink" href="#DecayPlayer1">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DecayPlayer1()</pre>
+			<p>
+DecayPlayer1 decays health of first player
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DecayPlayer2">func <a href="/src/target/health.go?s=2947:2966#L136">DecayPlayer2</a>
+				<a class="permalink" href="#DecayPlayer2">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DecayPlayer2()</pre>
+			<p>
+DecayPlayer2 decays health of second player
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetHealth">func <a href="/src/target/health.go?s=1061:1094#L42">GetHealth</a>
+				<a class="permalink" href="#GetHealth">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetHealth(player <a href="/pkg/builtin/#string">string</a>) <a href="/pkg/builtin/#int">int</a></pre>
+			<p>
+GetHealth is a getter for health of a player
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetDecayParams">func <a href="/src/target/health.go?s=1248:1292#L52">SetDecayParams</a>
+				<a class="permalink" href="#SetDecayParams">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetDecayParams(rate_val, pause_val <a href="/pkg/builtin/#int">int</a>)</pre>
+			<p>
+SetDecayParams is a setter for rate and pause as explained
+above
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetGameWinChannel">func <a href="/src/target/health.go?s=784:827#L30">SetGameWinChannel</a>
+				<a class="permalink" href="#SetGameWinChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetGameWinChannel(winChannel chan <a href="/pkg/builtin/#int">int</a>)</pre>
+			<p>
+SetGameWinChannel is a setter for gameWinChannel in this
+package
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetHealth">func <a href="/src/target/health.go?s=920:945#L35">SetHealth</a>
+				<a class="permalink" href="#SetHealth">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetHealth(value <a href="/pkg/builtin/#int">int</a>)</pre>
+			<p>
+SetHealth is the setter for initial health of a player
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UpdateHealth">func <a href="/src/target/health.go?s=1450:1509#L59">UpdateHealth</a>
+				<a class="permalink" href="#UpdateHealth">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UpdateHealth(operation <a href="/pkg/builtin/#byte">byte</a>, value <a href="/pkg/builtin/#int">int</a>, player <a href="/pkg/builtin/#string">string</a>)</pre>
+			<p>
+UpdateHealth updated health on collision with gem. Health can be
+updated in various ways depending on the gem
+</p>
+
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+

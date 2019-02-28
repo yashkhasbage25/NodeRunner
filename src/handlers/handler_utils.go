@@ -50,7 +50,7 @@ func SetAccordingToLadderTop(player dtypes.Rect) dtypes.Rect { // originally was
 	var i int
 	var center int = (player.XLo + player.XHi) / 2
 	for i = 0; i < len(coords.Ladder); i++ {
-		if coords.Ladder[i].YLo >= player.YLo && coords.Ladder[i].YHi <= player.YLo {
+		if coords.Ladder[i].YLo >= player.YLo && coords.Ladder[i].YHi >= player.YLo {
 			if center >= coords.Ladder[i].XHi && center <= coords.Ladder[i].XLo {
 				log.Println("Executing", coords.Ladder[i].YHi)
 				return dtypes.Rect{player.XHi, coords.Ladder[i].YHi - 2*offsetY, player.XLo, coords.Ladder[i].YHi}
@@ -66,7 +66,7 @@ func SetAccordingToLadderBottom(player dtypes.Rect) dtypes.Rect {
 	var i int
 	var center int = (player.XLo + player.XHi) / 2
 	for i = 0; i < len(coords.Ladder); i++ {
-		if coords.Ladder[i].YLo >= player.YLo && coords.Ladder[i].YHi <= player.YLo {
+		if coords.Ladder[i].YLo <= player.YLo && coords.Ladder[i].YHi <= player.YLo {
 			if center >= coords.Ladder[i].XHi && center <= coords.Ladder[i].XLo {
 				//return dtypes.Rect{coords.Ladder[i].XHi-2*offset,coords.Ladder[i].YLo-2*offset,coords.Ladder[i].XHi,coords.Ladder[i].YLo}
 				return dtypes.Rect{player.XHi, coords.Ladder[i].YLo - 2*offsetY, player.XLo, coords.Ladder[i].YLo}

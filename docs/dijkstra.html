@@ -1,0 +1,292 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/dijkstra"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="#Abs">func Abs(x int) int</a></dd>
+			
+				
+				<dd><a href="#AllignedWithLadder">func AllignedWithLadder(player dtypes.Rect) int</a></dd>
+			
+				
+				<dd><a href="#GetBoundary">func GetBoundary(player dtypes.Position) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#OnPlatform">func OnPlatform(player dtypes.Rect) int</a></dd>
+			
+				
+				<dd><a href="#UpdateBots">func UpdateBots(event dtypes.Event) dtypes.Event</a></dd>
+			
+			
+				
+				<dd><a href="#Matrix">type Matrix</a></dd>
+				
+				
+			
+				
+				<dd><a href="#StaticNode">type StaticNode</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/dijkstra/dijkstra.go">dijkstra.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="Allnodes">Allnodes</span> [6][32 + 2]<a href="#StaticNode">StaticNode</a></pre>
+			
+				
+				<pre>var <span id="Parentarray">Parentarray</span> [6][32 + 2]<a href="/pkg/builtin/#int">int</a></pre>
+			
+				
+				<pre>var <span id="Path">Path</span> [6][32 + 2]<a href="/pkg/builtin/#bool">bool</a></pre>
+			
+		
+		
+			
+			
+			<h2 id="Abs">func <a href="/src/target/dijkstra.go?s=761:780#L25">Abs</a>
+				<a class="permalink" href="#Abs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Abs(x <a href="/pkg/builtin/#int">int</a>) <a href="/pkg/builtin/#int">int</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="AllignedWithLadder">func <a href="/src/target/dijkstra.go?s=1683:1730#L55">AllignedWithLadder</a>
+				<a class="permalink" href="#AllignedWithLadder">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AllignedWithLadder(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#int">int</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="GetBoundary">func <a href="/src/target/dijkstra.go?s=1487:1539#L47">GetBoundary</a>
+				<a class="permalink" href="#GetBoundary">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetBoundary(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Position">Position</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="OnPlatform">func <a href="/src/target/dijkstra.go?s=2143:2182#L70">OnPlatform</a>
+				<a class="permalink" href="#OnPlatform">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func OnPlatform(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#int">int</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="UpdateBots">func <a href="/src/target/dijkstra.go?s=7090:7138#L214">UpdateBots</a>
+				<a class="permalink" href="#UpdateBots">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UpdateBots(event <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Matrix">type <a href="/src/target/dijkstra.go?s=474:629#L13">Matrix</a>
+				<a class="permalink" href="#Matrix">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Matrix struct {
+<span id="Matrix.AdjacencyMatrix"></span>    AdjacencyMatrix [6][32 + 2][32 + 2]<a href="/pkg/builtin/#int">int</a>
+<span id="Matrix.Size"></span>    Size            <a href="/pkg/builtin/#int">int</a> <span class="comment">// 34</span>
+
+}
+</pre>
+
+			
+
+			
+				<p>
+global game Matrix
+</p>
+
+				<pre>var <span id="Game">Game</span> <a href="#Matrix">Matrix</a></pre>
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StaticNode">type <a href="/src/target/dijkstra.go?s=330:472#L5">StaticNode</a>
+				<a class="permalink" href="#StaticNode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
+</p>
+
+			<pre>type StaticNode struct {
+<span id="StaticNode.Location"></span>    Location <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Position">Position</a>
+<span id="StaticNode.NodeID"></span>    NodeID   <a href="/pkg/builtin/#int">int</a>
+<span id="StaticNode.XNodeID"></span>    XNodeID  <a href="/pkg/builtin/#int">int</a>
+<span id="StaticNode.YNodeID"></span>    YNodeID  <a href="/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+

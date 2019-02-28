@@ -58,7 +58,7 @@ func Initialize() {
 		XHi: 0,
 		YHi: 550,
 		XLo: 1200,
-		YLo: 50,
+		YLo: 600,
 	}
 
 	Ladder[0] = dtypes.Rect{

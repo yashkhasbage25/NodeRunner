@@ -22,21 +22,21 @@ func Handle(event dtypes.Event) dtypes.Event {
 	var b11 = GetBoundary(event.B1Pos)
 	var b22 = GetBoundary(event.B2Pos)
 	var b33 = GetBoundary(event.B3Pos)
-	var p11 = GetBoundary(event.P1Pos)  
+	var p11 = GetBoundary(event.P1Pos)
 	var p22 = GetBoundary(event.P2Pos)
 	if CollidesWithBot(p11, b11, b22, b33) {
-					replyEvent.EventType = "Lose"
-					replyEvent.Object = "p1"
-					gameWinChannel <- 1
-				}
+		replyEvent.EventType = "Lose"
+		replyEvent.Object = "p1"
+		gameWinChannel <- 1
+	}
 	if CollidesWithBot(p22, b11, b22, b33) {
-					replyEvent.EventType = "Lose"
-					replyEvent.Object = "p2"
-					gameWinChannel <- 0
-				}
+		replyEvent.EventType = "Lose"
+		replyEvent.Object = "p2"
+		gameWinChannel <- 0
+	}
 	// Ordinary Update event no change in positions
-	if event.EventType == "Update" {		
-		
+	if event.EventType == "Update" {
+
 		replyEvent = dtypes.Event{
 			EventType: "Update",
 			Object:    event.Object,
@@ -51,7 +51,6 @@ func Handle(event dtypes.Event) dtypes.Event {
 			G4Pos:     event.G4Pos,
 			P1Health:  health.GetHealth("p1"),
 			P2Health:  health.GetHealth("p2"),
-			
 		}
 		log.Println("handler replies with ordinary update eventtype", replyEvent.GetStr())
 		return replyEvent
@@ -154,7 +153,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else {
 						// get ladder top as excedded ladder height
 						log.Println("up and not alligned with ladder restricted")
-						updatedRect = SetAccordingToLadderTop(p11)
+						updatedRect = SetAccordingToLadderTop(p22)
 					}
 				} else if i == 1 {
 					if !AllignedWithLadder(p11) {
@@ -168,7 +167,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else {
 						// get ladder bottom as excedded ladder height from bottom
 						log.Println("down and alligned with ladder restricted")
-						updatedRect = SetAccordingToLadderBottom(p11)
+						updatedRect = SetAccordingToLadderBottom(p22)
 					}
 				} else if i == 2 {
 					// was alligned ladder when left key was pressed and is still alligned with it
@@ -289,7 +288,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else {
 						// get ladder top
 						log.Println("up and not alligned with ladder restricted")
-						updatedRect = SetAccordingToLadderTop(p11)
+						updatedRect = SetAccordingToLadderTop(p22)
 					}
 				} else if i == 1 {
 					if !AllignedWithLadder(p11) {
@@ -303,7 +302,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 					} else {
 						// get ladder bottom
 						log.Println("down and alligned with ladder restricted")
-						updatedRect = SetAccordingToLadderBottom(p11)
+						updatedRect = SetAccordingToLadderBottom(p22)
 					}
 				} else if i == 2 {
 					if AllignedWithLadder(p11) && AllignedWithLadder(p22) {
