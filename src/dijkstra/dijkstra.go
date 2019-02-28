@@ -9,6 +9,7 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/platform"
 )
 
+// lock is LOCK for safety of 6 concurrent execution of runDijkstra.
 var lock sync.Mutex
 
 // StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
@@ -17,19 +18,22 @@ type StaticNode struct {
 	NodeID   int
 	XNodeID  int
 	YNodeID  int
-	//type of node ..ladder or ..end of path or ..
+	//We are considering end or start of ladder or end of platform or start of platform as static nodes.
+	//player and bots will be dynamic nodes .
 }
 
 type Matrix struct { // 32 is number of static node and we are adding 2 dynamic node.
-	AdjacencyMatrix [6][32 + 2][32 + 2]int
+	AdjacencyMatrix [6][32 + 2][32 + 2]int // adjacency matrix is Global matrix which  stores information about edges of graph
 	Size            int // 34
 
 }
 
 // global game Matrix
 var Game Matrix
+//  parentarray stores parent of nodes  in shortest path
 var Parentarray [6][32 + 2]int
 var Allnodes [6][32 + 2]StaticNode
+// path is array which stores information about nodes present in shortest path
 var Path [6][32 + 2]bool
 
 func Abs(x int) int {
@@ -38,6 +42,7 @@ func Abs(x int) int {
 	}
 	return x
 }
+// function for adding dynamic edges each time when we add dynamic node  
 func setter(i int, n int, z int, flag bool) {
 	if flag == true {
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
@@ -50,7 +55,7 @@ func setter(i int, n int, z int, flag bool) {
 	}
 
 }
-
+// helper function for getting rectangular boundry of player or bot
 func GetBoundary(player dtypes.Position) dtypes.Rect {
 	var temp dtypes.Rect
 	temp.XHi = player.X - 15
@@ -59,6 +64,7 @@ func GetBoundary(player dtypes.Position) dtypes.Rect {
 	temp.YLo = player.Y + 20
 	return temp
 }
+// helper function that returns 1 if player or bot is alligned with ladder 
 func AllignedWithLadder(player dtypes.Rect) int {
 	var i int
 	var center int = (player.XLo + player.XHi) / 2
@@ -73,8 +79,8 @@ func AllignedWithLadder(player dtypes.Rect) int {
 	//	log.Println("AllignedWithLadder returns false.")
 	return 0
 }
-
-func OnPlatform(player dtypes.Rect) int {
+// helper function that returns 1 if player or bot is alligned on platform 
+func OnPlatform(player dtypes.Rect) int {//
 	var i int
 	//	log.Println("Executing OnPlatform")
 	for i = 0; i < len(platform.Platform); i++ {
@@ -87,6 +93,8 @@ func OnPlatform(player dtypes.Rect) int {
 	//log.Println("OnPlatform returns false.")
 	return 0
 }
+// helper function that returns the y co ordinates where bot or player will land if 
+// currently they are in air
 func fallingon(entity dtypes.Position, z int) int {
 	var ymin = 1200
 	for i := 0; i < 32; i++ {
@@ -106,10 +114,13 @@ func onladder(entity dtypes.Position) bool { //code from atharva.
 	}
 }
 
+// this function add dynaic part of code .. adds new edges each time we invoke dijkstra. 
 func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
-
+	// we are adding information about bot at node ID equals 32
 	Allnodes[z][32] = StaticNode{dtypes.Position{bot.X, bot.Y}, 9, bot.X, bot.Y}
+
 	//log.Println("dynamic", z, OnPlatform(GetBoundary(player)), AllignedWithLadder(GetBoundary(player))) //added bot at position equal to n.
+	// player is in the air bot will target and create the node where player will probabily fall
 	if OnPlatform(GetBoundary(player)) == 0 && AllignedWithLadder(GetBoundary(player)) == 0 {
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, fallingon(player, z)}, 10, player.X, fallingon(player, z)}
 	} else {
@@ -118,6 +129,7 @@ func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 	log.Println(" add dynamic", Allnodes[z][32], Allnodes[z][33])
 	botonladder := AllignedWithLadder(GetBoundary(bot))
 	playeronladder := AllignedWithLadder(GetBoundary(player))
+	// adding edegs considering all possibilities of movements of bot at that node position
 	for i := 0; i < 32; i++ {
 		if Allnodes[z][i].XNodeID == Allnodes[z][32].XNodeID && botonladder == 1 {
 			setter(i, 32, z, true)
@@ -125,6 +137,7 @@ func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 			setter(i, 32, z, false)
 		}
 	}
+	//// adding edegs considering all possibilities of movements of bot at that node position
 	for i := 0; i < 32+1; i++ {
 		if Allnodes[z][i].XNodeID == Allnodes[z][32+1].XNodeID && playeronladder == 1 {
 			setter(i, 32+1, z, true)
@@ -134,12 +147,14 @@ func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 	}
 
 }
+// each time it is removing dynamic part of code so it can be ready to serve other function calls
 func removeDynamicnode(z int) {
 	for i := 0; i < 34; i++ {
 		Game.AdjacencyMatrix[z][32][i] = -1
 		Game.AdjacencyMatrix[z][33][i] = -1
 	}
 }
+// helper function for dijkstra to select node with minimum distance so we can add it in a cluster 
 func minDistance(distance []int, cluster []bool, size int) int {
 
 	var min_index int
@@ -153,6 +168,7 @@ func minDistance(distance []int, cluster []bool, size int) int {
 	// log.Println("some min distacne is", min_index)
 	return min_index
 }
+// helper function to print  shortest path 
 func printPath(z int, node int) {
 
 	if Parentarray[z][node] != -1 {
@@ -162,6 +178,7 @@ func printPath(z int, node int) {
 		log.Println(node)
 	}
 }
+// helper function for marking the nodes which are part of shortest path 
 func markPath(z int, node int) {
 
 	if Parentarray[z][node] != -1 {
@@ -171,6 +188,7 @@ func markPath(z int, node int) {
 		Path[z][node] = true
 	}
 }
+// it is helper function which calculate update position of bot provided you have shortest path
 func nextposition(currentPosition dtypes.Position, botNextmove dtypes.Position, step int) dtypes.Position {
 	var updatedPosition dtypes.Position
 	xcurrent := currentPosition.X
@@ -203,11 +221,15 @@ func minimum(distance []int, i int, j int) int {
 		return j
 	}
 }
+//function that will execute 6 concurrent dijkstra and update Bots positions wisely 
+//so that they will aim at player in efficent way
 func UpdateBots(event dtypes.Event) dtypes.Event {
 	replyEvent := event
 	minpathlen := make([]int, 6)
 	var update [6]dtypes.Position
 	var bestUpdate [3]dtypes.Position
+	//for each bot- player pair we are using one  global channel that will continuously
+	//execute dijkstra.. 
 	log.Println("Inside Updatebots eith event", event.GetStr())
 	lock.Lock()
 	go runDijkstra(event.B1Pos, event.P1Pos, 0, channels.Chans[0])
@@ -224,6 +246,7 @@ func UpdateBots(event dtypes.Event) dtypes.Event {
 		minpathlen[i] = channeldata.MinimumDistance
 	}
 	//log.Println("In updated bots, obtained all channels after completing dijkstra")
+	//updation of botposition so that it will always choose way with minimum path length
 	for i := 0; i < 3; i++ {
 		bestUpdate[i] = update[minimum(minpathlen, 2*i, 2*i+1)]
 	}
@@ -240,7 +263,8 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 	//log.Println(bot, player)
 	var step int
 	step = 1
-	//initialize()
+	// if bot is in the air then no need to calculate shortest path anyway it is moving down
+	// if it is not in air following code executes
 	if OnPlatform(GetBoundary(bot)) == 1 || AllignedWithLadder(GetBoundary(bot)) == 1 {
 		addDynamicnode(bot, player, z)
 		//we have source as node with NodeID
@@ -321,6 +345,7 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 		channel <- channels.Data{updatedPosition, minimumDistance}
 		log.Println("Completed dijkstra for channel and put to channel", z, minimumDistance)
 	} else {
+		// just increment in y coordinate while bot is freely falling.
 		updatedposition := bot
 		updatedposition.Y = updatedposition.Y + step
 		channel <- channels.Data{updatedposition, 0}
