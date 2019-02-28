@@ -86,24 +86,3 @@ func TestFallsFromBlock(t *testing.T) {
 		}
 	}
 }
-func TestSetAccordingToLadderTop(t *testing.T) {
-	coords.Initialize()
-	var sample_test5 [4]dtypes.Rect
-	var answer5 [4]dtypes.Rect
-	sample_test5[0] = dtypes.Rect{400, 280, 430, 320}
-	sample_test5[1] = dtypes.Rect{400, 270, 430, 310}
-	sample_test5[2] = dtypes.Rect{400, 285, 430, 325}
-	sample_test5[3] = dtypes.Rect{400, 260, 430, 300}
-	answer5[0] = dtypes.Rect{400, 285, 430, 325}
-	answer5[1] = dtypes.Rect{400, 285, 430, 325}
-	answer5[2] = dtypes.Rect{400, 285, 430, 325}
-	answer5[3] = dtypes.Rect{400, 285, 430, 325}
-
-	for i := 0; i < 4; i++ {
-		got := SetAccordingToLadderTop(sample_test5[i])
-		want := answer5[i]
-		if got != want {
-			t.Error("SetAccordingToLadderTop was incorrect, got: ", got, "want: ", want)
-		}
-	}
-}
