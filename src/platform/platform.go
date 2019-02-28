@@ -10,7 +10,6 @@ var Platform [8]dtypes.Rect
 // Ladder stores rectangles describing ladders
 var Ladder [6]dtypes.Rect
 
-
 // Initialize initializes positions of platforms and ladders
 func Initialize() {
 	Platform[0] = dtypes.Rect{
@@ -52,7 +51,7 @@ func Initialize() {
 	Platform[6] = dtypes.Rect{ // FIXME:
 		XHi: 800,
 		YHi: 440,
-		XLo: 400,
+		XLo: 1200,
 		YLo: 470,
 	}
 	Platform[7] = dtypes.Rect{ // FIXME:

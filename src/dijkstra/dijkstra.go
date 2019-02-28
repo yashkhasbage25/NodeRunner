@@ -47,9 +47,11 @@ func setter(i int, n int, z int, flag bool) {
 	if flag == true {
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
+		log.Println(Game.AdjacencyMatrix[z][n][i], "z", z, "i:", i, "n:", n, " x same")
 	} else {
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
+		log.Println(Game.AdjacencyMatrix[z][n][i], "z", z, "i:", i, "n:", n, " Y same")
 	}
 
 }
@@ -116,13 +118,15 @@ func onladder(entity dtypes.Position) bool { //code from atharva.
 func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 	// we are adding information about bot at node ID equals 32
 	Allnodes[z][32] = StaticNode{dtypes.Position{bot.X, bot.Y}, 9, bot.X, bot.Y}
+
+	//log.Println("dynamic", z, OnPlatform(GetBoundary(player)), AllignedWithLadder(GetBoundary(player))) //added bot at position equal to n.
 	// player is in the air bot will target and create the node where player will probabily fall
 	if OnPlatform(GetBoundary(player)) == 0 && AllignedWithLadder(GetBoundary(player)) == 0 {
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, fallingon(player, z)}, 10, player.X, fallingon(player, z)}
 	} else {
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, player.Y}, 10, player.X, player.Y} //added player
 	}
-	//	log.Println(" add dynamic", Allnodes[z][32], Allnodes[z][33])
+	log.Println(" add dynamic", Allnodes[z][32], Allnodes[z][33])
 	botonladder := AllignedWithLadder(GetBoundary(bot))
 	playeronladder := AllignedWithLadder(GetBoundary(player))
 	// adding edegs considering all possibilities of movements of bot at that node position
@@ -294,7 +298,16 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 					Parentarray[z][v] = newNodeID
 				}
 			}
+			for x := 0; x < 34; x++ {
+				log.Println("distance ", distance[x], " of ", x, " for ", z, "32")
+			}
+
 		}
+		log.Println("parentarray : ", z)
+		for i := 0; i < 34; i++ {
+			log.Println("z: ", z, "parentarray[]", i, Parentarray[z][i])
+		}
+		//printPath(z, 33)
 		//send distance of[n+1]
 		//find parent of node[i]
 		//and return that information to
@@ -323,7 +336,7 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 
 		}*/
 		log.Println("dijkstra path for ", z, " aimed at node ", nxtid)
-		//printPath(z, 33)
+		//	printPath(z, 33)
 		log.Println("z:", z, "CP:", currentPosition, "UPdated", updatedPosition)
 
 		//fmt.Println("distance :: ",minimumDistance)

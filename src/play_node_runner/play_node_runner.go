@@ -21,11 +21,11 @@ import (
 // lock for reading and writing to websockets
 var lock sync.Mutex
 
-// regularUpdater regularly asks clients for update in time 
+// regularUpdater regularly asks clients for update in time
 // specified in its ticker
 func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelClient chan dtypes.Event, id int) {
 
-	ticker := time.NewTicker(10 * time.Millisecond)
+	ticker := time.NewTicker(100 * time.Millisecond)
 	go func() {
 		for range ticker.C {
 			var event dtypes.Event
@@ -84,8 +84,7 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 	locs.InitializeLocations()
 	channels.ChannelInitialization()
 	handler.SetGameWinChannel(gameWinChannel)
-	health.SetHealth("p1", 1000)
-	health.SetHealth("p2", 1000)
+	health.SetHealth(1000)
 	health.SetDecayParams(1, 500)
 
 	go health.DecayPlayer1()
@@ -115,9 +114,9 @@ func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event, id 
 	}
 }
 
-// serverReceiveComputations sends comptations randomly from request channels 
-// of clients to request channel of server. the select block selects randomly 
-// from the two player channels thus ensuring fairness among the players 
+// serverReceiveComputations sends comptations randomly from request channels
+// of clients to request channel of server. the select block selects randomly
+// from the two player channels thus ensuring fairness among the players
 func serverReceiveComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
 	log.Println("started running servercomputations")
 	for {
@@ -154,7 +153,7 @@ func serverReceiveComputations(firstClientRequestChannel, secondClientRequestCha
 // 	}
 // }
 
-// serverComputations handles the position computations need to be done 
+// serverComputations handles the position computations need to be done
 // by the server
 func serverComputations(firstClientRequestChannel, secondClientRequestChannel chan dtypes.Event, firstConn, secondConn *websocket.Conn, requestChannelServer chan dtypes.Event) {
 	// var latestState dtypes.Event
