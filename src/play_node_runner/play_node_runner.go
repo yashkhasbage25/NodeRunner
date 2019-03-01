@@ -20,6 +20,7 @@ import (
 
 var lock sync.Mutex
 
+// regularUpdater regularly asks for update to clients
 func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelClient chan dtypes.Event, id int) {
 
 	ticker := time.NewTicker(30 * time.Millisecond)
@@ -63,6 +64,7 @@ func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelCl
 	}()
 }
 
+// sendResponse sends respone to a client
 func sendResponse(receiveChannelClient chan dtypes.Event, conn *websocket.Conn, id int) {
 	responseMsg := <-receiveChannelClient
 	lock.Lock()
@@ -97,6 +99,7 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 	// go readConnections(secondClient.GetWSocket(), secondClient.GetRequestChannel())
 }
 
+// readConnections reads the websocket connections
 func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event, id int) {
 	for {
 		event := dtypes.Event{}
@@ -111,6 +114,7 @@ func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event, id 
 	}
 }
 
+// serverReceiveComputations sends information to server object to compute updated positions
 func serverReceiveComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
 	log.Println("started running servercomputations")
 	for {
@@ -122,33 +126,14 @@ func serverReceiveComputations(firstClientRequestChannel, secondClientRequestCha
 		case latestState := <-secondClientRequestChannel:
 			requestChannelServer <- latestState
 			log.Println("second client request channel passed the info to server")
-			// default:
-			// 	log.Print(":")
+
 		}
 	}
 }
 
-// func serverComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
-// 	// var latestState dtypes.Event
-// 	for {
-// 		log.Println("Server received a event msg to compute at Server computations")
-// 		playerPositions := <-requestChannelServer
-// 		updatedPlayerPositions := handler.Handle(playerPositions)
-// 		// log.Println("updated positions of players ", updatedPlayerPositions.GetStr())
-// 		// updatedPlayerPositions := playerPositions
-// 		updatedBotPositions := dijkstra.UpdateBots(updatedPlayerPositions)
-// 		log.Println("upadted positions of bots", updatedBotPositions.GetStr())
-// 		// updatedBotPositions := updatedPlayerPositions
-// 		firstRespondChannelServer <- updatedBotPositions
-// 		log.Println("updated bot positions sent to firstrespondchannelserver")
-// 		secondRespondChannelServer <- updatedBotPositions
-// 		log.Println("updated bot positions sent to secondrespond channelserver")
-// 		log.Println("Updated bot positons send to client objects")
-// 	}
-// }
-
+// serverComputations handles computations from a server
 func serverComputations(firstClientRequestChannel, secondClientRequestChannel chan dtypes.Event, firstConn, secondConn *websocket.Conn, requestChannelServer chan dtypes.Event) {
-	// var latestState dtypes.Event
+
 	for {
 		log.Println("Server received a event msg to compute at Server computations")
 		playerPositions := <-requestChannelServer

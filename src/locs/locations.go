@@ -6,22 +6,16 @@ import (
 	"github.com/IITH-SBJoshi/concurrency-3/src/dtypes"
 )
 
-var playerOne dtypes.Position
-var playerTwo dtypes.Position
-
-var botOne dtypes.Position
-var botTwo dtypes.Position
-var botThree dtypes.Position
-
-var gemOne dtypes.Position
-var gemTwo dtypes.Position
-var gemThree dtypes.Position
-var gemFour dtypes.Position
-
+// player array stores positions of the players
 var player [2]dtypes.Position
+
+// bot rray stores positions of bots
 var bot [3]dtypes.Position
+
+// gem array stores the positions of gems
 var gem [4]dtypes.Position
 
+// InitializeLocations initializes  positions of players, bots and gems
 func InitializeLocations() {
 	player[0] = dtypes.Position{
 		X: 900,
@@ -61,6 +55,7 @@ func InitializeLocations() {
 	}
 }
 
+// GetPlayerPos is a getter for position of a player
 func GetPlayerPos(index int) dtypes.Position {
 	if index < 0 || index >= len(player) {
 		log.Fatalln("GetPlayerPos index out of range", index)
@@ -68,6 +63,7 @@ func GetPlayerPos(index int) dtypes.Position {
 	return player[index]
 }
 
+// GetBotPos is a getter fot position of a bot
 func GetBotPos(index int) dtypes.Position {
 	if index < 0 || index >= len(bot) {
 		log.Fatalln("GetBotPos index out of range", index)
@@ -75,6 +71,7 @@ func GetBotPos(index int) dtypes.Position {
 	return bot[index]
 }
 
+// GetGemPos is a getter for position of a gem
 func GetGemPos(index int) dtypes.Position {
 	if index < 0 || index >= len(gem) {
 		log.Fatalln("GetGemPos index out of range", index)
@@ -82,6 +79,7 @@ func GetGemPos(index int) dtypes.Position {
 	return gem[index]
 }
 
+// SetPlayerPos is a setter for position of a player
 func SetPlayerPos(index int, pos dtypes.Position) {
 	if index < 0 || index >= len(player) {
 		log.Fatalln("SetPlayerPos index out of range", index)
@@ -89,6 +87,7 @@ func SetPlayerPos(index int, pos dtypes.Position) {
 	player[index] = pos
 }
 
+// SetBotPos is a setter for position of a bot
 func SetBotPos(index int, pos dtypes.Position) {
 	if index < 0 || index >= len(bot) {
 		log.Fatalln("SetBotPos index out of range", index)
@@ -96,6 +95,7 @@ func SetBotPos(index int, pos dtypes.Position) {
 	bot[index] = pos
 }
 
+// SetGemPos is a setter for position of a gem
 func SetGemPos(index int, pos dtypes.Position) {
 	if index < 0 || index >= len(gem) {
 		log.Fatalln("SetGemPos index out of range", index)
@@ -103,6 +103,8 @@ func SetGemPos(index int, pos dtypes.Position) {
 	gem[index] = pos
 }
 
+// GetCurrentLocations is a getter fot current location of all players,
+// bots and gems
 func GetCurrentLocations(event dtypes.Event) dtypes.Event {
 	log.Println("Getting current locations, with prev locations as:", event.GetStr())
 	return dtypes.Event{
@@ -120,6 +122,7 @@ func GetCurrentLocations(event dtypes.Event) dtypes.Event {
 	}
 }
 
+// SetCurrentLocations is a setter for current locations of all player, bots and gems
 func SetCurrentLocations(event dtypes.Event) {
 	log.Println("Setting current locations")
 	player[0] = event.P1Pos
