@@ -62,7 +62,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 	// Teleportation Event
 	if event.EventType == "Teleport" {
 		if event.Object == "p1" {
-			j := rand.Intn(10) // selects random position among 10 randompositions for player 1
+			j := rand.Intn(9) // selects random position among 10 randompositions for player 1
 			replyEvent = dtypes.Event{
 				EventType: "Update",
 				Object:    event.Object,
@@ -79,7 +79,7 @@ func Handle(event dtypes.Event) dtypes.Event {
 				P2Health:  health.GetHealth("p2"),
 			}
 		} else if event.Object == "p2" {
-			j := rand.Intn(10) // selects random position among 10 randompositions for player 1
+			j := rand.Intn(9) // selects random position among 10 randompositions for player 1
 			replyEvent = dtypes.Event{
 				EventType: "Update",
 				Object:    event.Object,

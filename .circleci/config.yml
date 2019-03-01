@@ -21,11 +21,19 @@ jobs:
       # Normally, this step would be in a custom primary image;
       # we've added it here for the sake of explanation.
       - run: ls -R
+      # - run: go get github.com/gorilla/websocket
+      # - run: go build github.com/IITH-SBJoshi/concurrency-3/main.go
+      # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/client
+      # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/coords
+      # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dijkstra
+      # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dtypes
+      # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/handlers
+      # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/health
       - run: go get github.com/gorilla/websocket
-      - run: go build github.com/IITH-SBJoshi/concurrency-3/main.go
-      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/client
-      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/coords
-      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dijkstra
-      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dtypes
-      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/handlers
-      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/health
+      - run: go build main.go
+      - run: go test -v src/client
+      - run: go test -v src/coords
+      - run: go test -v src/dijkstra
+      - run: go test -v src/dtypes
+      - run: go test -v src/handlers
+      - run: go test -v src/health
