@@ -54,11 +54,11 @@ ws.onmessage = function(event) {
         clientNumber = parseInt(data.object);
         clientID = "p" + (clientNumber + 1).toString();
         if(clientNumber == 0) {
-            playerOne.style.background = "green";
-            playerTwo.style.background = "orange"
+            playerOne.elem.style.background = "radial-gradient(green, black)";
+            playerTwo.elem.style.background = "radial-gradient(orange, black)";
         } else {
-            playerOne.style.background = "orange";
-            playerTwo.style.background = "green";
+            playerOne.elem.style.background = "radial-gradient(orange, black)";
+            playerTwo.elem.style.background = "radial-gradient(green, black)";
         }
         // currentPositions = getCurrentPositions();
         // currentPositions.object = clientID;
