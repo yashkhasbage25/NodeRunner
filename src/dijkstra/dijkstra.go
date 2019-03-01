@@ -45,9 +45,9 @@ func setter(i int, n int, z int, flag bool) {
 	if flag == true {
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.Y - Allnodes[z][n].Location.Y)
-		//log.Println("added  vertical edge between ", i, n, "for ", z)
+		log.Println("added  vertical edge between ", i, n, "for ", z)
 	} else {
-		//log.Println("added  horizental edge between ", i, n, "for ", z)
+		log.Println("added  horizental edge between ", i, n, "for ", z)
 		Game.AdjacencyMatrix[z][n][i] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 		Game.AdjacencyMatrix[z][i][n] = Abs(Allnodes[z][i].Location.X - Allnodes[z][n].Location.X)
 	}
@@ -111,6 +111,21 @@ func onladder(entity dtypes.Position) bool {
 		return false
 	}
 }
+// nearestXnode  is helper function that returns nearest node in x direction if player is on ladder. 
+func nearestXnode(player dtypes.Position,z int) int {
+	xmin :=40
+	nearestX := player.X
+	for i :=0; i<34 ;i++ {
+		if Abs(Allnodes[z][i].XNodeID-player.X) <=15 {
+			if Abs(Allnodes[z][i].XNodeID-player.X) < xmin {
+				 nearestX = Allnodes[z][i].XNodeID
+				 xmin = Abs(Allnodes[z][i].XNodeID-player.X)
+			}
+		}
+	}
+	return nearestX
+
+}
 // addDynamicnode is function that adds dynamic part to graph 
 // it adds  all  new edges formed due to addition of bot or player. 
 func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
@@ -124,7 +139,9 @@ func addDynamicnode(bot dtypes.Position, player dtypes.Position, z int) {
 	//	println("dynamic", OnPlatform(GetBoundary(player)), AllignedWithLadder(GetBoundary(player))) //added bot at position equal to n.
 	if playeronplatform == 0 && playeronladder == 0 {
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, fallingon(player, z)}, 10, player.X, fallingon(player, z)}
-	} else {
+	} else if playeronplatform==0 && playeronladder ==1 {
+		Allnodes[z][32+1] = StaticNode{dtypes.Position{ nearestXnode(player, z),player.Y}, 10, nearestXnode(player,z),player.Y}
+	} else	{
 		Allnodes[z][32+1] = StaticNode{dtypes.Position{player.X, player.Y}, 10, player.X, player.Y} //added player
 	}
 	//	log.Println(" add dynamic", Allnodes[z][32], Allnodes[z][33])
@@ -352,3 +369,4 @@ func runDijkstra(bot dtypes.Position, player dtypes.Position, z int, channel cha
 
 	}
 }
+

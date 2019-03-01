@@ -191,12 +191,12 @@ func CollidesGem(player dtypes.Rect, id string) {
 			// collided with gem
 			// now change position of gems
 			for j := 0; j < len(coords.Freepositions); j++ {
-				if coords.Freepositions[i].Available == true {
-					coords.Gems[i].Pos.XHi = coords.Freepositions[i].Pos.XHi
-					coords.Gems[i].Pos.XLo = coords.Freepositions[i].Pos.XLo
-					coords.Gems[i].Pos.YHi = coords.Freepositions[i].Pos.YHi
-					coords.Gems[i].Pos.YLo = coords.Freepositions[i].Pos.YLo
-					coords.Freepositions[i].Available = false
+				if coords.Freepositions[j].Available == true {
+					coords.Gems[i].Pos.XHi = coords.Freepositions[j].Pos.XHi
+					coords.Gems[i].Pos.XLo = coords.Freepositions[j].Pos.XLo
+					coords.Gems[i].Pos.YHi = coords.Freepositions[j].Pos.YHi
+					coords.Gems[i].Pos.YLo = coords.Freepositions[j].Pos.YLo
+					coords.Freepositions[j].Available = false
 					break
 				}
 			}
