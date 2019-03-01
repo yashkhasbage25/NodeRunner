@@ -142,7 +142,6 @@ func serverComputations(firstClientRequestChannel, secondClientRequestChannel ch
 			log.Println(" Error writing json.", err)
 		}
 		log.Println("Updated bot positon sent to first client socket")
-		// log.Println("updated bot positions sent to firstrespondchannelserver")
 		// secondRespondChannelServer <- updatedBotPositions
 		lock.Lock()
 		err = secondConn.WriteJSON(updatedBotPositions)
