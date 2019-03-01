@@ -112,10 +112,12 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("New client object created.", newClient.GetInfoStr())
 			gameServer.AddNewClient(newClient)
 			log.Println("New state of server: ", gameServer.GetInfoStr())
+			serverLock.Lock()
 			conn.WriteJSON(dtypes.Event{
 				EventType: "SetClientID",
 				Object:    strconv.Itoa(int(thisClientID)),
 			})
+			serverLock.Unlock()
 		}
 		serverLock.Unlock()
 		log.Println("handling pattern /game")

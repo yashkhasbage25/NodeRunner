@@ -77,7 +77,7 @@ ws.onmessage = function(event) {
     } else if (data.etype == "Win" && data.object != clientID) {
         alert("You Lose");
         throw new Error();
-    } else if (data.etypr == "Lose" && data.object == clientID){
+    } else if (data.etypr == "Lose" && data.object == clientID) {
         alert("You Lose");
         throw new Error();
     } else {
@@ -146,21 +146,6 @@ function getHealth(element) {
 
 function getCurrentPositions() {
     console.log("Getting all positions");
-    // return {
-    //     "etype": "None",
-    //     "object": "None",
-    //     "p1_pos": getPositionOfElement(playerOne.elem),
-    //     "p2_pos": getPositionOfElement(playerTwo.elem),
-    //     "b1_pos": getPositionOfElement(botOne.elem),
-    //     "b2_pos": getPositionOfElement(botTwo.elem),
-    //     "b3_pos": getPositionOfElement(botThree.elem),
-    //     "g1_pos": getPositionOfElement(gemOne.elem),
-    //     "g2_pos": getPositionOfElement(gemTwo.elem),
-    //     "g3_pos": getPositionOfElement(gemThree.elem),
-    //     "g4_pos": getPositionOfElement(gemFour.elem),
-    //     "h1": getHealth(myHealth.elem) * 10,
-    //     "h2": getHealth(otherHealth.elem) * 10
-    // };
     return {
         etype: "None",
         object: "None",

@@ -27,16 +27,6 @@ func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelCl
 	go func() {
 		for range ticker.C {
 			var event dtypes.Event
-			// select {
-			// case event = <-receiveChannelClient:
-			// 	lock.Lock()
-			// 	err := conn.WriteJSON(event)
-			// 	lock.Unlock()
-			// 	log.Println(id, " written update json", event.GetStr())
-			// 	if err != nil {
-			// 		log.Println(id, " Error writing json.", err)
-			// 	}
-			// default:
 			event = dtypes.Event{
 				EventType: "SendUpdate",
 			}
@@ -93,10 +83,6 @@ func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespo
 	// go serverComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
 	go serverComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstClient.GetWSocket(), secondClient.GetWSocket(), requestChannelServer)
 	go serverReceiveComputations(firstClient.GetRequestChannel(), secondClient.GetRequestChannel(), firstRespondChannelServer, secondRespondChannelServer, requestChannelServer)
-	// go sendResponse(firstClient.GetReceiveChannel(), firstClient.GetWSocket(), 0)
-	// go sendResponse(secondClient.GetReceiveChannel(), secondClient.GetWSocket(), 1)
-	// go readConnections(firstClient.GetWSocket(), firstClient.GetRequestChannel())
-	// go readConnections(secondClient.GetWSocket(), secondClient.GetRequestChannel())
 }
 
 // readConnections reads the websocket connections
@@ -114,7 +100,9 @@ func readConnections(conn *websocket.Conn, requestChannel chan dtypes.Event, id 
 	}
 }
 
-// serverReceiveComputations sends information to server object to compute updated positions
+// serverReceiveComputations sends comptations randomly from request channels
+// of clients to request channel of server. the select block selects randomly
+// from the two player channels thus ensuring fairness among the players
 func serverReceiveComputations(firstClientRequestChannel, secondClientRequestChannel, firstRespondChannelServer, secondRespondChannelServer, requestChannelServer chan dtypes.Event) {
 	log.Println("started running servercomputations")
 	for {

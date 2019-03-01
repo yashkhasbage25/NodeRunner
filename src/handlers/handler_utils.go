@@ -204,7 +204,7 @@ func CollidesGem(player dtypes.Rect, id string) {
 	}
 }
 
-// Check if player collides with bots
+// CollidesWithBot Check if player collides with bots
 func CollidesWithBot(player dtypes.Rect, b11 dtypes.Rect, b22 dtypes.Rect, b33 dtypes.Rect) bool {
 	if (player.YLo >= b11.YHi && player.YHi <= b11.YLo && player.XHi <= b11.XLo && player.XLo >= b11.XHi) ||
 		(player.YLo >= b22.YHi && player.YHi <= b22.YLo && player.XHi <= b22.XLo && player.XLo >= b22.XHi) ||
@@ -215,34 +215,3 @@ func CollidesWithBot(player dtypes.Rect, b11 dtypes.Rect, b22 dtypes.Rect, b33 d
 	log.Println("Collision with bot returns false")
 	return false
 }
-
-/*// testing part
-func main() {
-	p1:=Position{45,35}
-	p2:=Position{50,55}
-	//coords.Platform[0]=dtypes.Rect{0,39,100,40}
-	var p11 dtypes.Rect =GetBoundary(p1);
-	//coords.Platform[1]=dtypes.Rect{70,50,90,60}
-	coords.Platform[0]=dtypes.Rect{20,50,160,80}
-	var p22 dtypes.Rect =GetBoundary(p2);
-	//fmt.Println(coords.Platform[0].XLo)
-	//fmt.Println(OnPlatform(p11))
-	//fmt.Println(CollidesWithBlockVertically(p11))
-	//fmt.Println(CollidesWithBlockOnRightMove(p22))
-	var p33 dtypes.Rect=GetPositionCollidesWithBlockVer(p22)
-	//var p33 dtypes.Rect=GetPositionCollidesWithBlockOnRight(p22)
-
-	/*	coords.Platform[1]=dtypes.Rect{60,60,80,80}
-	coords.Platform[2]=dtypes.Rect{0,30,50,50}
-	//coords.Ladder[0]=dtypes.Rect{15,25,25,45}
-	coords.Ladder[0]=dtypes.Rect{35,12,45,42}
-	//fmt.Println(AllignedWithLadder(p11))
-	//fmt.Println(AllignedWithLadder(p22))
-	log.Println(p33.XHi,p33.YHi,p33.XLo,p33.YLo)
-	fmt.Println(p11.XHi,p11.YHi,p11.XLo,p11.YLo);
-	/*
-
-	//fmt.Println(on_coords.Platform(p11))
-	fmt.Println(CollidesWithBlock_vertically(p11))
-
-}*/
