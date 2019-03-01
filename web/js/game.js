@@ -77,15 +77,19 @@ ws.onmessage = function(event) {
         console.log("set positions");
     } else if (data.etype == "Win" && data.object == clientID) {
         alert("You Win");
+        ws.close();
         throw new Error();
     } else if (data.etype == "Lose" && data.object != clientID) {
         alert("You Win");
+        ws.close();
         throw new Error();
     } else if (data.etype == "Win" && data.object != clientID) {
         alert("You Lose");
+        ws.close();
         throw new Error();
     } else if (data.etypr == "Lose" && data.object == clientID) {
         alert("You Lose");
+        ws.close();
         throw new Error();
     } else {
         console.log("Unknown event");

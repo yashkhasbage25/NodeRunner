@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"strconv"
 	"sync"
 
@@ -300,6 +301,7 @@ func detectGameOver(server *Server, gameWinChanel chan int) {
 	serverLock.Lock()
 	gameRunning = false
 	serverLock.Unlock()
+	os.Exit(0)
 	// server.resetServer()
 }
 
