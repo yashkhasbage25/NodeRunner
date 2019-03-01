@@ -31,7 +31,7 @@ jobs:
       # - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/health
       - run: go get github.com/gorilla/websocket
       - run: go build main.go
-      - run: go build github.com/IITH-SBJoshi/concurrency-3/main.go
+      # - run: go build github.com/IITH-SBJoshi/concurrency-3/main.go
       - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/client
       - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/coords
       - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dijkstra
