@@ -53,6 +53,13 @@ ws.onmessage = function(event) {
     if(data.etype == "SetClientID") {
         clientNumber = parseInt(data.object);
         clientID = "p" + (clientNumber + 1).toString();
+        if(clientNumber == 0) {
+            playerOne.style.background = "green";
+            playerTwo.style.background = "orange"
+        } else {
+            playerOne.style.background = "orange";
+            playerTwo.style.background = "green";
+        }
         // currentPositions = getCurrentPositions();
         // currentPositions.object = clientID;
         // currentPositions.etype = "Update";

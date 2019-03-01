@@ -267,6 +267,15 @@ func (gameServer *Server) SetHandlers() {
 		log.Println("handling pattern /web/assets/img/bot.png")
 		fmt.Fprintf(w, "%s", content)
 	})
+
+	http.HandleFunc("/web/assets/img/tom_and_jerry.png", func(w http.ResponseWriter, r *http.Request) {
+		content, err := ioutil.ReadFile("web/assets/img/tom_and_jerry.png")
+		if err != nil {
+			log.Println("Could not open image.", err)
+		}
+		log.Println("handling pattern /web/assets/img/tom_and_jerry.png")
+		fmt.Fprintf(w, "%s", content)
+	})
 }
 
 // detectGameOver reads from gameWinChannel. Reading from game win channel

@@ -74,7 +74,7 @@ func initializePlatforms() {
 	Freepositions[4] = dtypes.Freepos{Available: true, Pos: dtypes.Rect{XHi: 100, YHi: 5, XLo: 115, YLo: 25}}
 
 	Randompos[0] = dtypes.Position{X: 715, Y: 25}
-	Randompos[1] = dtypes.Position{X: 215, Y: 180}
+	Randompos[1] = dtypes.Position{X: 915, Y: 105}
 	Randompos[2] = dtypes.Position{X: 1015, Y: 190}
 	Randompos[3] = dtypes.Position{X: 565, Y: 305}  // 550, 285
 	Randompos[4] = dtypes.Position{X: 25, Y: 530}   // 10 , 510
