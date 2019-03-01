@@ -23,7 +23,7 @@ var lock sync.Mutex
 // regularUpdater regularly asks for update to clients
 func regularUpdater(conn *websocket.Conn, requestChannelClient, receiveChannelClient chan dtypes.Event, id int) {
 
-	ticker := time.NewTicker(30 * time.Millisecond)
+	ticker := time.NewTicker(20 * time.Millisecond)
 	go func() {
 		for range ticker.C {
 			var event dtypes.Event

@@ -82,9 +82,9 @@ func (gameServer *Server) SetHandlers() {
 	})
 
 	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-		serverLock.Lock()
+		// serverLock.Lock()
 		gameRunning = true
-		serverLock.Unlock()
+		// serverLock.Unlock()
 		ip, port, err := net.SplitHostPort(r.RemoteAddr)
 		if err != nil {
 			log.Println("Could not separate ip and port.")
@@ -112,12 +112,12 @@ func (gameServer *Server) SetHandlers() {
 			log.Println("New client object created.", newClient.GetInfoStr())
 			gameServer.AddNewClient(newClient)
 			log.Println("New state of server: ", gameServer.GetInfoStr())
-			serverLock.Lock()
+			// serverLock.Lock()
 			conn.WriteJSON(dtypes.Event{
 				EventType: "SetClientID",
 				Object:    strconv.Itoa(int(thisClientID)),
 			})
-			serverLock.Unlock()
+			// serverLock.Unlock()
 		}
 		serverLock.Unlock()
 		log.Println("handling pattern /game")

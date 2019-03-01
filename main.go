@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -9,7 +10,7 @@ import (
 )
 
 func main() {
-
+	log.SetOutput(ioutil.Discard)
 	gameServer := server.Server{
 		IDCounter:      0,
 		RequestChannel: make(chan dtypes.Event),
