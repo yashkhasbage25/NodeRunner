@@ -19,7 +19,7 @@
 		
 		<div id="short-nav">
 			<dl>
-			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner"</code></dd>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/utils"</code></dd>
 			</dl>
 			<dl>
 			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
@@ -54,7 +54,10 @@
 			
 			
 				
-				<dd><a href="#PlayNodeRunner">func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespondChannelServer chan dtypes.Event, gameWinChannel chan int, firstClient, secondClient *client.Client)</a></dd>
+				<dd><a href="#InArray">func InArray(str string, arr []string) bool</a></dd>
+			
+				
+				<dd><a href="#StrSplit">func StrSplit(str string, c byte) []string</a></dd>
 			
 			
 			
@@ -68,7 +71,7 @@
 			<p>
 			<span style="font-size:90%">
 			
-				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/play_node_runner/play_node_runner.go">play_node_runner.go</a>
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/utils/array_utils.go">array_utils.go</a>
 			
 			</span>
 			</p>
@@ -118,14 +121,30 @@
 		
 			
 			
-			<h2 id="PlayNodeRunner">func <a href="/src/target/play_node_runner.go?s=1968:2149#L60">PlayNodeRunner</a>
-				<a class="permalink" href="#PlayNodeRunner">&#xb6;</a>
+			<h2 id="InArray">func <a href="/src/target/array_utils.go?s=69:112#L1">InArray</a>
+				<a class="permalink" href="#InArray">&#xb6;</a>
 				
 				
 			</h2>
-			<pre>func PlayNodeRunner(requestChannelServer, firstRespondChannelServer, secondRespondChannelServer chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>, gameWinChannel chan <a href="/pkg/builtin/#int">int</a>, firstClient, secondClient *<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/">client</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/#Client">Client</a>)</pre>
+			<pre>func InArray(str <a href="/pkg/builtin/#string">string</a>, arr []<a href="/pkg/builtin/#string">string</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
 			<p>
-PlayNodeRunner is the event loop of NodeRunner
+InArray checks if a string str is present in array
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="StrSplit">func <a href="/src/target/array_utils.go?s=251:293#L5">StrSplit</a>
+				<a class="permalink" href="#StrSplit">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func StrSplit(str <a href="/pkg/builtin/#string">string</a>, c <a href="/pkg/builtin/#byte">byte</a>) []<a href="/pkg/builtin/#string">string</a></pre>
+			<p>
+StrSplit splits a string at the character c
 </p>
 
 			

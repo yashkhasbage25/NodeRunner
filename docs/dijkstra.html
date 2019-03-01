@@ -141,20 +141,29 @@
 		
 			<h2 id="pkg-variables">Variables</h2>
 			
-				
+				<p>
+Allnodes is array of static nodes
+</p>
+
 				<pre>var <span id="Allnodes">Allnodes</span> [6][32 + 2]<a href="#StaticNode">StaticNode</a></pre>
 			
-				
+				<p>
+Parentarray stores parent of every node during shortest path evaluation
+</p>
+
 				<pre>var <span id="Parentarray">Parentarray</span> [6][32 + 2]<a href="/pkg/builtin/#int">int</a></pre>
 			
-				
+				<p>
+Path represents which nodes are present in shortest path
+</p>
+
 				<pre>var <span id="Path">Path</span> [6][32 + 2]<a href="/pkg/builtin/#bool">bool</a></pre>
 			
 		
 		
 			
 			
-			<h2 id="Abs">func <a href="/src/target/dijkstra.go?s=761:780#L25">Abs</a>
+			<h2 id="Abs">func <a href="/src/target/dijkstra.go?s=1097:1116#L34">Abs</a>
 				<a class="permalink" href="#Abs">&#xb6;</a>
 				
 				
@@ -167,52 +176,64 @@
 		
 			
 			
-			<h2 id="AllignedWithLadder">func <a href="/src/target/dijkstra.go?s=1683:1730#L55">AllignedWithLadder</a>
+			<h2 id="AllignedWithLadder">func <a href="/src/target/dijkstra.go?s=2235:2282#L67">AllignedWithLadder</a>
 				<a class="permalink" href="#AllignedWithLadder">&#xb6;</a>
 				
 				
 			</h2>
 			<pre>func AllignedWithLadder(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#int">int</a></pre>
-			
+			<p>
+AllignedWithLadder is function that returns weather object is aligned with ladder or not
+</p>
+
 			
 			
 
 		
 			
 			
-			<h2 id="GetBoundary">func <a href="/src/target/dijkstra.go?s=1487:1539#L47">GetBoundary</a>
+			<h2 id="GetBoundary">func <a href="/src/target/dijkstra.go?s=1946:1998#L57">GetBoundary</a>
 				<a class="permalink" href="#GetBoundary">&#xb6;</a>
 				
 				
 			</h2>
 			<pre>func GetBoundary(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Position">Position</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
-			
+			<p>
+GetBoundary is function that gives you rect type data structure
+</p>
+
 			
 			
 
 		
 			
 			
-			<h2 id="OnPlatform">func <a href="/src/target/dijkstra.go?s=2143:2182#L70">OnPlatform</a>
+			<h2 id="OnPlatform">func <a href="/src/target/dijkstra.go?s=2770:2809#L83">OnPlatform</a>
 				<a class="permalink" href="#OnPlatform">&#xb6;</a>
 				
 				
 			</h2>
 			<pre>func OnPlatform(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#int">int</a></pre>
-			
+			<p>
+Onplatform is function that returns weather object is on platform or not
+</p>
+
 			
 			
 
 		
 			
 			
-			<h2 id="UpdateBots">func <a href="/src/target/dijkstra.go?s=7090:7138#L214">UpdateBots</a>
+			<h2 id="UpdateBots">func <a href="/src/target/dijkstra.go?s=9273:9321#L265">UpdateBots</a>
 				<a class="permalink" href="#UpdateBots">&#xb6;</a>
 				
 				
 			</h2>
 			<pre>func UpdateBots(event <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
-			
+			<p>
+UpdateBots takes event data type and returns updated position of bots chossing best pot one of shortest path
+</p>
+
 			
 			
 
@@ -220,12 +241,15 @@
 		
 			
 			
-			<h2 id="Matrix">type <a href="/src/target/dijkstra.go?s=474:629#L13">Matrix</a>
+			<h2 id="Matrix">type <a href="/src/target/dijkstra.go?s=687:777#L16">Matrix</a>
 				<a class="permalink" href="#Matrix">&#xb6;</a>
 				
 				
 			</h2>
-			
+			<p>
+Matrix structure represents a total Adjacency matrix and size of our game
+</p>
+
 			<pre>type Matrix struct {
 <span id="Matrix.AdjacencyMatrix"></span>    AdjacencyMatrix [6][32 + 2][32 + 2]<a href="/pkg/builtin/#int">int</a>
 <span id="Matrix.Size"></span>    Size            <a href="/pkg/builtin/#int">int</a> <span class="comment">// 34</span>
@@ -237,7 +261,7 @@
 
 			
 				<p>
-global game Matrix
+Game Matrix global declaration
 </p>
 
 				<pre>var <span id="Game">Game</span> <a href="#Matrix">Matrix</a></pre>
@@ -253,13 +277,13 @@ global game Matrix
 		
 			
 			
-			<h2 id="StaticNode">type <a href="/src/target/dijkstra.go?s=330:472#L5">StaticNode</a>
+			<h2 id="StaticNode">type <a href="/src/target/dijkstra.go?s=369:608#L6">StaticNode</a>
 				<a class="permalink" href="#StaticNode">&#xb6;</a>
 				
 				
 			</h2>
 			<p>
-StaticNode number of static nodes are 32 depended on construction of graph ..here manually measured
+StaticNode  structure represents nodes through which we simulate game
 </p>
 
 			<pre>type StaticNode struct {
