@@ -48,17 +48,17 @@ func Initialize() {
 		XLo: 530,
 		YLo: 480,
 	}
-	Platform[6] = dtypes.Rect{ // FIXME:
+	Platform[6] = dtypes.Rect{
 		XHi: 800,
 		YHi: 440,
 		XLo: 1200,
 		YLo: 470,
 	}
-	Platform[7] = dtypes.Rect{ // FIXME:
+	Platform[7] = dtypes.Rect{
 		XHi: 0,
 		YHi: 550,
 		XLo: 1200,
-		YLo: 50,
+		YLo: 600,
 	}
 
 	Ladder[0] = dtypes.Rect{
@@ -71,7 +71,7 @@ func Initialize() {
 		XHi: 1170,
 		YHi: 440,
 		XLo: 1200,
-		YLo: 155,
+		YLo: 550,
 	}
 	Ladder[2] = dtypes.Rect{
 		XHi: 800,

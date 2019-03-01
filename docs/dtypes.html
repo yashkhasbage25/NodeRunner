@@ -1,0 +1,416 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/dtypes"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="#Debug">type Debug</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Event">type Event</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Event.GetStr">func (event *Event) GetStr() string</a></dd>
+				
+			
+				
+				<dd><a href="#Freepos">type Freepos</a></dd>
+				
+				
+			
+				
+				<dd><a href="#GameRedirector">type GameRedirector</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Gem">type Gem</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Position">type Position</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Position.GetStr">func (pos Position) GetStr() string</a></dd>
+				
+			
+				
+				<dd><a href="#Rect">type Rect</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/msgs.go">msgs.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Debug">type <a href="/src/target/msgs.go?s=1798:1843#L56">Debug</a>
+				<a class="permalink" href="#Debug">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Debug struct is used for communicating error codes
+</p>
+
+			<pre>type Debug struct {
+<span id="Debug.Code"></span>    Code <a href="/pkg/builtin/#int">int</a> `json:&#34;code&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Event">type <a href="/src/target/msgs.go?s=222:652#L2">Event</a>
+				<a class="permalink" href="#Event">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Event represents the events on the client side
+</p>
+
+			<pre>type Event struct {
+<span id="Event.EventType"></span>    EventType <a href="/pkg/builtin/#string">string</a> `json:&#34;etype&#34;`
+
+<span id="Event.Object"></span>    Object <a href="/pkg/builtin/#string">string</a> `json:&#34;object&#34;`
+
+<span id="Event.P1Pos"></span>    P1Pos <a href="#Position">Position</a> `json:&#34;p1_pos&#34;`
+<span id="Event.P2Pos"></span>    P2Pos <a href="#Position">Position</a> `json:&#34;p2_pos&#34;`
+
+<span id="Event.B1Pos"></span>    B1Pos <a href="#Position">Position</a> `json:&#34;b1_pos&#34;`
+<span id="Event.B2Pos"></span>    B2Pos <a href="#Position">Position</a> `json:&#34;b2_pos&#34;`
+<span id="Event.B3Pos"></span>    B3Pos <a href="#Position">Position</a> `json:&#34;b3_pos&#34;`
+
+<span id="Event.G1Pos"></span>    G1Pos <a href="#Position">Position</a> `json:&#34;g1_pos&#34;`
+<span id="Event.G2Pos"></span>    G2Pos <a href="#Position">Position</a> `json:&#34;g2_pos&#34;`
+<span id="Event.G3Pos"></span>    G3Pos <a href="#Position">Position</a> `json:&#34;g3_pos&#34;`
+<span id="Event.G4Pos"></span>    G4Pos <a href="#Position">Position</a> `json:&#34;g4_pos&#34;`
+
+<span id="Event.P1Health"></span>    P1Health <a href="/pkg/builtin/#int">int</a> `json:&#34;h1&#34;`
+<span id="Event.P2Health"></span>    P2Health <a href="/pkg/builtin/#int">int</a> `json:&#34;h2&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Event.GetStr">func (*Event) <a href="/src/target/msgs.go?s=923:958#L32">GetStr</a>
+					<a class="permalink" href="#Event.GetStr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (event *<a href="#Event">Event</a>) GetStr() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetStr returns a debugging string of a event object
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Freepos">type <a href="/src/target/msgs.go?s=2183:2238#L77">Freepos</a>
+				<a class="permalink" href="#Freepos">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Freepos stores the attributes of a free position
+</p>
+
+			<pre>type Freepos struct {
+<span id="Freepos.Available"></span>    Available <a href="/pkg/builtin/#bool">bool</a>
+<span id="Freepos.Pos"></span>    Pos       <a href="#Rect">Rect</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GameRedirector">type <a href="/src/target/msgs.go?s=1679:1742#L51">GameRedirector</a>
+				<a class="permalink" href="#GameRedirector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GameRedirector redirects when both clients are connected to server
+</p>
+
+			<pre>type GameRedirector struct {
+<span id="GameRedirector.Redirect"></span>    Redirect <a href="/pkg/builtin/#bool">bool</a> `json:&#34;redirect&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Gem">type <a href="/src/target/msgs.go?s=2069:2129#L70">Gem</a>
+				<a class="permalink" href="#Gem">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Gem struct stores the attributes of a gem
+</p>
+
+			<pre>type Gem struct {
+<span id="Gem.Gemtype"></span>    Gemtype <a href="/pkg/builtin/#byte">byte</a>
+<span id="Gem.Value"></span>    Value   <a href="/pkg/builtin/#int">int</a>
+<span id="Gem.Pos"></span>    Pos     <a href="#Rect">Rect</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Position">type <a href="/src/target/msgs.go?s=110:170#L1">Position</a>
+				<a class="permalink" href="#Position">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Position represents the coordinates of an object in the form (left, top)
+</p>
+
+			<pre>type Position struct {
+<span id="Position.X"></span>    X <a href="/pkg/builtin/#int">int</a> `json:&#34;x&#34;`
+<span id="Position.Y"></span>    Y <a href="/pkg/builtin/#int">int</a> `json:&#34;y&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Position.GetStr">func (Position) <a href="/src/target/msgs.go?s=712:747#L24">GetStr</a>
+					<a class="permalink" href="#Position.GetStr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pos <a href="#Position">Position</a>) GetStr() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetStr returns a debugging string of a position object
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Rect">type <a href="/src/target/msgs.go?s=1966:2022#L62">Rect</a>
+				<a class="permalink" href="#Rect">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Rect stores the diagonally opposite points of a rectangle
+Diagonally opposite points are top-left and bottom-right
+</p>
+
+			<pre>type Rect struct {
+<span id="Rect.XHi"></span>    XHi <a href="/pkg/builtin/#int">int</a>
+<span id="Rect.YHi"></span>    YHi <a href="/pkg/builtin/#int">int</a>
+<span id="Rect.XLo"></span>    XLo <a href="/pkg/builtin/#int">int</a>
+<span id="Rect.YLo"></span>    YLo <a href="/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+

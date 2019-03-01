@@ -56,7 +56,7 @@ func (gameServer *Server) SetHandlers() {
 		if err != nil {
 			log.Println("Could not separate ip and port.")
 		}
-
+		serverLock.Lock()
 		log.Println("server client count is", gameServer.GetNextID())
 		if gameServer.CheckClientLimit() {
 			newClient := &client.Client{
@@ -69,6 +69,7 @@ func (gameServer *Server) SetHandlers() {
 			gameServer.AddNewClient(newClient)
 			log.Println("New server state: ", gameServer.GetInfoStr())
 		}
+		serverLock.Unlock()
 	})
 
 	http.HandleFunc("/web/game.html", func(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +95,7 @@ func (gameServer *Server) SetHandlers() {
 		if err != nil {
 			fmt.Print(err)
 		}
-
+		serverLock.Lock()
 		if gameServer.CheckClientLimit() {
 			log.Println("Before getting sockets server is:", gameServer.GetInfoStr())
 			thisClientID := gameServer.GetNextID()
@@ -118,6 +119,7 @@ func (gameServer *Server) SetHandlers() {
 			})
 			serverLock.Unlock()
 		}
+		serverLock.Unlock()
 		log.Println("handling pattern /game")
 	})
 
@@ -272,12 +274,24 @@ func (gameServer *Server) SetHandlers() {
 func detectGameOver(server *Server, gameWinChanel chan int) {
 	winner := <-gameWinChanel
 	log.Println("Winner is client id", winner)
+	winnerID := ""
+	if winner == 0 {
+		winnerID = "p1"
+	} else {
+		winnerID = "p2"
+	}
 	server.GetClient(winner).GetWSocket().WriteJSON(dtypes.Event{
 		EventType: "Win",
+		Object:    winnerID,
 	})
 	server.GetClient(1 - winner).GetWSocket().WriteJSON(dtypes.Event{
-		EventType: "Lose",
+		EventType: "Win",
+		Object:    winnerID,
 	})
+	serverLock.Lock()
+	gameRunning = false
+	serverLock.Unlock()
+	// server.resetServer()
 }
 
 // checIfBothConnected checks if both clients are connected to server
@@ -291,4 +305,13 @@ func checkIfBothConnected(server *Server) {
 	log.Println("Both clients are connected and ")
 	go play.PlayNodeRunner(server.GetRequestChannel(), server.GetRespondChannel(0), server.GetRespondChannel(1), gameWinChannel, server.GetClient(0), server.GetClient(1))
 	go detectGameOver(server, gameWinChannel)
+}
+
+func (server *Server) resetServer() {
+	serverLock.Lock()
+	server.SetClient(0, nil)
+	server.SetClient(0, nil)
+	server.SetIDCounter(0)
+	serverLock.Unlock()
+	go checkIfBothConnected(server)
 }

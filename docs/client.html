@@ -1,0 +1,440 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/client"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="#CompareClientsWithAddr">func CompareClientsWithAddr(ip, port string, client *Client) bool</a></dd>
+			
+				
+				<dd><a href="#CompareClientsWithSocket">func CompareClientsWithSocket(wsocket *websocket.Conn, client *Client) bool</a></dd>
+			
+			
+				
+				<dd><a href="#Client">type Client</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetID">func (client *Client) GetID() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetIP">func (client *Client) GetIP() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetInfoStr">func (client *Client) GetInfoStr() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetPort">func (client *Client) GetPort() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetReceiveChannel">func (client *Client) GetReceiveChannel() chan dtypes.Event</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetRequestChannel">func (client *Client) GetRequestChannel() chan dtypes.Event</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.GetWSocket">func (client *Client) GetWSocket() *websocket.Conn</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.SetID">func (client *Client) SetID(id uint32)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.SetIP">func (client *Client) SetIP(ip string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.SetPort">func (client *Client) SetPort(port string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.SetReceiveChannel">func (client *Client) SetReceiveChannel(receiveChannel chan dtypes.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.SetRequestChannel">func (client *Client) SetRequestChannel(requestChannel chan dtypes.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Client.SetWSocket">func (client *Client) SetWSocket(wsocket *websocket.Conn)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/client/client.go">client.go</a>
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/client/client_utils.go">client_utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+			
+			
+			<h2 id="CompareClientsWithAddr">func <a href="/src/target/client_utils.go?s=194:259#L1">CompareClientsWithAddr</a>
+				<a class="permalink" href="#CompareClientsWithAddr">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CompareClientsWithAddr(ip, port <a href="/pkg/builtin/#string">string</a>, client *<a href="#Client">Client</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CompareClientsWithAddr compares the given ip and port with a client.
+if they have same ip and port then it returns true
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CompareClientsWithSocket">func <a href="/src/target/client_utils.go?s=559:634#L13">CompareClientsWithSocket</a>
+				<a class="permalink" href="#CompareClientsWithSocket">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CompareClientsWithSocket(wsocket *<a href="/pkg/github.com/gorilla/websocket/">websocket</a>.<a href="/pkg/github.com/gorilla/websocket/#Conn">Conn</a>, client *<a href="#Client">Client</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CompareClientsWithSocket compares a given websocket connection with websocket
+connection of a given client
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Client">type <a href="/src/target/client.go?s=190:381#L1">Client</a>
+				<a class="permalink" href="#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client struct represents the connected client
+</p>
+
+			<pre>type Client struct {
+<span id="Client.IP"></span>    IP             <a href="/pkg/builtin/#string">string</a>
+<span id="Client.ID"></span>    ID             <a href="/pkg/builtin/#uint32">uint32</a>
+<span id="Client.Port"></span>    Port           <a href="/pkg/builtin/#string">string</a>
+<span id="Client.WSocket"></span>    WSocket        *<a href="/pkg/github.com/gorilla/websocket/">websocket</a>.<a href="/pkg/github.com/gorilla/websocket/#Conn">Conn</a>
+<span id="Client.RequestChannel"></span>    RequestChannel chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>
+<span id="Client.ReceiveChannel"></span>    ReceiveChannel chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Client.GetID">func (*Client) <a href="/src/target/client.go?s=495:531#L16">GetID</a>
+					<a class="permalink" href="#Client.GetID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetID() <a href="/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+GetID is getter for ID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetIP">func (*Client) <a href="/src/target/client.go?s=409:445#L11">GetIP</a>
+					<a class="permalink" href="#Client.GetIP">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetIP() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetIP is getter for IP
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetInfoStr">func (*Client) <a href="/src/target/client.go?s=1150:1191#L42">GetInfoStr</a>
+					<a class="permalink" href="#Client.GetInfoStr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetInfoStr() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetInfoStr gives string of attributes of a client object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetPort">func (*Client) <a href="/src/target/client.go?s=585:623#L21">GetPort</a>
+					<a class="permalink" href="#Client.GetPort">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetPort() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetPort is getter for Port
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetReceiveChannel">func (*Client) <a href="/src/target/client.go?s=995:1054#L37">GetReceiveChannel</a>
+					<a class="permalink" href="#Client.GetReceiveChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetReceiveChannel() chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
+				<p>
+GetReceiveChannel is a getter for receive channel of client
+object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetRequestChannel">func (*Client) <a href="/src/target/client.go?s=826:885#L31">GetRequestChannel</a>
+					<a class="permalink" href="#Client.GetRequestChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetRequestChannel() chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
+				<p>
+GetRequestChannel is getter for update channel of a client
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetWSocket">func (*Client) <a href="/src/target/client.go?s=685:735#L26">GetWSocket</a>
+					<a class="permalink" href="#Client.GetWSocket">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) GetWSocket() *<a href="/pkg/github.com/gorilla/websocket/">websocket</a>.<a href="/pkg/github.com/gorilla/websocket/#Conn">Conn</a></pre>
+				<p>
+GetWSocket is getter for Wsocket
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.SetID">func (*Client) <a href="/src/target/client.go?s=1446:1484#L52">SetID</a>
+					<a class="permalink" href="#Client.SetID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) SetID(id <a href="/pkg/builtin/#uint32">uint32</a>)</pre>
+				<p>
+SetID is getter for ID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.SetIP">func (*Client) <a href="/src/target/client.go?s=1360:1398#L47">SetIP</a>
+					<a class="permalink" href="#Client.SetIP">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) SetIP(ip <a href="/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetIP is getter for IP
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.SetPort">func (*Client) <a href="/src/target/client.go?s=1536:1578#L57">SetPort</a>
+					<a class="permalink" href="#Client.SetPort">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) SetPort(port <a href="/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetPort is getter for Port
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.SetReceiveChannel">func (*Client) <a href="/src/target/client.go?s=1984:2057#L73">SetReceiveChannel</a>
+					<a class="permalink" href="#Client.SetReceiveChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) SetReceiveChannel(receiveChannel chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>)</pre>
+				<p>
+SetReceiveChannel is a setter for receive channel of
+a client object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.SetRequestChannel">func (*Client) <a href="/src/target/client.go?s=1789:1862#L67">SetRequestChannel</a>
+					<a class="permalink" href="#Client.SetRequestChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) SetRequestChannel(requestChannel chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>)</pre>
+				<p>
+SetRequestChannel is setter for RequestChannel of client
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.SetWSocket">func (*Client) <a href="/src/target/client.go?s=1640:1697#L62">SetWSocket</a>
+					<a class="permalink" href="#Client.SetWSocket">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (client *<a href="#Client">Client</a>) SetWSocket(wsocket *<a href="/pkg/github.com/gorilla/websocket/">websocket</a>.<a href="/pkg/github.com/gorilla/websocket/#Conn">Conn</a>)</pre>
+				<p>
+SetWSocket is getter for Wsocket
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+

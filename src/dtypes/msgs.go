@@ -52,6 +52,8 @@ func (event *Event) GetStr() string {
 	replyStr += " G2Pos:" + event.G2Pos.GetStr()
 	replyStr += " G3Pos:" + event.G3Pos.GetStr()
 	replyStr += " G4Pos:" + event.G4Pos.GetStr()
+	replyStr += " P1Health:" + strconv.Itoa(event.P1Health)
+	replyStr += " P2Health:" + strconv.Itoa(event.P2Health)
 	return replyStr
 }
 

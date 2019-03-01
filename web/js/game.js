@@ -35,14 +35,15 @@ var otherHealth = getElement("otherHealth");
 // otherHealth.setAttribute("style", "height: 30px; background-color: #ddd; width: 80px;");
 var playerHeight = playerOne.height;
 var playerWidth = playerOne.width;
-
+var maxTeleports = 10;
+var teleports = 0;
 ws.onopen = function() {
     console.log("game.html websocket opened");
 }
 
 ws.onclose = function() {
     console.log("game.html websocket closed");
-    ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}));
+    // ws.send(JSON.stringify({etype: "SocketClosedUnexpectedly", object: clientID}));
 }
 
 ws.onmessage = function(event) {
@@ -69,15 +70,20 @@ ws.onmessage = function(event) {
         console.log("set positions");
     } else if (data.etype == "Win" && data.object == clientID) {
         alert("You Win");
+        throw new Error();
     } else if (data.etype == "Lose" && data.object != clientID) {
         alert("You Win");
-    } else if (data.etype == "Lose" && data.object == clientID) {
+        throw new Error();
+    } else if (data.etype == "Win" && data.object != clientID) {
         alert("You Lose");
-    } else if (data.etype == "Win" && data.object != clientID) { 
-        alert("You Lose")
+        throw new Error();
+    } else if (data.etypr == "Lose" && data.object == clientID) {
+        alert("You Lose");
+        throw new Error();
     } else {
         console.log("Unknown event");
     }
+    // console.log("teleports ", teleports);
 }
 
 function setPosition(elem, position) {
@@ -88,11 +94,11 @@ function setPosition(elem, position) {
     elem.style.top = (position.y - 20).toString() + "px";
 }
 
-function setHealth(elem, health) {
+function setHealth(elem, health, id) {
     health /= 10;
     // console.log(elem, "is undefined.");
     elem.style.width = health.toString() + "%";
-    elem.innerHTML = health + '%';
+    elem.innerHTML = health + '% ' + id;
 }
 
 function setAllPositions(data) {
@@ -107,11 +113,11 @@ function setAllPositions(data) {
     setPosition(gemThree.elem, data.g3_pos);
     setPosition(gemFour.elem, data.g4_pos);
     if (clientID == "p1") {
-        setHealth(myHealth.elem, data.h1);
-        setHealth(otherHealth.elem, data.h2);
+        setHealth(myHealth.elem, data.h1, "myHealth");
+        setHealth(otherHealth.elem, data.h2, "Opponent Health");
     } else {
-        setHealth(myHealth.elem, data.h2);
-        setHealth(otherHealth.elem, data.h1);
+        setHealth(myHealth.elem, data.h2, "myHealth");
+        setHealth(otherHealth.elem, data.h1, "Opponent Health");
     }
 }
 
@@ -140,21 +146,6 @@ function getHealth(element) {
 
 function getCurrentPositions() {
     console.log("Getting all positions");
-    // return {
-    //     "etype": "None",
-    //     "object": "None",
-    //     "p1_pos": getPositionOfElement(playerOne.elem),
-    //     "p2_pos": getPositionOfElement(playerTwo.elem),
-    //     "b1_pos": getPositionOfElement(botOne.elem),
-    //     "b2_pos": getPositionOfElement(botTwo.elem),
-    //     "b3_pos": getPositionOfElement(botThree.elem),
-    //     "g1_pos": getPositionOfElement(gemOne.elem),
-    //     "g2_pos": getPositionOfElement(gemTwo.elem),
-    //     "g3_pos": getPositionOfElement(gemThree.elem),
-    //     "g4_pos": getPositionOfElement(gemFour.elem),
-    //     "h1": getHealth(myHealth.elem) * 10,
-    //     "h2": getHealth(otherHealth.elem) * 10
-    // };
     return {
         etype: "None",
         object: "None",
@@ -191,10 +182,11 @@ document.onkeydown = function(event) {
         type = "Down";
     } else if (event.keyCode == 32) {
         type = "Teleport";
+        teleports++;
     } else {
         console.log("Unknown keyCode detected", event.keyCode);
     }
-    if (type.localeCompare("") != 0) {
+    if (type.localeCompare("") != 0 && teleports < maxTeleports) {
         currentPositions = getCurrentPositions();
         currentPositions.object = clientID;
         currentPositions.etype = type;

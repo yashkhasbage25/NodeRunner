@@ -1,0 +1,545 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/server"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="#Server">type Server</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.AddNewClient">func (server *Server) AddNewClient(newClient *client.Client)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.AreBothClientsConnected">func (server *Server) AreBothClientsConnected() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.BroadcastGameRedirection">func (server *Server) BroadcastGameRedirection()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.CheckClientLimit">func (server *Server) CheckClientLimit() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.ClearConnections">func (server *Server) ClearConnections()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.GetClient">func (server *Server) GetClient(index int) *client.Client</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.GetIDCounter">func (server *Server) GetIDCounter() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.GetInfoStr">func (server *Server) GetInfoStr() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.GetNextID">func (server *Server) GetNextID() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.GetRequestChannel">func (server *Server) GetRequestChannel() chan dtypes.Event</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.GetRespondChannel">func (server *Server) GetRespondChannel(index int) chan dtypes.Event</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.IncrementIDCounter">func (server *Server) IncrementIDCounter()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.RedirectToGameIfConnected">func (server *Server) RedirectToGameIfConnected()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.RemoveClientWithAddr">func (server *Server) RemoveClientWithAddr(ipaddress, port string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.RemoveClientWithSocket">func (server *Server) RemoveClientWithSocket(socket *websocket.Conn)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.SetClient">func (server *Server) SetClient(index uint32, newClient *client.Client)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.SetConnWithAddr">func (server *Server) SetConnWithAddr(ip, port string, conn *websocket.Conn) uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.SetHandlers">func (gameServer *Server) SetHandlers()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.SetIDCounter">func (server *Server) SetIDCounter(i uint32)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.SetRequestChannel">func (server *Server) SetRequestChannel(requestChannel chan dtypes.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Server.SetRespondChannel">func (server *Server) SetRespondChannel(index int, respondChannel chan dtypes.Event)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/server/broadcast.go">broadcast.go</a>
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/server/server.go">server.go</a>
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/server/server_handlers.go">server_handlers.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Server">type <a href="/src/target/server.go?s=204:358#L4">Server</a>
+				<a class="permalink" href="#Server">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Server structure
+</p>
+
+			<pre>type Server struct {
+<span id="Server.ConnectedClient"></span>    ConnectedClient [2]*<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/">client</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/#Client">Client</a>
+<span id="Server.RespondChannels"></span>    RespondChannels [2]chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>
+<span id="Server.RequestChannel"></span>    RequestChannel  chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>
+<span id="Server.IDCounter"></span>    IDCounter       <a href="/pkg/builtin/#uint32">uint32</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Server.AddNewClient">func (*Server) <a href="/src/target/server.go?s=2330:2390#L76">AddNewClient</a>
+					<a class="permalink" href="#Server.AddNewClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) AddNewClient(newClient *<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/">client</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/#Client">Client</a>)</pre>
+				<p>
+AddNewClient adds a new client to the gameServer server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.AreBothClientsConnected">func (*Server) <a href="/src/target/server.go?s=3982:4034#L125">AreBothClientsConnected</a>
+					<a class="permalink" href="#Server.AreBothClientsConnected">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) AreBothClientsConnected() <a href="/pkg/builtin/#bool">bool</a></pre>
+				<p>
+AreBothClientsConnected checks if both clients are connected or not
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.BroadcastGameRedirection">func (*Server) <a href="/src/target/broadcast.go?s=202:250#L1">BroadcastGameRedirection</a>
+					<a class="permalink" href="#Server.BroadcastGameRedirection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) BroadcastGameRedirection()</pre>
+				<p>
+BroadcastGameRedirection broadcasts the redirection msg to clients
+here, msg is to redirect the client to game page
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.CheckClientLimit">func (*Server) <a href="/src/target/server.go?s=2025:2070#L62">CheckClientLimit</a>
+					<a class="permalink" href="#Server.CheckClientLimit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) CheckClientLimit() <a href="/pkg/builtin/#bool">bool</a></pre>
+				<p>
+CheckClientLimit checks if the number of clients is not more than 2
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.ClearConnections">func (*Server) <a href="/src/target/broadcast.go?s=574:614#L12">ClearConnections</a>
+					<a class="permalink" href="#Server.ClearConnections">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) ClearConnections()</pre>
+				<p>
+ClearConnections closes the current websocket connections
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.GetClient">func (*Server) <a href="/src/target/server.go?s=543:600#L17">GetClient</a>
+					<a class="permalink" href="#Server.GetClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) GetClient(index <a href="/pkg/builtin/#int">int</a>) *<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/">client</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/#Client">Client</a></pre>
+				<p>
+GetClient is a getter for clients connected to server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.GetIDCounter">func (*Server) <a href="/src/target/server.go?s=412:455#L12">GetIDCounter</a>
+					<a class="permalink" href="#Server.GetIDCounter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) GetIDCounter() <a href="/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+GetIDCounter is getter for IDCounter of a server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.GetInfoStr">func (*Server) <a href="/src/target/server.go?s=5129:5170#L163">GetInfoStr</a>
+					<a class="permalink" href="#Server.GetInfoStr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) GetInfoStr() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetInfoStr gives a string  of attributes of a server object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.GetNextID">func (*Server) <a href="/src/target/server.go?s=3840:3880#L120">GetNextID</a>
+					<a class="permalink" href="#Server.GetNextID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) GetNextID() <a href="/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+GetNextID returns the next possible ID that can be given to a client
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.GetRequestChannel">func (*Server) <a href="/src/target/server.go?s=1100:1159#L34">GetRequestChannel</a>
+					<a class="permalink" href="#Server.GetRequestChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) GetRequestChannel() chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
+				<p>
+GetRequestChannel is a getter for request channel for a server object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.GetRespondChannel">func (*Server) <a href="/src/target/server.go?s=818:886#L26">GetRespondChannel</a>
+					<a class="permalink" href="#Server.GetRespondChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) GetRespondChannel(index <a href="/pkg/builtin/#int">int</a>) chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
+				<p>
+GetRespondChannel is a getter for update channel of a server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.IncrementIDCounter">func (*Server) <a href="/src/target/server.go?s=2203:2245#L71">IncrementIDCounter</a>
+					<a class="permalink" href="#Server.IncrementIDCounter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) IncrementIDCounter()</pre>
+				<p>
+IncrementIDCounter increments the IDCounter by 1
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.RedirectToGameIfConnected">func (*Server) <a href="/src/target/server.go?s=4293:4342#L137">RedirectToGameIfConnected</a>
+					<a class="permalink" href="#Server.RedirectToGameIfConnected">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) RedirectToGameIfConnected()</pre>
+				<p>
+RedirectToGameIfConnected redirects both clients to game.html once both clients
+are connected
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.RemoveClientWithAddr">func (*Server) <a href="/src/target/server.go?s=2758:2824#L89">RemoveClientWithAddr</a>
+					<a class="permalink" href="#Server.RemoveClientWithAddr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) RemoveClientWithAddr(ipaddress, port <a href="/pkg/builtin/#string">string</a>)</pre>
+				<p>
+RemoveClientWithAddr removes the client given ots IPAddress,
+in case of some disconnections.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.RemoveClientWithSocket">func (*Server) <a href="/src/target/server.go?s=3322:3390#L105">RemoveClientWithSocket</a>
+					<a class="permalink" href="#Server.RemoveClientWithSocket">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) RemoveClientWithSocket(socket *<a href="/pkg/github.com/gorilla/websocket/">websocket</a>.<a href="/pkg/github.com/gorilla/websocket/#Conn">Conn</a>)</pre>
+				<p>
+RemoveClientWithSocket removes the client given its websocket connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.SetClient">func (*Server) <a href="/src/target/server.go?s=1353:1424#L44">SetClient</a>
+					<a class="permalink" href="#Server.SetClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) SetClient(index <a href="/pkg/builtin/#uint32">uint32</a>, newClient *<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/">client</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/client/#Client">Client</a>)</pre>
+				<p>
+SetClient is a setter for client of server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.SetConnWithAddr">func (*Server) <a href="/src/target/server.go?s=4646:4729#L149">SetConnWithAddr</a>
+					<a class="permalink" href="#Server.SetConnWithAddr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) SetConnWithAddr(ip, port <a href="/pkg/builtin/#string">string</a>, conn *<a href="/pkg/github.com/gorilla/websocket/">websocket</a>.<a href="/pkg/github.com/gorilla/websocket/#Conn">Conn</a>) <a href="/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+SetConnWithAddr sets the websocket connection of a cleint object given its ip and port
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.SetHandlers">func (*Server) <a href="/src/target/server_handlers.go?s=536:575#L17">SetHandlers</a>
+					<a class="permalink" href="#Server.SetHandlers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (gameServer *<a href="#Server">Server</a>) SetHandlers()</pre>
+				<p>
+SetHandlers is sets all possible handlers for the server.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.SetIDCounter">func (*Server) <a href="/src/target/server.go?s=1235:1279#L39">SetIDCounter</a>
+					<a class="permalink" href="#Server.SetIDCounter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) SetIDCounter(i <a href="/pkg/builtin/#uint32">uint32</a>)</pre>
+				<p>
+SetIDCounter is setter for IDCoubter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.SetRequestChannel">func (*Server) <a href="/src/target/server.go?s=1835:1908#L57">SetRequestChannel</a>
+					<a class="permalink" href="#Server.SetRequestChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) SetRequestChannel(requestChannel chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>)</pre>
+				<p>
+SetRequestChannel is a setter for request channel of a server object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Server.SetRespondChannel">func (*Server) <a href="/src/target/server.go?s=1535:1619#L49">SetRespondChannel</a>
+					<a class="permalink" href="#Server.SetRespondChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (server *<a href="#Server">Server</a>) SetRespondChannel(index <a href="/pkg/builtin/#int">int</a>, respondChannel chan <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>)</pre>
+				<p>
+SetRespondChannel is setter for update channel of a server
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+

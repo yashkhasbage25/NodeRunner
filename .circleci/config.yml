@@ -4,27 +4,20 @@ jobs:
     docker:
       - image: circleci/golang:1.8
 
-    working_directory: /go/src/github.com/IITH-SBJoshi/concurrency-3
+    working_directory: /go/src/github.com/IITH-SBJoshi/concurrency-3/
 
     environment:
       TEST_RESULTS: /tmp/test-results
+
     steps:
       - checkout
       - run: mkdir -p $TEST_RESULTS # create the test results directory
 
-      - restore_cache: # restores saved cache if no changes are detected since last run
-      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          keys:
-            - v1-pkg-cache
-
-      # - run: go get github.com/jstemmer/go-junit-report
       - run: go get github.com/gorilla/websocket
       - run: go build main.go
-
-
-      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: /tmp/test-results
-          destination: raw-test-output
-
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: /tmp/test-results
+      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/client
+      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/coords
+      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dijkstra
+      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/dtypes
+      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/handlers
+      - run: go test -v github.com/IITH-SBJoshi/concurrency-3/src/health

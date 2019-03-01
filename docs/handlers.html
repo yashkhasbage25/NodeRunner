@@ -1,0 +1,448 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IITH-SBJoshi/concurrency-3/src/handlers"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="#AllignedWithLadder">func AllignedWithLadder(player dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#CollidesGem">func CollidesGem(player dtypes.Rect, id string)</a></dd>
+			
+				
+				<dd><a href="#CollidesWithBlockOnLeftMove">func CollidesWithBlockOnLeftMove(player dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#CollidesWithBlockOnRightMove">func CollidesWithBlockOnRightMove(player dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#CollidesWithBlockVertically">func CollidesWithBlockVertically(player dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#CollidesWithBot">func CollidesWithBot(player dtypes.Rect, b11 dtypes.Rect, b22 dtypes.Rect, b33 dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#FallsFromBlock">func FallsFromBlock(player dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#GetBoundary">func GetBoundary(player dtypes.Position) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#GetPosition">func GetPosition(player dtypes.Rect) dtypes.Position</a></dd>
+			
+				
+				<dd><a href="#GetPositionCollidesWithBlockOnLeft">func GetPositionCollidesWithBlockOnLeft(player dtypes.Rect) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#GetPositionCollidesWithBlockOnRight">func GetPositionCollidesWithBlockOnRight(player dtypes.Rect) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#GetPositionCollidesWithBlockVer">func GetPositionCollidesWithBlockVer(player dtypes.Rect) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#Handle">func Handle(event dtypes.Event) dtypes.Event</a></dd>
+			
+				
+				<dd><a href="#OnPlatform">func OnPlatform(player dtypes.Rect) bool</a></dd>
+			
+				
+				<dd><a href="#SetAccordingToLadderBottom">func SetAccordingToLadderBottom(player dtypes.Rect) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#SetAccordingToLadderTop">func SetAccordingToLadderTop(player dtypes.Rect) dtypes.Rect</a></dd>
+			
+				
+				<dd><a href="#SetGameWinChannel">func SetGameWinChannel(winChannel chan int)</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/handlers/event_handler.go">event_handler.go</a>
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/handlers/event_handler_2.go">event_handler_2.go</a>
+			
+				<a href="/src/github.com/IITH-SBJoshi/concurrency-3/src/handlers/handler_utils.go">handler_utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+			
+			
+			<h2 id="AllignedWithLadder">func <a href="/src/target/handler_utils.go?s=1073:1121#L22">AllignedWithLadder</a>
+				<a class="permalink" href="#AllignedWithLadder">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AllignedWithLadder(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+AllignedWithLadder returns true if x coordinate of center point lies within x coordinates of ladder
+and y coordinate of bottom point of player lies between y coordinates of ladder
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CollidesGem">func <a href="/src/target/handler_utils.go?s=7678:7725#L176">CollidesGem</a>
+				<a class="permalink" href="#CollidesGem">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CollidesGem(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>, id <a href="/pkg/builtin/#string">string</a>)</pre>
+			<p>
+CollidesGem Check whether collided with gem
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CollidesWithBlockOnLeftMove">func <a href="/src/target/handler_utils.go?s=5174:5231#L112">CollidesWithBlockOnLeftMove</a>
+				<a class="permalink" href="#CollidesWithBlockOnLeftMove">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CollidesWithBlockOnLeftMove(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CollidesWithBlockOnLeftMove Checks if player collided with a block while moving left
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CollidesWithBlockOnRightMove">func <a href="/src/target/handler_utils.go?s=4548:4606#L98">CollidesWithBlockOnRightMove</a>
+				<a class="permalink" href="#CollidesWithBlockOnRightMove">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CollidesWithBlockOnRightMove(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CollidesWithBlockOnRightMove Checks if player collided with a block while moving right
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CollidesWithBlockVertically">func <a href="/src/target/handler_utils.go?s=3865:3922#L84">CollidesWithBlockVertically</a>
+				<a class="permalink" href="#CollidesWithBlockVertically">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CollidesWithBlockVertically(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CollidesWithBlockVertically Checks if player collided vertically
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CollidesWithBot">func <a href="/src/target/handler_utils.go?s=8524:8620#L198">CollidesWithBot</a>
+				<a class="permalink" href="#CollidesWithBot">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CollidesWithBot(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>, b11 <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>, b22 <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>, b33 <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+Check if player collides with bots
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="FallsFromBlock">func <a href="/src/target/handler_utils.go?s=3126:3170#L70">FallsFromBlock</a>
+				<a class="permalink" href="#FallsFromBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func FallsFromBlock(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+FallsFromBlock Checks if player fell form block
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetBoundary">func <a href="/src/target/handler_utils.go?s=7180:7232#L158">GetBoundary</a>
+				<a class="permalink" href="#GetBoundary">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetBoundary(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Position">Position</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			<p>
+GetBoundary get bounding rectangle using coordinates of center point
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPosition">func <a href="/src/target/handler_utils.go?s=7454:7506#L168">GetPosition</a>
+				<a class="permalink" href="#GetPosition">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPosition(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Position">Position</a></pre>
+			<p>
+GetPosition get center point using bounding rectangle
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPositionCollidesWithBlockOnLeft">func <a href="/src/target/handler_utils.go?s=5678:5749#L125">GetPositionCollidesWithBlockOnLeft</a>
+				<a class="permalink" href="#GetPositionCollidesWithBlockOnLeft">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPositionCollidesWithBlockOnLeft(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			<p>
+GetPositionCollidesWithBlockOnLeft get updated Position of player when it collided with block on left move
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPositionCollidesWithBlockOnRight">func <a href="/src/target/handler_utils.go?s=6178:6250#L136">GetPositionCollidesWithBlockOnRight</a>
+				<a class="permalink" href="#GetPositionCollidesWithBlockOnRight">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPositionCollidesWithBlockOnRight(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			<p>
+GetPositionCollidesWithBlockOnRight get updated Position of player when it collided with block on right move
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPositionCollidesWithBlockVer">func <a href="/src/target/handler_utils.go?s=6678:6746#L147">GetPositionCollidesWithBlockVer</a>
+				<a class="permalink" href="#GetPositionCollidesWithBlockVer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPositionCollidesWithBlockVer(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			<p>
+GetPositionCollidesWithBlockVer get updated Position of player when it collided with block on vertical move
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Handle">func <a href="/src/target/event_handler.go?s=351:395#L9">Handle</a>
+				<a class="permalink" href="#Handle">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Handle(event <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Event">Event</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="OnPlatform">func <a href="/src/target/handler_utils.go?s=404:444#L6">OnPlatform</a>
+				<a class="permalink" href="#OnPlatform">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func OnPlatform(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+			<p>
+OnPlatform takes player&#39;s bounding rectangle and checks whether it is on a platform
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetAccordingToLadderBottom">func <a href="/src/target/handler_utils.go?s=2487:2550#L55">SetAccordingToLadderBottom</a>
+				<a class="permalink" href="#SetAccordingToLadderBottom">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetAccordingToLadderBottom(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			<p>
+SetAccordingToLadderBottom As it excedded ladder height while moving lower y coordinate of player is set to lower y coordinate of platform
+and according top y coordinate of ladder is adjusted using offset
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetAccordingToLadderTop">func <a href="/src/target/handler_utils.go?s=1720:1780#L39">SetAccordingToLadderTop</a>
+				<a class="permalink" href="#SetAccordingToLadderTop">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetAccordingToLadderTop(player <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a>) <a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/">dtypes</a>.<a href="/pkg/github.com/IITH-SBJoshi/concurrency-3/src/dtypes/#Rect">Rect</a></pre>
+			<p>
+SetAccordingToLadderTop As it excedded ladder height lower y coordinate of player is set to upper y coordinate of platform
+and according top y coordinate of ladder is adjusted using offset
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetGameWinChannel">func <a href="/src/target/event_handler.go?s=235:278#L4">SetGameWinChannel</a>
+				<a class="permalink" href="#SetGameWinChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetGameWinChannel(winChannel chan <a href="/pkg/builtin/#int">int</a>)</pre>
+			
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+
