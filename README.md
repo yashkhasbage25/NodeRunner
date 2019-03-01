@@ -16,7 +16,6 @@
 * golint
 * go vet
 * go test
-* golint
 
 ## Concurrency involved
 
@@ -59,3 +58,10 @@ go run main.go
 ## Game Rules
 
 Survive as long as you can to be the winner. 3 ghosts will always be on your tail so beware of them. But you have 10 teleports to jump to random locations. Green colored gems will increase your health and the red one will decrease opponent's health. So, choose your gems wisely. Once a gem is acquired, new gem will appear at some other location. Gems have a special property: green gems either multiply or add a value to your health, whereas red ones either subtract or divide opponents health.
+
+## In-Browser Documentation
+run
+```bash
+godoc -http=:6060
+```
+Connect to localhost:6060 in your browser and traverse to github.com/IITH-SBJoshi/concurrency-3/
